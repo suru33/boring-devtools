@@ -1,4 +1,4 @@
-const RandomWordsGenerator = () => {
+const WordsGenerator = () => {
   return(
     <div>
           RandomWordsGenerator
@@ -6,5 +6,5 @@ const RandomWordsGenerator = () => {
   );
 };
 
-export default RandomWordsGenerator;
+export default WordsGenerator;
     

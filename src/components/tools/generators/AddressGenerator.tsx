@@ -1,4 +1,4 @@
-const RandomAddressGenerator = () => {
+const AddressGenerator = () => {
   return(
     <div>
           RandomAddressGenerator
@@ -6,5 +6,5 @@ const RandomAddressGenerator = () => {
   );
 };
 
-export default RandomAddressGenerator;
+export default AddressGenerator;
     

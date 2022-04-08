@@ -1,4 +1,4 @@
-const RandomStringsGenerator = () => {
+const StringsGenerator = () => {
   return(
     <div>
           RandomStringsGenerator
@@ -6,5 +6,5 @@ const RandomStringsGenerator = () => {
   );
 };
 
-export default RandomStringsGenerator;
+export default StringsGenerator;
     

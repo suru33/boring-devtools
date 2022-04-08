@@ -1,23 +1,23 @@
-import RandomStringsGenerator from "./random/RandomStringsGenerator";
-import RandomWordsGenerator from "./random/RandomWordsGenerator";
-import RandomParagraphGenerator from "./random/RandomParagraphGenerator";
-import RandomNumbersGenerator from "./random/RandomNumbersGenerator";
-import RandomIPAddressGenerator from "./random/RandomIPAddressGenerator";
-import RandomDateGenerator from "./random/RandomDateGenerator";
-import RandomUUIDGenerator from "./random/RandomUUIDGenerator";
-import RandomAddressGenerator from "./random/RandomAddressGenerator";
-import StringLengthCalculator from "./string/StringLengthCalculator";
-import StringCaseConverter from "./string/StringCaseConverter";
-import StringReverser from "./string/StringReverser";
-import WordsSorter from "./string/WordsSorter";
-import StringRepeater from "./string/StringRepeater";
-import HEXtoStringConverter from "./string/HEXtoStringConverter";
-import DateDifferenceCalculator from "./date/DateDifferenceCalculator";
-import TimeZoneConverter from "./date/TimeZoneConverter";
 import { ReactNode } from "react";
-import { Writing } from "tabler-icons-react";
 import { MantineColor } from "@mantine/styles/lib/theme/types/MantineColor";
-import RandomSentenceGenerator from "./random/RandomSentenceGenerator";
+import { Writing } from "tabler-icons-react";
+import StringsGenerator from "./generators/StringsGenerator";
+import WordsGenerator from "./generators/WordsGenerator";
+import SentencesGenerator from "./generators/SentencesGenerator";
+import ParagraphGenerator from "./generators/ParagraphGenerator";
+import NumbersGenerator from "./generators/NumbersGenerator";
+import IPAddressGenerator from "./generators/IPAddressGenerator";
+import DateGenerator from "./generators/DateGenerator";
+import UUIDGenerator from "./generators/UUIDGenerator";
+import AddressGenerator from "./generators/AddressGenerator";
+import StringLengthCalculator from "./strings/StringLengthCalculator";
+import StringCaseConverter from "./strings/StringCaseConverter";
+import StringReverser from "./strings/StringReverser";
+import StringRepeater from "./strings/StringRepeater";
+import WordsSorter from "./strings/WordsSorter";
+import HEXtoStringConverter from "./strings/HEXtoStringConverter";
+import DateDifferenceCalculator from "./dates/DateDifferenceCalculator";
+import TimeZoneConverter from "./dates/TimeZoneConverter";
 
 export interface Tool {
   label: string,
@@ -36,69 +36,69 @@ export interface ToolCategory {
 const writingIcon = <Writing size={16}/>;
 
 const randomToolsCategory: ToolCategory = {
-  label: "Random Tools",
-  path: "random-tools",
+  label: "Random Generators",
+  path: "random-generators",
   tools: [
     {
-      label: "Random Strings Generator",
-      path: "random-strings-generator",
-      component: <RandomStringsGenerator/>,
+      label: "Strings Generator",
+      path: "strings-generator",
+      component: <StringsGenerator/>,
       icon: writingIcon,
       color: "red"
     },
     {
-      label: "Random Words Generator",
-      path: "random-words-generator",
-      component: <RandomWordsGenerator/>,
+      label: "Words Generator",
+      path: "words-generator",
+      component: <WordsGenerator/>,
       icon: writingIcon,
       color: "red"
     },
     {
-      label: "Random Sentence Generator",
-      path: "random-sentence-generator",
-      component: <RandomSentenceGenerator/>,
+      label: "Sentence Generator",
+      path: "sentence-generator",
+      component: <SentencesGenerator/>,
       icon: writingIcon,
       color: "red"
     },
     {
-      label: "Random Paragraph Generator",
-      path: "random-paragraph-generator",
-      component: <RandomParagraphGenerator/>,
+      label: "Paragraph Generator",
+      path: "paragraph-generator",
+      component: <ParagraphGenerator/>,
       icon: writingIcon,
       color: "red"
     },
     {
-      label: "Random Numbers Generator",
+      label: "Numbers Generator",
       path: "random-numbers-generator",
-      component: <RandomNumbersGenerator/>,
+      component: <NumbersGenerator/>,
       icon: writingIcon,
       color: "red"
     },
     {
-      label: "Random IP Address Generator",
-      path: "random-ip-address-generator",
-      component: <RandomIPAddressGenerator/>,
+      label: "IP Address Generator",
+      path: "ip-address-generator",
+      component: <IPAddressGenerator/>,
       icon: writingIcon,
       color: "red"
     },
     {
-      label: "Random Date Generator",
-      path: "random-date-generator",
-      component: <RandomDateGenerator/>,
+      label: "Date Generator",
+      path: "date-generator",
+      component: <DateGenerator/>,
       icon: writingIcon,
       color: "red"
     },
     {
-      label: "Random UUID Generator",
-      path: "random-uuid-generator",
-      component: <RandomUUIDGenerator/>,
+      label: "UUID Generator",
+      path: "uuid-generator",
+      component: <UUIDGenerator/>,
       icon: writingIcon,
       color: "red"
     },
     {
-      label: "Random Address Generator",
-      path: "random-address-generator",
-      component: <RandomAddressGenerator/>,
+      label: "Address Generator",
+      path: "address-generator",
+      component: <AddressGenerator/>,
       icon: writingIcon,
       color: "red"
     },

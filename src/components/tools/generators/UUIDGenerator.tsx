@@ -1,4 +1,4 @@
-const RandomUUIDGenerator = () => {
+const UUIDGenerator = () => {
   return(
     <div>
           RandomUUIDGenerator
@@ -6,5 +6,5 @@ const RandomUUIDGenerator = () => {
   );
 };
 
-export default RandomUUIDGenerator;
+export default UUIDGenerator;
     

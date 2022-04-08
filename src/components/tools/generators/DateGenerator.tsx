@@ -1,4 +1,4 @@
-const RandomDateGenerator = () => {
+const DateGenerator = () => {
   return(
     <div>
           RandomDateGenerator
@@ -6,5 +6,5 @@ const RandomDateGenerator = () => {
   );
 };
 
-export default RandomDateGenerator;
+export default DateGenerator;
     

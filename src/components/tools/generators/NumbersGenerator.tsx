@@ -1,4 +1,4 @@
-const RandomNumbersGenerator = () => {
+const NumbersGenerator = () => {
   return(
     <div>
           RandomNumbersGenerator
@@ -6,5 +6,5 @@ const RandomNumbersGenerator = () => {
   );
 };
 
-export default RandomNumbersGenerator;
+export default NumbersGenerator;
     
