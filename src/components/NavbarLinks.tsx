@@ -17,8 +17,7 @@ const NavbarLink = (props: {parentPath: string, tool: Tool}) => {
         },
       })}
       component={Link}
-      to={`${parentPath}/${tool.path}`}
-    >
+      to={`${parentPath}/${tool.path}`}>
       <Group>
         <ThemeIcon color={tool.color} variant="light">
           {tool.icon}
