@@ -1,0 +1,13 @@
+{
+  "name": "boring-devtools",
+  "short_name": "bd",
+  "icons": [
+    {
+      "src": "/logo.svg",
+      "sizes": "any"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
