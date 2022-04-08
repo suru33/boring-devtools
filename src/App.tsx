@@ -21,6 +21,7 @@ import AppLogo from "./resources/AppLogo";
 import { allTools } from "./components/tools";
 import NavbarLinks from "./components/NavbarLinks";
 import Home from "./pages/Home";
+import AppHeader from "./components/AppHeader";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useState<ColorScheme>("light");
@@ -38,26 +39,10 @@ const App = () => {
         <AppShell
           padding="md"
           header={
-            <Header height={60}>
-              <Group sx={{ height: "100%" }} px={20} position="apart">
-                <Group>
-                  <UnstyledButton component={Link} to="/home">
-                    <Group>
-                      <AppLogo size={50} colorScheme={colorScheme}/>
-                      <Text
-                        size="xl"
-                        weight={700}
-                        style={{ fontFamily: appTheme.fontFamilyMonospace }}>
-                        boring-devtools
-                      </Text>
-                    </Group>
-                  </UnstyledButton>
-                </Group>
-                <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
-                  {colorScheme === "dark" ? <Sun size={16}/> : <MoonStars size={16}/>}
-                </ActionIcon>
-              </Group>
-            </Header>
+            <AppHeader
+              colorScheme={colorScheme}
+              titleFont={appTheme.fontFamilyMonospace}
+              colorSchemeToggleFn={toggleColorScheme} />
           }
           navbar={
             <Navbar width={{ base: 350 }}>
