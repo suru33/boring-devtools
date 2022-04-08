@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
 
 import {
   Accordion,
@@ -12,13 +12,15 @@ import {
   MantineProvider,
   Navbar,
   ScrollArea,
-  Text
+  Text,
+  UnstyledButton
 } from "@mantine/core";
 import { useState } from "react";
 import { MoonStars, Sun } from "tabler-icons-react";
 import AppLogo from "./resources/AppLogo";
 import { allTools } from "./components/tools";
 import NavbarLinks from "./components/NavbarLinks";
+import Home from "./pages/Home";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useState<ColorScheme>("light");
@@ -39,10 +41,17 @@ const App = () => {
             <Header height={60}>
               <Group sx={{ height: "100%" }} px={20} position="apart">
                 <Group>
-                  <AppLogo size={50} colorScheme={colorScheme}/>
-                  <Text size="xl" weight={700} style={{ fontFamily: appTheme.fontFamilyMonospace }}>
-                    boring-devtools
-                  </Text>
+                  <UnstyledButton component={Link} to="/home">
+                    <Group>
+                      <AppLogo size={50} colorScheme={colorScheme}/>
+                      <Text
+                        size="xl"
+                        weight={700}
+                        style={{ fontFamily: appTheme.fontFamilyMonospace }}>
+                        boring-devtools
+                      </Text>
+                    </Group>
+                  </UnstyledButton>
                 </Group>
                 <ActionIcon variant="default" onClick={() => toggleColorScheme()} size={30}>
                   {colorScheme === "dark" ? <Sun size={16}/> : <MoonStars size={16}/>}
@@ -70,6 +79,7 @@ const App = () => {
           <Routes>
             <Route path="/">
               <Route index element={<Navigate to="home" replace/>}/>
+              <Route path="home" element={<Home/>}/>
               {
                 allTools.map((tc, i) =>
                   <Route key={`${i}-${tc.path}`} path={tc.path}>
