@@ -1,26 +1,18 @@
-import { Link, Navigate, Route, Routes } from "react-router-dom";
-
+import { useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import {
   Accordion,
-  ActionIcon,
   AppShell,
   Box,
   ColorScheme,
   ColorSchemeProvider,
-  Group,
-  Header,
   MantineProvider,
   Navbar,
-  ScrollArea,
-  Text,
-  UnstyledButton
+  ScrollArea
 } from "@mantine/core";
-import { useState } from "react";
-import { MoonStars, Sun } from "tabler-icons-react";
-import AppLogo from "./resources/AppLogo";
+import Home from "./pages/Home";
 import { allTools } from "./components/tools";
 import NavbarLinks from "./components/NavbarLinks";
-import Home from "./pages/Home";
 import AppHeader from "./components/AppHeader";
 
 const App = () => {
@@ -42,7 +34,7 @@ const App = () => {
             <AppHeader
               colorScheme={colorScheme}
               titleFont={appTheme.fontFamilyMonospace}
-              colorSchemeToggleFn={toggleColorScheme} />
+              colorSchemeToggleFn={toggleColorScheme}/>
           }
           navbar={
             <Navbar width={{ base: 350 }}>

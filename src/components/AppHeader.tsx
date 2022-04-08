@@ -1,7 +1,7 @@
-import { ActionIcon, ColorScheme, Group, Header, Text, UnstyledButton } from "@mantine/core";
 import { Link } from "react-router-dom";
-import AppLogo from "../resources/AppLogo";
+import { ActionIcon, ColorScheme, Group, Header, Text, UnstyledButton } from "@mantine/core";
 import { MoonStars, Sun } from "tabler-icons-react";
+import AppLogo from "../resources/AppLogo";
 
 interface AppHeaderProps {
   colorScheme: ColorScheme,

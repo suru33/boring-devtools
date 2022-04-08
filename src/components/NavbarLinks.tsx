@@ -1,6 +1,6 @@
+import { Link } from "react-router-dom";
 import { Group, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { Tool } from "./tools";
-import { Link } from "react-router-dom";
 
 const NavbarLink = (props: {parentPath: string, tool: Tool}) => {
   const { parentPath, tool } = props;
