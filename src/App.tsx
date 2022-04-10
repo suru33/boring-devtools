@@ -14,14 +14,17 @@ import Home from "./pages/Home";
 import { allTools } from "./components/tools";
 import NavbarLinks from "./components/NavbarLinks";
 import AppHeader from "./components/AppHeader";
+import ToolContainer from "./components/ToolContainer";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+  const appFontFamily = "'Courier Prime', monospace";
   const appTheme = {
-    fontFamily: "'Courier Prime', monospace",
-    fontFamilyMonospace: "'Courier Prime', monospace",
+    fontFamily: appFontFamily,
+    fontFamilyMonospace: appFontFamily,
+    headings: { fontFamily: appFontFamily },
     colorScheme: colorScheme,
   };
 
@@ -29,7 +32,7 @@ const App = () => {
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={appTheme} withGlobalStyles>
         <AppShell
-          padding="md"
+          fixed
           header={
             <AppHeader
               colorScheme={colorScheme}
@@ -59,8 +62,14 @@ const App = () => {
               {
                 allTools.map((tc, i) =>
                   <Route key={`${i}-${tc.path}`} path={tc.path}>
-                    {tc.tools.map((t, j) =>
-                      <Route key={`${i}.${j}-${t.path}`} path={t.path} element={t.component}/>)}
+                    {
+                      tc.tools.map((t) =>
+                        <Route
+                          key={`${tc.path}-${t.path}`}
+                          path={t.path}
+                          element={<ToolContainer title={t.label}>{t.component}</ToolContainer>}
+                        />)
+                    }
                   </Route>
                 )
               }

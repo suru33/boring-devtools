@@ -1,5 +1,5 @@
 import { useInputState } from "@mantine/hooks";
-import { Button, Checkbox, Container, Group, NumberInput, Text, Textarea, TextInput } from "@mantine/core";
+import { Button, Checkbox, Group, NumberInput, Text, Textarea, TextInput } from "@mantine/core";
 import { generateRandomStrings } from "../../../utils/string-utils";
 import { asInputLabel, defaultMargin, verticalGroupIndent } from "../../../app-sx";
 
@@ -20,7 +20,7 @@ const StringsGenerator = () => {
   };
 
   return (
-    <Container fluid>
+    <>
       <Text sx={asInputLabel} weight={700}>Character Set</Text>
       <Group direction="column" sx={verticalGroupIndent}>
         <Checkbox checked={upper} label="Uppercase alphabets" onChange={setUpper}/>
@@ -51,10 +51,12 @@ const StringsGenerator = () => {
         spellCheck="false"
         sx={defaultMargin}
         minRows={20}
+        variant="filled"
         label={<Text weight={700}>Output</Text>}
         value={output}
-        onChange={setOutput}/>
-    </Container>
+        onChange={setOutput}>
+      </Textarea>
+    </>
   );
 };
 
