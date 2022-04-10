@@ -66,10 +66,7 @@ const StringsGenerator = () => {
           min={1}
           max={20}
           onChange={setCount}/>
-        <Button
-          onClick={() => generateOutput()}>
-          Generate
-        </Button>
+        <Button onClick={() => generateOutput()}>Generate</Button>
       </Group>
       <Textarea
         spellCheck="false"
