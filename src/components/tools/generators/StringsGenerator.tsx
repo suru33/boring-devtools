@@ -1,5 +1,5 @@
 import { useInputState } from "@mantine/hooks";
-import { Button, Checkbox, Group, NumberInput, Text, Textarea, TextInput } from "@mantine/core";
+import { Button, Checkbox, Group, NumberInput, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { generateRandomStrings } from "../../../utils/string-utils";
 import { asInputLabel, defaultMargin, verticalGroupIndent } from "../../../app-sx";
 
@@ -22,7 +22,7 @@ const StringsGenerator = () => {
   return (
     <>
       <Text sx={asInputLabel} weight={700}>Character Set</Text>
-      <Group direction="column" sx={verticalGroupIndent}>
+      <Stack sx={verticalGroupIndent}>
         <Checkbox checked={upper} label="Uppercase alphabets" onChange={setUpper}/>
         <Checkbox checked={lower} label="Lowercase alphabets" onChange={setLower}/>
         <Checkbox checked={numeric} label="Digits" onChange={setNumeric}/>
@@ -31,7 +31,7 @@ const StringsGenerator = () => {
           <Checkbox checked={extras} label="Extra characters" onChange={setExtras}/>
           <TextInput placeholder="add more characters" sx={{ width: 300 }} value={pool} onChange={setPool}/>
         </Group>
-      </Group>
+      </Stack>
       <Group sx={defaultMargin} align="end">
         <NumberInput
           label={<Text weight={700}>Length</Text>}
