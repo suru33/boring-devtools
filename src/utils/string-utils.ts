@@ -6,7 +6,7 @@ const random = new Chance(Math.random);
 const upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
 const numericLetters = "0123456789";
-const symbolLetters = "!@#$%^&*()[]";
+const symbolLetters = "!@#$%^&*()[]=";
 
 export const generateRandomString = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, pool: string): string => {
   let charSet = "";
@@ -22,9 +22,10 @@ export const generateRandomString = (length: number, upper: boolean, lower: bool
   if (symbols) {
     charSet += symbolLetters;
   }
-  if (_.isEmpty(pool.trim())) {
-    charSet += pool;
-    _.uniq(charSet).join("");
+  const poolTrim = pool.trim();
+  if (!_.isEmpty(poolTrim)) {
+    charSet += poolTrim;
+    charSet = _.uniq(charSet).join("");
   }
   return random.string({ length: length, pool: charSet });
 };

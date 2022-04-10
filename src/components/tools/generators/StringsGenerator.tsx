@@ -13,7 +13,7 @@ const StringsGenerator = () => {
   const [ length, setLength ] = useState(20);
   const [ output, setOutput ] = useState("");
 
-  const generateOutput = (_: any) => {
+  const generateOutput = () => {
     const result = generateRandomStrings(length, upper, lower, numeric, symbols, extras ? pool : "", count);
     setOutput(result);
   };
@@ -36,7 +36,7 @@ const StringsGenerator = () => {
           onChange={(e) => setNumeric(e.currentTarget.checked)}/>
         <Checkbox
           checked={symbols}
-          label="Symbols (!@#$%^&*()[])"
+          label="Symbols (!@#$%^&*()[]=)"
           onChange={(e) => setSymbols(e.currentTarget.checked)}/>
         <Group>
           <Checkbox
@@ -52,10 +52,10 @@ const StringsGenerator = () => {
       </Group>
       <Group style={{ marginTop: 15 }}>
         <Text weight={700}>Length:</Text>
-        <NumberInput value={length} min={1} max={100} onChange={(val) => setLength(val)}/>
+        <NumberInput value={length} min={1} max={100} onChange={setLength}/>
         <Text weight={700}>Count: </Text>
-        <NumberInput value={count} min={1} max={20} onChange={(val) => setCount(val)}/>
-        <Button onClick={generateOutput}>Generate</Button>
+        <NumberInput value={count} min={1} max={20} onChange={setCount}/>
+        <Button onClick={() => generateOutput()}>Generate</Button>
       </Group>
       <Textarea
         style={{ marginTop: 15 }}

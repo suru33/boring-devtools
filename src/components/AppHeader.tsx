@@ -5,12 +5,11 @@ import AppLogo from "../resources/AppLogo";
 
 interface AppHeaderProps {
   colorScheme: ColorScheme,
-  titleFont: string,
   colorSchemeToggleFn: (value?: ColorScheme) => void
 }
 
 const AppHeader = (props: AppHeaderProps) => {
-  const { colorScheme, titleFont, colorSchemeToggleFn } = props;
+  const { colorScheme, colorSchemeToggleFn } = props;
   return <Header height={60}>
     <Group sx={{ height: "100%" }} px={20} position="apart">
       <Group>
@@ -19,8 +18,7 @@ const AppHeader = (props: AppHeaderProps) => {
             <AppLogo size={50} colorScheme={colorScheme}/>
             <Text
               size="xl"
-              weight={700}
-              style={{ fontFamily: titleFont }}>
+              weight={700}>
               boring-devtools
             </Text>
           </Group>

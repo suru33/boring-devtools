@@ -20,7 +20,7 @@ const App = () => {
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
   const appTheme = {
-    fontFamily: "'Noto Sans', sans-serif",
+    fontFamily: "'Courier Prime', monospace",
     fontFamilyMonospace: "'Courier Prime', monospace",
     colorScheme: colorScheme,
   };
@@ -33,7 +33,6 @@ const App = () => {
           header={
             <AppHeader
               colorScheme={colorScheme}
-              titleFont={appTheme.fontFamilyMonospace}
               colorSchemeToggleFn={toggleColorScheme}/>
           }
           navbar={
