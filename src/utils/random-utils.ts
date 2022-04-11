@@ -11,34 +11,23 @@ export const randomNumber = (value: number | { min: number; max: number; }): num
   return typeof value === "number" ? fn(0, value) : fn(value.min, value.max);
 };
 
-export const chooseRandom = <T>(items: string | T[]): string | T => items[randomNumber(items.length)];
+export const chooseRandom = <T>(array: string | T[]): string | T => array[randomNumber(array.length)];
 
-const randomString = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, pool: string): string => {
-  let charSet = "";
-  if (upper) {
-    charSet += upperCaseLetters;
-  }
-  if (lower) {
-    charSet += lowerCaseLetters;
-  }
-  if (numeric) {
-    charSet += numericLetters;
-  }
-  if (symbols) {
-    charSet += symbolLetters;
-  }
-  const poolTrim = pool.trim();
-  if (!_.isEmpty(poolTrim)) {
-    charSet += poolTrim;
-    charSet = _.uniq(charSet).join("");
-  }
+export const randomString = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, extraChars: string): string => {
+  let set = "";
+  set += upper ? upperCaseLetters : "";
+  set += lower ? lowerCaseLetters : "";
+  set += numeric ? numericLetters : "";
+  set += symbols ? symbolLetters : "";
+  set = _.isEmpty(extraChars.trim()) ? set : _.uniq(set + extraChars.trim()).join("");
+
   return _.range(length)
-    .map(() => chooseRandom(charSet))
+    .map(() => chooseRandom(set))
     .join("");
 };
 
-export const randomStrings = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, pool: string, count: number): string => {
+export const randomStrings = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, extraChars: string, count: number): string => {
   return _.range(count)
-    .map(() => randomString(length, upper, lower, numeric, symbols, pool))
+    .map(() => randomString(length, upper, lower, numeric, symbols, extraChars))
     .join("\n");
 };
