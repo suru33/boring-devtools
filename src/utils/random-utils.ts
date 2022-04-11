@@ -1,14 +1,12 @@
 import * as _ from "lodash";
-import Chance from "chance";
-
-const random = new Chance(Math.random);
+import { faker } from "@faker-js/faker";
 
 const upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
 const numericLetters = "0123456789";
 const symbolLetters = "!@#$%^&*()[]=";
 
-export const generateRandomString = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, pool: string): string => {
+const randomString = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, pool: string): string => {
   let charSet = "";
   if (upper) {
     charSet += upperCaseLetters;
@@ -27,9 +25,13 @@ export const generateRandomString = (length: number, upper: boolean, lower: bool
     charSet += poolTrim;
     charSet = _.uniq(charSet).join("");
   }
-  return random.string({ length: length, pool: charSet });
+  return _.range(length)
+    .map(() => charSet[faker.datatype.number(charSet.length - 1)])
+    .join("");
 };
 
-export const generateRandomStrings = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, pool: string, count: number): string => {
-  return _.range(count).map(() => generateRandomString(length, upper, lower, numeric, symbols, pool)).join("\n");
+export const randomStrings = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, pool: string, count: number): string => {
+  return _.range(count)
+    .map(() => randomString(length, upper, lower, numeric, symbols, pool))
+    .join("\n");
 };

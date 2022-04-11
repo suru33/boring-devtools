@@ -1,7 +1,7 @@
 import { useInputState } from "@mantine/hooks";
 import { Button, Checkbox, Group, NumberInput, Stack, Text, Textarea, TextInput } from "@mantine/core";
-import { generateRandomStrings } from "../../../utils/string-utils";
-import { asInputLabel, defaultMargin, verticalGroupIndent } from "../../../app-sx";
+import { randomStrings } from "../../../utils/random-utils";
+import { asInputLabel, defaultMargin, textAreaDefaultRows, verticalGroupIndent } from "../../../app-sx";
 
 const StringsGenerator = () => {
   const [ upper, setUpper ] = useInputState(true);
@@ -15,7 +15,7 @@ const StringsGenerator = () => {
   const [ output, setOutput ] = useInputState("");
 
   const generateOutput = () => {
-    const result = generateRandomStrings(length, upper, lower, numeric, symbols, extras ? pool : "", count);
+    const result = randomStrings(length, upper, lower, numeric, symbols, extras ? pool : "", count);
     setOutput(result);
   };
 
@@ -50,7 +50,7 @@ const StringsGenerator = () => {
       <Textarea
         spellCheck="false"
         sx={defaultMargin}
-        minRows={20}
+        minRows={textAreaDefaultRows}
         variant="filled"
         label={<Text weight={700}>Output</Text>}
         value={output}

@@ -11,3 +11,5 @@ export const defaultMargin: Sx = {
 export const verticalGroupIndent: Sx = {
   marginLeft: 20
 };
+
+export const textAreaDefaultRows = 15;
