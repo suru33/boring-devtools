@@ -64,3 +64,9 @@ export const randomIPs = (version: IPv, count: number): string => {
   }
   return "";
 };
+
+export const randomUUIDs = (count: number): string => {
+  return _.range(count)
+    .map(() => faker.datatype.uuid())
+    .join(NEW_LINE);
+};
