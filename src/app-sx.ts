@@ -13,3 +13,5 @@ export const verticalGroupIndent: Sx = {
 };
 
 export const textAreaDefaultRows = 15;
+
+export const textAreaDefaultRowsSmall = 10;
