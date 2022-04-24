@@ -1,9 +1,10 @@
-import { useInputState } from "@mantine/hooks";
-import { EMPTY_STRING } from "../../../constants";
-import { StringCase } from "../../../types";
-import { Radio, RadioGroup, SimpleGrid, Text, Textarea, Tooltip } from "@mantine/core";
-import { defaultMargin, defaultTooltipWidth, textAreaDefaultRows } from "../../../app-sx";
 import { ChangeEvent } from "react";
+import { useInputState } from "@mantine/hooks";
+import { Radio, RadioGroup, SimpleGrid, Text, Textarea, Tooltip } from "@mantine/core";
+import ClipboardLabel from "../../ClipboardLabel";
+import { EMPTY_STRING } from "../../../constants";
+import { defaultMargin, defaultTooltipWidth, textAreaDefaultRowsBig } from "../../../app-sx";
+import { StringCase } from "../../../types";
 import { changeCase } from "../../../utils/string-utils";
 
 const StringCaseConverter = () => {
@@ -62,23 +63,20 @@ const StringCaseConverter = () => {
       <SimpleGrid sx={defaultMargin} cols={2}>
         <Textarea
           spellCheck="false"
-          minRows={textAreaDefaultRows}
+          minRows={textAreaDefaultRowsBig}
           label={<Text weight={700}>Input</Text>}
           value={input}
-          onChange={onInputChanged}>
-        </Textarea>
+          onChange={onInputChanged}/>
         <Textarea
           readOnly
           spellCheck="false"
-          minRows={textAreaDefaultRows}
+          minRows={textAreaDefaultRowsBig}
           variant="filled"
-          label={<Text weight={700}>Output</Text>}
-          value={output}>
-        </Textarea>
+          label={<ClipboardLabel label="Output" clipboardData={output}/>}
+          value={output}/>
       </SimpleGrid>
     </>
   );
 };
 
 export default StringCaseConverter;
-    

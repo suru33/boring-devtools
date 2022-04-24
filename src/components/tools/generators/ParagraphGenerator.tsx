@@ -3,6 +3,7 @@ import { EMPTY_STRING } from "../../../constants";
 import { randomParagraphs } from "../../../utils/random-utils";
 import { Button, Group, NumberInput, Text, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
+import ClipboardLabel from "../../ClipboardLabel";
 
 const ParagraphGenerator = () => {
 
@@ -26,14 +27,13 @@ const ParagraphGenerator = () => {
         <Button onClick={() => generateOutput()}>Generate</Button>
       </Group>
       <Textarea
+        readOnly
         spellCheck="false"
         sx={defaultMargin}
         minRows={textAreaDefaultRows}
         variant="filled"
-        label={<Text weight={700}>Output</Text>}
-        value={output}
-        onChange={setOutput}>
-      </Textarea>
+        label={<ClipboardLabel label="Output" clipboardData={output}/>}
+        value={output}/>
     </>
   );
 };

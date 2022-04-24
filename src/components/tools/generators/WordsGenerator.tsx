@@ -3,6 +3,7 @@ import { Button, Group, NumberInput, Text, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import { randomWords } from "../../../utils/random-utils";
 import { EMPTY_STRING } from "../../../constants";
+import ClipboardLabel from "../../ClipboardLabel";
 
 const WordsGenerator = () => {
   const [ count, setCount ] = useInputState(5);
@@ -25,14 +26,13 @@ const WordsGenerator = () => {
         <Button onClick={() => generateOutput()}>Generate</Button>
       </Group>
       <Textarea
+        readOnly
         spellCheck="false"
         sx={defaultMargin}
         minRows={textAreaDefaultRows}
         variant="filled"
-        label={<Text weight={700}>Output</Text>}
-        value={output}
-        onChange={setOutput}>
-      </Textarea>
+        label={<ClipboardLabel label="Output" clipboardData={output}/>}
+        value={output}/>
     </>
   );
 };
