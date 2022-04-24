@@ -6,6 +6,7 @@ import { EMPTY_STRING } from "../../../constants";
 import { defaultMargin, defaultTooltipWidth, textAreaDefaultRowsBig } from "../../../app-sx";
 import { StringCase } from "../../../types";
 import { changeCase } from "../../../utils/string-utils";
+import ComponentLabel from "../../ComponentLabel";
 
 const StringCaseConverter = () => {
 
@@ -37,7 +38,7 @@ const StringCaseConverter = () => {
     <>
       {/*https://lodash.com/docs/4.17.15#camelCase*/}
       <RadioGroup
-        label={<Text weight={700}>Select string case</Text>}
+        label={<ComponentLabel text="String case"/>}
         onChange={onStringCaseChanged}
         value={stringCase}>
         <Radio value="lower"
@@ -64,7 +65,7 @@ const StringCaseConverter = () => {
         <Textarea
           spellCheck="false"
           minRows={textAreaDefaultRowsBig}
-          label={<Text weight={700}>Input</Text>}
+          label={<ComponentLabel text="Input"/>}
           value={input}
           onChange={onInputChanged}/>
         <Textarea
@@ -72,7 +73,7 @@ const StringCaseConverter = () => {
           spellCheck="false"
           minRows={textAreaDefaultRowsBig}
           variant="filled"
-          label={<ClipboardLabel label="Output" clipboardData={output}/>}
+          label={<ClipboardLabel title="Output" clipboardData={output}/>}
           value={output}/>
       </SimpleGrid>
     </>

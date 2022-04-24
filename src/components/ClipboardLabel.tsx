@@ -1,21 +1,32 @@
 import { useClipboard } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
-import { ActionIcon, Group, Text, Tooltip } from "@mantine/core";
+import { ActionIcon, Group, Tooltip } from "@mantine/core";
 import { clipboardIcon } from "../resources/icons";
+import { EMPTY_STRING } from "../constants";
+import ComponentLabel from "./ComponentLabel";
 
-const ClipboardLabel = (props: { label: string, clipboardData: string }) => {
+const ClipboardLabel = (props: { title: string, clipboardData: string }) => {
   const clipboard = useClipboard({ timeout: 500 });
 
   const onClipboardClicked = () => {
-    clipboard.copy(props.clipboardData);
-    showNotification({
-      message: `${props.label} text copied to clipboard!`,
-      autoClose: 2000
-    });
+    if (props.clipboardData === EMPTY_STRING) {
+      showNotification({
+        message: "Nothing to copy!",
+        autoClose: 2000,
+        color: "orange"
+      });
+    } else {
+      clipboard.copy(props.clipboardData);
+      showNotification({
+        message: `👍 ${props.title} text copied to clipboard!`,
+        autoClose: 2000,
+        color: "green"
+      });
+    }
   };
 
   return <Group spacing="xs">
-    <Text weight={700}>{props.label}</Text>
+    <ComponentLabel text={props.title}/>
     <Tooltip label={"Copy"}>
       <ActionIcon variant="hover" color="gray" onClick={() => onClipboardClicked()}>
         {clipboardIcon}

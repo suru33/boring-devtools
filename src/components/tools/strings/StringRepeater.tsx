@@ -1,10 +1,11 @@
 import { ChangeEvent } from "react";
 import { defaultMargin, textAreaDefaultRowsBig } from "../../../app-sx";
-import { Group, NumberInput, SimpleGrid, Text, Textarea } from "@mantine/core";
+import { Group, NumberInput, SimpleGrid, Textarea } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import { EMPTY_STRING } from "../../../constants";
 import { repeat } from "../../../utils/string-utils";
 import ClipboardLabel from "../../ClipboardLabel";
+import ComponentLabel from "../../ComponentLabel";
 
 const StringRepeater = () => {
   const [ times, setTimes ] = useInputState(3);
@@ -30,7 +31,7 @@ const StringRepeater = () => {
     <>
       <Group sx={defaultMargin} align="end">
         <NumberInput
-          label={<Text weight={700}>How many times?</Text>}
+          label={<ComponentLabel text="How many times?"/>}
           value={times}
           min={1}
           max={50}
@@ -40,7 +41,7 @@ const StringRepeater = () => {
         <Textarea
           spellCheck="false"
           minRows={textAreaDefaultRowsBig}
-          label={<Text weight={700}>Input</Text>}
+          label={<ComponentLabel text="Input"/>}
           value={input}
           onChange={onInputChanged}/>
         <Textarea
@@ -48,7 +49,7 @@ const StringRepeater = () => {
           spellCheck="false"
           minRows={textAreaDefaultRowsBig}
           variant="filled"
-          label={<ClipboardLabel label="Output" clipboardData={output}/>}
+          label={<ClipboardLabel title="Output" clipboardData={output}/>}
           value={output}/>
       </SimpleGrid>
     </>

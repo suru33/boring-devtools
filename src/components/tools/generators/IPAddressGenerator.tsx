@@ -2,9 +2,10 @@ import { IPv } from "../../../types";
 import { useInputState } from "@mantine/hooks";
 import { EMPTY_STRING } from "../../../constants";
 import { randomIPs } from "../../../utils/random-utils";
-import { Button, Group, NumberInput, Radio, RadioGroup, Text, Textarea } from "@mantine/core";
+import { Button, Group, NumberInput, Radio, RadioGroup, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import ClipboardLabel from "../../ClipboardLabel";
+import ComponentLabel from "../../ComponentLabel";
 
 const IPAddressGenerator = () => {
 
@@ -20,7 +21,7 @@ const IPAddressGenerator = () => {
   return (
     <>
       <RadioGroup
-        label={<Text weight={700}>Select IP version</Text>}
+        label={<ComponentLabel text="IP version?"/>}
         onChange={setVersion}
         value={version}>
         <Radio value="v4" label="IPv4"/>
@@ -29,7 +30,7 @@ const IPAddressGenerator = () => {
 
       <Group align="end" sx={defaultMargin}>
         <NumberInput
-          label={<Text weight={700}>Count</Text>}
+          label={<ComponentLabel text="How many?"/>}
           value={count}
           min={1}
           max={20}
@@ -42,7 +43,7 @@ const IPAddressGenerator = () => {
         sx={defaultMargin}
         minRows={textAreaDefaultRows}
         variant="filled"
-        label={<ClipboardLabel label="Output" clipboardData={output}/>}
+        label={<ClipboardLabel title="Output" clipboardData={output}/>}
         value={output}/>
     </>
   );

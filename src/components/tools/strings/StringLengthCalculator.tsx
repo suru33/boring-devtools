@@ -3,6 +3,7 @@ import { Checkbox, Text, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import { useInputState } from "@mantine/hooks";
 import { EMPTY_STRING } from "../../../constants";
+import ComponentLabel from "../../ComponentLabel";
 
 const StringLengthCalculator = () => {
   const [ input, setInput ] = useInputState(EMPTY_STRING);
@@ -20,7 +21,7 @@ const StringLengthCalculator = () => {
       <Textarea
         spellCheck="false"
         minRows={textAreaDefaultRows}
-        label={<Text weight={700}>Input</Text>}
+        label={<ComponentLabel text="Input"/>}
         value={input}
         onChange={onTextChange}>
       </Textarea>
