@@ -1,9 +1,14 @@
 import * as _ from "lodash";
-
-const upperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
-const numericLetters = "0123456789";
-const symbolLetters = "!@#$%^&*()[]=";
+import faker from "@faker-js/faker";
+import {
+  LOWERCASE_LETTERS,
+  NUMERIC_LETTERS,
+  SYMBOL_LETTERS,
+  UPPERCASE_LETTERS,
+  NO_SPACE,
+  NEW_LINE,
+  EMPTY_STRING
+} from "../constants";
 
 export const randomNumber = (value: number | { min: number; max: number; }): number => {
   const fn = (a: number, b: number) => Math.floor(Math.random() * (b - a)) + a;
@@ -14,20 +19,26 @@ export const randomNumber = (value: number | { min: number; max: number; }): num
 export const chooseRandom = <T>(array: string | T[]): string | T => array[randomNumber(array.length)];
 
 export const randomString = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, extraChars: string): string => {
-  let set = "";
-  set += upper ? upperCaseLetters : "";
-  set += lower ? lowerCaseLetters : "";
-  set += numeric ? numericLetters : "";
-  set += symbols ? symbolLetters : "";
-  set = _.isEmpty(extraChars.trim()) ? set : _.uniq(set + extraChars.trim()).join("");
+  let set = EMPTY_STRING;
+  set += upper ? UPPERCASE_LETTERS : EMPTY_STRING;
+  set += lower ? LOWERCASE_LETTERS : EMPTY_STRING;
+  set += numeric ? NUMERIC_LETTERS : EMPTY_STRING;
+  set += symbols ? SYMBOL_LETTERS : EMPTY_STRING;
+  set = _.isEmpty(extraChars.trim()) ? set : _.uniq(set + extraChars.trim()).join(NO_SPACE);
 
   return _.range(length)
     .map(() => chooseRandom(set))
-    .join("");
+    .join(NO_SPACE);
 };
 
 export const randomStrings = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, extraChars: string, count: number): string => {
   return _.range(count)
     .map(() => randomString(length, upper, lower, numeric, symbols, extraChars))
-    .join("\n");
+    .join(NEW_LINE);
+};
+
+export const randomWords = (count: number): string => {
+  return _.range(count)
+    .map(() => faker.word.noun())
+    .join(NEW_LINE);
 };

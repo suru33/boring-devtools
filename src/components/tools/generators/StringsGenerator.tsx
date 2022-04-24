@@ -2,6 +2,7 @@ import { useInputState } from "@mantine/hooks";
 import { Button, Checkbox, Group, NumberInput, Stack, Text, Textarea, TextInput } from "@mantine/core";
 import { randomStrings } from "../../../utils/random-utils";
 import { asInputLabel, defaultMargin, textAreaDefaultRows, verticalGroupIndent } from "../../../app-sx";
+import { EMPTY_STRING } from "../../../constants";
 
 const StringsGenerator = () => {
   const [ upper, setUpper ] = useInputState(true);
@@ -9,13 +10,13 @@ const StringsGenerator = () => {
   const [ numeric, setNumeric ] = useInputState(true);
   const [ symbols, setSymbols ] = useInputState(false);
   const [ extras, setExtras ] = useInputState(false);
-  const [ pool, setPool ] = useInputState("");
+  const [ pool, setPool ] = useInputState(EMPTY_STRING);
   const [ count, setCount ] = useInputState(5);
   const [ length, setLength ] = useInputState(20);
-  const [ output, setOutput ] = useInputState("");
+  const [ output, setOutput ] = useInputState(EMPTY_STRING);
 
   const generateOutput = () => {
-    const result = randomStrings(length, upper, lower, numeric, symbols, extras ? pool : "", count);
+    const result = randomStrings(length, upper, lower, numeric, symbols, extras ? pool : EMPTY_STRING, count);
     setOutput(result);
   };
 
