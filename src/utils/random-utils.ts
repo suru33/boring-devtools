@@ -1,3 +1,4 @@
+import { IPv } from "../types";
 import * as _ from "lodash";
 import faker from "@faker-js/faker";
 import {
@@ -49,4 +50,17 @@ export const randomSentences = (count: number): string => {
 
 export const randomParagraphs = (count: number): string => {
   return faker.lorem.paragraphs(count);
+};
+
+export const randomIPs = (version: IPv, count: number): string => {
+  if (version === "v4") {
+    return _.range(count)
+      .map(() => faker.internet.ipv4())
+      .join(NEW_LINE);
+  } else if (version === "v6") {
+    return _.range(count)
+      .map(() => faker.internet.ipv6())
+      .join(NEW_LINE);
+  }
+  return "";
 };
