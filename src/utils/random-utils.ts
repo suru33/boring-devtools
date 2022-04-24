@@ -7,8 +7,7 @@ import {
   SYMBOL_LETTERS,
   UPPERCASE_LETTERS,
   NO_SPACE,
-  NEW_LINE,
-  EMPTY_STRING
+  NEW_LINE
 } from "../constants";
 
 export const randomNumber = (value: number | { min: number; max: number; }): number => {
@@ -20,15 +19,15 @@ export const randomNumber = (value: number | { min: number; max: number; }): num
 export const chooseRandom = <T>(array: T[]): T => array[randomNumber(array.length)];
 
 export const randomString = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, extraChars: string): string => {
-  let set = EMPTY_STRING;
-  set += upper ? UPPERCASE_LETTERS : EMPTY_STRING;
-  set += lower ? LOWERCASE_LETTERS : EMPTY_STRING;
-  set += numeric ? NUMERIC_LETTERS : EMPTY_STRING;
-  set += symbols ? SYMBOL_LETTERS : EMPTY_STRING;
-  set = _.isEmpty(extraChars.trim()) ? set : _.uniq(set + extraChars.trim()).join(NO_SPACE);
+  let charSet: string[] = [];
+  charSet = upper ? [ ...charSet, ...UPPERCASE_LETTERS ] : charSet;
+  charSet = lower ? [ ...charSet, ...LOWERCASE_LETTERS ] : charSet;
+  charSet = numeric ? [ ...charSet, ...NUMERIC_LETTERS ] : charSet;
+  charSet = symbols ? [ ...charSet, ...SYMBOL_LETTERS ] : charSet;
+  charSet = _.isEmpty(extraChars.trim()) ? charSet: _.uniq([ ...charSet, ...extraChars.trim() ]);
 
   return _.range(length)
-    .map(() => chooseRandom<string>(Array.from(set)))
+    .map(() => chooseRandom<string>(charSet))
     .join(NO_SPACE);
 };
 
@@ -53,16 +52,10 @@ export const randomParagraphs = (count: number): string => {
 };
 
 export const randomIPs = (version: IPv, count: number): string => {
-  if (version === "v4") {
-    return _.range(count)
-      .map(() => faker.internet.ipv4())
-      .join(NEW_LINE);
-  } else if (version === "v6") {
-    return _.range(count)
-      .map(() => faker.internet.ipv6())
-      .join(NEW_LINE);
-  }
-  return "";
+  const fn = version === "v4" ? faker.internet.ipv4 : faker.internet.ipv6;
+  return _.range(count)
+    .map(() => fn())
+    .join(NEW_LINE);
 };
 
 export const randomUUIDs = (count: number): string => {
