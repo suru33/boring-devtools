@@ -16,7 +16,7 @@ export const randomNumber = (value: number | { min: number; max: number; }): num
   return typeof value === "number" ? fn(0, value) : fn(value.min, value.max);
 };
 
-export const chooseRandom = <T>(array: string | T[]): string | T => array[randomNumber(array.length)];
+export const chooseRandom = <T>(array: T[]): T => array[randomNumber(array.length)];
 
 export const randomString = (length: number, upper: boolean, lower: boolean, numeric: boolean, symbols: boolean, extraChars: string): string => {
   let set = EMPTY_STRING;
@@ -27,7 +27,7 @@ export const randomString = (length: number, upper: boolean, lower: boolean, num
   set = _.isEmpty(extraChars.trim()) ? set : _.uniq(set + extraChars.trim()).join(NO_SPACE);
 
   return _.range(length)
-    .map(() => chooseRandom(set))
+    .map(() => chooseRandom<string>(Array.from(set)))
     .join(NO_SPACE);
 };
 
@@ -37,8 +37,19 @@ export const randomStrings = (length: number, upper: boolean, lower: boolean, nu
     .join(NEW_LINE);
 };
 
+type WordFunction = (length?: number) => string;
+
+const wordCategories: WordFunction[] = [
+  faker.word.adjective,
+  faker.word.adverb,
+  faker.word.interjection,
+  faker.word.noun,
+  faker.word.preposition,
+  faker.word.verb
+];
+
 export const randomWords = (count: number): string => {
   return _.range(count)
-    .map(() => faker.word.noun())
+    .map(() => chooseRandom<WordFunction>(wordCategories)())
     .join(NEW_LINE);
 };
