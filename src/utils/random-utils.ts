@@ -1,14 +1,7 @@
 import { IPv } from "../types";
 import * as _ from "lodash";
 import faker from "@faker-js/faker";
-import {
-  LOWERCASE_LETTERS,
-  NUMERIC_LETTERS,
-  SYMBOL_LETTERS,
-  UPPERCASE_LETTERS,
-  NO_SPACE,
-  NEW_LINE
-} from "../constants";
+import { LOWERCASE_LETTERS, NEW_LINE, NO_SPACE, NUMERIC_LETTERS, SYMBOL_LETTERS, UPPERCASE_LETTERS } from "../constants";
 
 export const randomNumber = (value: number | { min: number; max: number; }): number => {
   const fn = (a: number, b: number) => Math.floor(Math.random() * (b - a)) + a;

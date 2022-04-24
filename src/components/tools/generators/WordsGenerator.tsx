@@ -1,9 +1,10 @@
 import { useInputState } from "@mantine/hooks";
-import { Button, Group, NumberInput, Text, Textarea } from "@mantine/core";
+import { Button, Group, NumberInput, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import { randomWords } from "../../../utils/random-utils";
 import { EMPTY_STRING } from "../../../constants";
 import ClipboardLabel from "../../ClipboardLabel";
+import ComponentLabel from "../../ComponentLabel";
 
 const WordsGenerator = () => {
   const [ count, setCount ] = useInputState(5);
@@ -18,7 +19,7 @@ const WordsGenerator = () => {
     <>
       <Group align="end">
         <NumberInput
-          label={<Text weight={700}>Count</Text>}
+          label={<ComponentLabel text="How many?"/>}
           value={count}
           min={1}
           max={20}
@@ -31,7 +32,7 @@ const WordsGenerator = () => {
         sx={defaultMargin}
         minRows={textAreaDefaultRows}
         variant="filled"
-        label={<ClipboardLabel label="Output" clipboardData={output}/>}
+        label={<ClipboardLabel title="Output" clipboardData={output}/>}
         value={output}/>
     </>
   );

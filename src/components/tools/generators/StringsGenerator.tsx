@@ -1,9 +1,10 @@
 import { useInputState } from "@mantine/hooks";
-import { Button, Checkbox, Group, NumberInput, Stack, Text, Textarea, TextInput } from "@mantine/core";
+import { Button, Checkbox, Group, NumberInput, Stack, Textarea, TextInput } from "@mantine/core";
 import { randomStrings } from "../../../utils/random-utils";
-import { asInputLabel, defaultMargin, textAreaDefaultRows, verticalGroupIndent } from "../../../app-sx";
+import { defaultMargin, textAreaDefaultRows, verticalGroupIndent } from "../../../app-sx";
 import { EMPTY_STRING } from "../../../constants";
 import ClipboardLabel from "../../ClipboardLabel";
+import ComponentLabel from "../../ComponentLabel";
 
 const StringsGenerator = () => {
   const [ upper, setUpper ] = useInputState(true);
@@ -23,7 +24,7 @@ const StringsGenerator = () => {
 
   return (
     <>
-      <Text sx={asInputLabel} weight={700}>Character Set</Text>
+      <ComponentLabel text="Character Set"/>
       <Stack sx={verticalGroupIndent}>
         <Checkbox checked={upper} label="Uppercase alphabets" onChange={setUpper}/>
         <Checkbox checked={lower} label="Lowercase alphabets" onChange={setLower}/>
@@ -36,13 +37,13 @@ const StringsGenerator = () => {
       </Stack>
       <Group sx={defaultMargin} align="end">
         <NumberInput
-          label={<Text weight={700}>Length</Text>}
+          label={<ComponentLabel text="Length"/>}
           value={length}
           min={1}
           max={100}
           onChange={setLength}/>
         <NumberInput
-          label={<Text weight={700}>Count</Text>}
+          label={<ComponentLabel text="How many?"/>}
           value={count}
           min={1}
           max={20}
@@ -55,7 +56,7 @@ const StringsGenerator = () => {
         sx={defaultMargin}
         minRows={textAreaDefaultRows}
         variant="filled"
-        label={<ClipboardLabel label="Output" clipboardData={output}/>}
+        label={<ClipboardLabel title="Output" clipboardData={output}/>}
         value={output}/>
     </>
   );
