@@ -3,6 +3,7 @@ import { Button, Checkbox, Group, NumberInput, Stack, Text, Textarea, TextInput 
 import { randomStrings } from "../../../utils/random-utils";
 import { asInputLabel, defaultMargin, textAreaDefaultRows, verticalGroupIndent } from "../../../app-sx";
 import { EMPTY_STRING } from "../../../constants";
+import ClipboardLabel from "../../ClipboardLabel";
 
 const StringsGenerator = () => {
   const [ upper, setUpper ] = useInputState(true);
@@ -49,14 +50,13 @@ const StringsGenerator = () => {
         <Button onClick={() => generateOutput()}>Generate</Button>
       </Group>
       <Textarea
+        readOnly
         spellCheck="false"
         sx={defaultMargin}
         minRows={textAreaDefaultRows}
         variant="filled"
-        label={<Text weight={700}>Output</Text>}
-        value={output}
-        onChange={setOutput}>
-      </Textarea>
+        label={<ClipboardLabel label="Output" clipboardData={output}/>}
+        value={output}/>
     </>
   );
 };

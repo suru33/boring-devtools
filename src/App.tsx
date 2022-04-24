@@ -15,6 +15,7 @@ import { allTools } from "./components/tools";
 import NavbarLinks from "./components/NavbarLinks";
 import AppHeader from "./components/AppHeader";
 import ToolContainer from "./components/ToolContainer";
+import { NotificationsProvider } from "@mantine/notifications";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useState<ColorScheme>("light");
@@ -31,51 +32,53 @@ const App = () => {
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={appTheme} withGlobalStyles>
-        <AppShell
-          fixed
-          header={
-            <AppHeader
-              colorScheme={colorScheme}
-              colorSchemeToggleFn={toggleColorScheme}/>
-          }
-          navbar={
-            <Navbar width={{ base: 350 }}>
-              <Navbar.Section grow component={ScrollArea}>
-                <Accordion multiple>
-                  {
-                    allTools.map((tc, i) => {
-                      return <Accordion.Item key={`${i}-${tc.label}`} label={tc.label}>
-                        <Box>
-                          <NavbarLinks key={i} parentPath={tc.path} tools={tc.tools}/>
-                        </Box>
-                      </Accordion.Item>;
-                    })
-                  }
-                </Accordion>
-              </Navbar.Section>
-            </Navbar>
-          }>
-          <Routes>
-            <Route path="/">
-              <Route index element={<Navigate to="home" replace/>}/>
-              <Route path="home" element={<Home/>}/>
-              {
-                allTools.map((tc, i) =>
-                  <Route key={`${i}-${tc.path}`} path={tc.path}>
+        <NotificationsProvider>
+          <AppShell
+            fixed
+            header={
+              <AppHeader
+                colorScheme={colorScheme}
+                colorSchemeToggleFn={toggleColorScheme}/>
+            }
+            navbar={
+              <Navbar width={{ base: 350 }}>
+                <Navbar.Section grow component={ScrollArea}>
+                  <Accordion multiple>
                     {
-                      tc.tools.map((t) =>
-                        <Route
-                          key={`${tc.path}-${t.path}`}
-                          path={t.path}
-                          element={<ToolContainer title={t.label}>{t.component}</ToolContainer>}
-                        />)
+                      allTools.map((tc, i) => {
+                        return <Accordion.Item key={`${i}-${tc.label}`} label={tc.label}>
+                          <Box>
+                            <NavbarLinks key={i} parentPath={tc.path} tools={tc.tools}/>
+                          </Box>
+                        </Accordion.Item>;
+                      })
                     }
-                  </Route>
-                )
-              }
-            </Route>
-          </Routes>
-        </AppShell>
+                  </Accordion>
+                </Navbar.Section>
+              </Navbar>
+            }>
+            <Routes>
+              <Route path="/">
+                <Route index element={<Navigate to="home" replace/>}/>
+                <Route path="home" element={<Home/>}/>
+                {
+                  allTools.map((tc, i) =>
+                    <Route key={`${i}-${tc.path}`} path={tc.path}>
+                      {
+                        tc.tools.map((t) =>
+                          <Route
+                            key={`${tc.path}-${t.path}`}
+                            path={t.path}
+                            element={<ToolContainer title={t.label}>{t.component}</ToolContainer>}
+                          />)
+                      }
+                    </Route>
+                  )
+                }
+              </Route>
+            </Routes>
+          </AppShell>
+        </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

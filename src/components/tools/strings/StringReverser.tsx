@@ -1,9 +1,10 @@
 import { ChangeEvent } from "react";
 import { useInputState } from "@mantine/hooks";
-import { Text, Textarea } from "@mantine/core";
-import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
+import { SimpleGrid, Text, Textarea } from "@mantine/core";
+import { defaultMargin, textAreaDefaultRowsBig } from "../../../app-sx";
 import { EMPTY_STRING } from "../../../constants";
 import { reverse } from "../../../utils/string-utils";
+import ClipboardLabel from "../../ClipboardLabel";
 
 const StringReverser = () => {
   const [ input, setInput ] = useInputState(EMPTY_STRING);
@@ -16,25 +17,21 @@ const StringReverser = () => {
   };
 
   return (
-    <>
+    <SimpleGrid cols={2} sx = {defaultMargin}>
       <Textarea
         spellCheck="false"
-        minRows={textAreaDefaultRows}
+        minRows={textAreaDefaultRowsBig}
         label={<Text weight={700}>Input</Text>}
         value={input}
-        onChange={onTextChange}>
-      </Textarea>
+        onChange={onTextChange}/>
       <Textarea
         readOnly
-        sx = {defaultMargin}
         spellCheck="false"
         variant="filled"
-        minRows={textAreaDefaultRows}
-        label={<Text weight={700}>Output</Text>}
-        value={output}>
-      </Textarea>
-
-    </>
+        minRows={textAreaDefaultRowsBig}
+        label={<ClipboardLabel label="Output" clipboardData={output}/>}
+        value={output}/>
+    </SimpleGrid>
   );
 };
 

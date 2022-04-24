@@ -4,6 +4,7 @@ import { Group, NumberInput, SimpleGrid, Text, Textarea } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import { EMPTY_STRING } from "../../../constants";
 import { repeat } from "../../../utils/string-utils";
+import ClipboardLabel from "../../ClipboardLabel";
 
 const StringRepeater = () => {
   const [ times, setTimes ] = useInputState(3);
@@ -41,16 +42,14 @@ const StringRepeater = () => {
           minRows={textAreaDefaultRowsBig}
           label={<Text weight={700}>Input</Text>}
           value={input}
-          onChange={onInputChanged}>
-        </Textarea>
+          onChange={onInputChanged}/>
         <Textarea
           readOnly
           spellCheck="false"
           minRows={textAreaDefaultRowsBig}
           variant="filled"
-          label={<Text weight={700}>Output</Text>}
-          value={output}>
-        </Textarea>
+          label={<ClipboardLabel label="Output" clipboardData={output}/>}
+          value={output}/>
       </SimpleGrid>
     </>
   );
