@@ -5,6 +5,7 @@ import {
   ArrowsSort,
   CalendarStats,
   CalendarTime,
+  Clipboard,
   Code,
   Id,
   LetterCase,
@@ -41,4 +42,6 @@ export const navbarIcons = {
   dateDifference: <CalendarStats size={navbarIconSize}/>,
   timeZone: <WorldLongitude size={navbarIconSize}/>,
 };
+
+export const clipboardIcon = <Clipboard size={16}/>;
 
