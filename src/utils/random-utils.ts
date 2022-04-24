@@ -37,19 +37,12 @@ export const randomStrings = (length: number, upper: boolean, lower: boolean, nu
     .join(NEW_LINE);
 };
 
-type WordFunction = (length?: number) => string;
-
-const wordCategories: WordFunction[] = [
-  faker.word.adjective,
-  faker.word.adverb,
-  faker.word.interjection,
-  faker.word.noun,
-  faker.word.preposition,
-  faker.word.verb
-];
-
 export const randomWords = (count: number): string => {
   return _.range(count)
-    .map(() => chooseRandom<WordFunction>(wordCategories)())
+    .map(() => faker.random.word())
     .join(NEW_LINE);
+};
+
+export const randomSentences = (count: number): string => {
+  return faker.lorem.sentences(count, NEW_LINE);
 };
