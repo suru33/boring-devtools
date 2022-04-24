@@ -46,3 +46,7 @@ export const randomWords = (count: number): string => {
 export const randomSentences = (count: number): string => {
   return faker.lorem.sentences(count, NEW_LINE);
 };
+
+export const randomParagraphs = (count: number): string => {
+  return faker.lorem.paragraphs(count);
+};
