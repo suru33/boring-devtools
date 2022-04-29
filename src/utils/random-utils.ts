@@ -10,13 +10,13 @@ import {
   UPPERCASE_LETTERS
 } from "../constants";
 
-export const randomNumber = (value: number | { min: number; max: number; }): number => {
+export const randomInt = (value: number | { min: number; max: number; }): number => {
   const fn = (a: number, b: number) => Math.floor(Math.random() * (b - a)) + a;
 
   return typeof value === "number" ? fn(0, value) : fn(value.min, value.max);
 };
 
-export const chooseRandom = <T>(array: T[]): T => array[randomNumber(array.length)];
+export const chooseRandom = <T>(array: T[]): T => array[randomInt(array.length)];
 
 export const randomString = (
   length: number,
@@ -69,4 +69,12 @@ export const randomIPs = (version: IPv, count: number): string => {
 export const randomUUIDs = (count: number): string =>
   _.range(count)
     .map(() => faker.datatype.uuid())
+    .join(NEW_LINE);
+
+export const randomNumber = (min: number, max: number, floatValue: boolean): number =>
+  faker.datatype.number({ min: min, max: max, precision: floatValue ? 1/10000 : 1 });
+
+export const randomNumbers = (min: number, max: number, floatValue: boolean, count: number): string =>
+  _.range(count)
+    .map(() => randomNumber(min, max, floatValue))
     .join(NEW_LINE);
