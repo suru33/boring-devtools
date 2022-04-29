@@ -1,10 +1,6 @@
-const NumbersGenerator = () => {
-  return(
-    <div>
+const NumbersGenerator = () =>
+  <div>
           RandomNumbersGenerator
-    </div>
-  );
-};
-
+  </div>;
 export default NumbersGenerator;
-    
+

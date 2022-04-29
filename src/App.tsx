@@ -26,7 +26,7 @@ const App = () => {
     fontFamily: appFontFamily,
     fontFamilyMonospace: appFontFamily,
     headings: { fontFamily: appFontFamily },
-    colorScheme: colorScheme,
+    colorScheme: colorScheme
   };
 
   return (
@@ -45,13 +45,13 @@ const App = () => {
                 <Navbar.Section grow component={ScrollArea}>
                   <Accordion multiple>
                     {
-                      allTools.map((tc, i) => {
-                        return <Accordion.Item key={`${i}-${tc.label}`} label={tc.label}>
+                      allTools.map((tc, i) =>
+                        <Accordion.Item key={`${i}-${tc.label}`} label={tc.label}>
                           <Box>
                             <NavbarLinks key={i} parentPath={tc.path} tools={tc.tools}/>
                           </Box>
-                        </Accordion.Item>;
-                      })
+                        </Accordion.Item>
+                      )
                     }
                   </Accordion>
                 </Navbar.Section>

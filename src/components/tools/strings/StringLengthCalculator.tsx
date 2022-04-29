@@ -32,4 +32,3 @@ const StringLengthCalculator = () => {
 };
 
 export default StringLengthCalculator;
-    

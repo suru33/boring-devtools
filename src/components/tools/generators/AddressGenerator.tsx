@@ -1,10 +1,6 @@
-const AddressGenerator = () => {
-  return(
-    <div>
+const AddressGenerator = () =>
+  <div>
           RandomAddressGenerator
-    </div>
-  );
-};
-
+  </div>;
 export default AddressGenerator;
-    
+

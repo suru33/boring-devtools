@@ -1,10 +1,6 @@
-const DateDifferenceCalculator = () => {
-  return(
-    <div>
+const DateDifferenceCalculator = () =>
+  <div>
           DateDifferenceCalculator
-    </div>
-  );
-};
-
+  </div>;
 export default DateDifferenceCalculator;
-     
+
