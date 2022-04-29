@@ -9,7 +9,7 @@ import ClipboardLabel from "../../ClipboardLabel";
 
 const NumbersGenerator = () => {
   const [ min, setMin ] = useInputState(0);
-  const [ max, setMax ] = useInputState(1);
+  const [ max, setMax ] = useInputState(1000);
   const [ count, setCount ] = useInputState(5);
   const [ floatValue, setFloatValue ] = useState(false);
   const [ output, setOutput ] = useState(EMPTY_STRING);
