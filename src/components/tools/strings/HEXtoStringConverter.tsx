@@ -1,10 +1,5 @@
-const HEXtoStringConverter = () => {
-  return(
-    <div>
-          HEXtoStringConverter
-    </div>
-  );
-};
-
+const HEXtoStringConverter = () =>
+  <div>
+    HEXtoStringConverter
+  </div>;
 export default HEXtoStringConverter;
-    

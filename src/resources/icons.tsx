@@ -40,7 +40,7 @@ export const navbarIcons = {
   sort: <ArrowsSort size={navbarIconSize}/>,
   code: <Code size={navbarIconSize}/>,
   dateDifference: <CalendarStats size={navbarIconSize}/>,
-  timeZone: <WorldLongitude size={navbarIconSize}/>,
+  timeZone: <WorldLongitude size={navbarIconSize}/>
 };
 
 export const clipboardIcon = <Clipboard size={16}/>;

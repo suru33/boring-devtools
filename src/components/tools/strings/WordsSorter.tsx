@@ -1,10 +1,5 @@
-const WordsSorter = () => {
-  return(
-    <div>
-          WordsSorter
-    </div>
-  );
-};
-
+const WordsSorter = () =>
+  <div>
+    WordsSorter
+  </div>;
 export default WordsSorter;
-    

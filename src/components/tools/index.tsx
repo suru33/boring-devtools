@@ -101,7 +101,7 @@ const randomToolsCategory: ToolCategory = {
       component: <AddressGenerator/>,
       icon: icons.address,
       color: colors.world
-    },
+    }
   ]
 };
 
@@ -150,7 +150,7 @@ const stringToolsCategory: ToolCategory = {
       component: <HEXtoStringConverter/>,
       icon: icons.code,
       color: colors.code
-    },
+    }
   ]
 };
 
@@ -173,7 +173,7 @@ const dateToolsCategory: ToolCategory = {
       component: <TimeZoneConverter/>,
       icon: icons.timeZone,
       color: colors.world
-    },
+    }
   ]
 };
 

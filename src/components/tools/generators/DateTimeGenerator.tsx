@@ -1,10 +1,6 @@
-const DateTimeGenerator = () => {
-  return(
-    <div>
+const DateTimeGenerator = () =>
+  <div>
           RandomDateGenerator
-    </div>
-  );
-};
-
+  </div>;
 export default DateTimeGenerator;
-    
+

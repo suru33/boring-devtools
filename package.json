@@ -6,8 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint-check": "eslint --ext .js --ext .tsx --ext .ts --ext .json .",
-    "lint-fix": "eslint --fix --ext js --ext .tsx --ext .ts --ext .json ."
+    "lint:check": "eslint --ext .js --ext .tsx --ext .ts --ext .json .",
+    "lint:fix": "eslint --fix --ext js --ext .tsx --ext .ts --ext .json ."
   },
   "dependencies": {
     "@faker-js/faker": "^6.1.2",

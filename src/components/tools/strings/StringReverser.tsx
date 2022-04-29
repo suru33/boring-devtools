@@ -18,7 +18,7 @@ const StringReverser = () => {
   };
 
   return (
-    <SimpleGrid cols={2} sx = {defaultMargin}>
+    <SimpleGrid cols={2} sx={defaultMargin}>
       <Textarea
         spellCheck="false"
         minRows={textAreaDefaultRowsBig}
@@ -37,4 +37,3 @@ const StringReverser = () => {
 };
 
 export default StringReverser;
-    

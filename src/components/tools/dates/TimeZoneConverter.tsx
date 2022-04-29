@@ -1,10 +1,6 @@
-const TimeZoneConverter = () => {
-  return(
-    <div>
+const TimeZoneConverter = () =>
+  <div>
           TimeZoneConverter
-    </div>
-  );
-};
-
+  </div>;
 export default TimeZoneConverter;
-    
+

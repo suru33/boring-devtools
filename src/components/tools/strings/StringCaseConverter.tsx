@@ -36,7 +36,7 @@ const StringCaseConverter = () => {
 
   return (
     <>
-      {/*https://lodash.com/docs/4.17.15#camelCase*/}
+      {/* https://lodash.com/docs/4.17.15#camelCase */}
       <RadioGroup
         label={<ComponentLabel text="String case"/>}
         onChange={onStringCaseChanged}

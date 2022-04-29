@@ -6,13 +6,9 @@ type ToolContainerProps = {
   children: ReactNode
 }
 
-const ToolContainer = ({ title, children }: ToolContainerProps) => {
-  return (
-    <Box>
-      <Title order={2} align="center">{title}</Title>
-      {children}
-    </Box>
-  );
-};
-
+const ToolContainer = ({ title, children }: ToolContainerProps) =>
+  <Box>
+    <Title order={2} align="center">{title}</Title>
+    {children}
+  </Box>;
 export default ToolContainer;

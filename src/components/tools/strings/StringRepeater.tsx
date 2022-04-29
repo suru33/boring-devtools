@@ -27,7 +27,7 @@ const StringRepeater = () => {
     updateOutput(s, times);
   };
 
-  return(
+  return (
     <>
       <Group sx={defaultMargin} align="end">
         <NumberInput
@@ -57,4 +57,3 @@ const StringRepeater = () => {
 };
 
 export default StringRepeater;
-    

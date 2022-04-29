@@ -39,4 +39,4 @@ const WordsGenerator = () => {
 };
 
 export default WordsGenerator;
-    
+
