@@ -69,7 +69,7 @@ const randomToolsCategory: ToolCategory = {
     },
     {
       label: "Numbers Generator",
-      path: "random-numbers-generator",
+      path: "numbers-generator",
       component: <NumbersGenerator/>,
       icon: icons.numbers,
       color: colors.numbers
