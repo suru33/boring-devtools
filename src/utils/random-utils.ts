@@ -1,5 +1,6 @@
 import * as _ from "lodash";
 import faker from "@faker-js/faker";
+import dayjs from "dayjs";
 import { IPv } from "../types";
 import {
   LOWERCASE_LETTERS,
@@ -72,9 +73,13 @@ export const randomUUIDs = (count: number): string =>
     .join(NEW_LINE);
 
 export const randomNumber = (min: number, max: number, floatValue: boolean): number =>
-  faker.datatype.number({ min: min, max: max, precision: floatValue ? 1/10000 : 1 });
+  faker.datatype.number({ min: min, max: max, precision: floatValue ? 1 / 10000 : 1 });
 
 export const randomNumbers = (min: number, max: number, floatValue: boolean, count: number): string =>
   _.range(count)
     .map(() => randomNumber(min, max, floatValue))
+    .join(NEW_LINE);
+
+export const randomDates = (from: Date, to: Date, count: number, format = "YYYY-MM-DD HH:mm"): string =>
+  _.uniq(faker.date.betweens(from, to, count).map(d => dayjs(d).format(format)))
     .join(NEW_LINE);

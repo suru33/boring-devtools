@@ -54,7 +54,6 @@ module.exports = {
     "computed-property-spacing": [ "error", "never" ],
     "func-call-spacing": [ "error", "never" ],
     "lines-around-comment": [ "error", { "afterBlockComment": true, "beforeBlockComment": false } ],
-    "newline-per-chained-call": [ "error", { "ignoreChainWithDepth": 2 } ],
     "no-extra-parens": "error",
     "no-trailing-spaces": "error",
     "no-whitespace-before-property": "error",
