@@ -1,9 +1,8 @@
 import * as _ from "lodash";
 import faker from "@faker-js/faker";
-import dayjs from "dayjs";
-import { IPv } from "../types";
+import { IPv } from "./types";
 import { LOWERCASE_LETTERS, NEW_LINE, NO_SPACE, NUMERIC_LETTERS, SYMBOL_LETTERS, UPPERCASE_LETTERS } from "./constants";
-import { DateFormatFn } from "./types";
+import { dateFormatFunction, DEFAULT_DATETIME_FORMAT } from "./utils.datetime";
 
 export const randomInt = (value: number | { min: number; max: number; }): number => {
   const fn = (a: number, b: number) => Math.floor(Math.random() * (b - a)) + a;
@@ -47,7 +46,7 @@ export const randomStrings = (
 
 export const randomWords = (count: number): string =>
   _.range(count)
-    .map(() => faker.random.word())
+    .map(faker.random.word)
     .join(NEW_LINE);
 
 export const randomSentences = (count: number): string => faker.lorem.sentences(count, NEW_LINE);
@@ -57,13 +56,13 @@ export const randomParagraphs = (count: number): string => faker.lorem.paragraph
 export const randomIPs = (version: IPv, count: number): string => {
   const fn = version === "v4" ? faker.internet.ipv4 : faker.internet.ipv6;
   return _.range(count)
-    .map(() => fn())
+    .map(fn)
     .join(NEW_LINE);
 };
 
 export const randomUUIDs = (count: number): string =>
   _.range(count)
-    .map(() => faker.datatype.uuid())
+    .map(faker.datatype.uuid)
     .join(NEW_LINE);
 
 export const randomNumber = (min: number, max: number, floatValue: boolean): number =>
@@ -74,19 +73,7 @@ export const randomNumbers = (min: number, max: number, floatValue: boolean, cou
     .map(() => randomNumber(min, max, floatValue))
     .join(NEW_LINE);
 
-const getDateFormatFunction = (format: string):DateFormatFn => {
-  if(format === "UNIX_MILLIS") {
-    return d => dayjs(d).valueOf().toString();
-  } else if(format === "UNIX") {
-    return d => dayjs(d).unix().toString();
-  } else if(format === "ISO_8601") {
-    return d => dayjs(d).toISOString();
-  } else {
-    return d => dayjs(d).format(format);
-  }
-};
-
-export const randomDates = (from: Date, to: Date, count: number, format = "YYYY-MM-DD HH:mm"): string =>
+export const randomDates = (from: Date, to: Date, count: number, format = DEFAULT_DATETIME_FORMAT): string =>
   _.uniq(faker.date.betweens(from, to, count)
-    .map(getDateFormatFunction(format)))
+    .map(dateFormatFunction(format)))
     .join(NEW_LINE);
