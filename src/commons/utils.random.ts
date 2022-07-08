@@ -2,14 +2,8 @@ import * as _ from "lodash";
 import faker from "@faker-js/faker";
 import dayjs from "dayjs";
 import { IPv } from "../types";
-import {
-  LOWERCASE_LETTERS,
-  NEW_LINE,
-  NO_SPACE,
-  NUMERIC_LETTERS,
-  SYMBOL_LETTERS,
-  UPPERCASE_LETTERS
-} from "../constants";
+import { LOWERCASE_LETTERS, NEW_LINE, NO_SPACE, NUMERIC_LETTERS, SYMBOL_LETTERS, UPPERCASE_LETTERS } from "./constants";
+import { DateFormatFn } from "./types";
 
 export const randomInt = (value: number | { min: number; max: number; }): number => {
   const fn = (a: number, b: number) => Math.floor(Math.random() * (b - a)) + a;
@@ -80,6 +74,19 @@ export const randomNumbers = (min: number, max: number, floatValue: boolean, cou
     .map(() => randomNumber(min, max, floatValue))
     .join(NEW_LINE);
 
+const getDateFormatFunction = (format: string):DateFormatFn => {
+  if(format === "UNIX_MILLIS") {
+    return d => dayjs(d).valueOf().toString();
+  } else if(format === "UNIX") {
+    return d => dayjs(d).unix().toString();
+  } else if(format === "ISO_8601") {
+    return d => dayjs(d).toISOString();
+  } else {
+    return d => dayjs(d).format(format);
+  }
+};
+
 export const randomDates = (from: Date, to: Date, count: number, format = "YYYY-MM-DD HH:mm"): string =>
-  _.uniq(faker.date.betweens(from, to, count).map(d => dayjs(d).format(format)))
+  _.uniq(faker.date.betweens(from, to, count)
+    .map(getDateFormatFunction(format)))
     .join(NEW_LINE);
