@@ -1,13 +1,14 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { Button, Group, NumberInput, Select, Text, Textarea } from "@mantine/core";
+import { Button, Grid, Group, NumberInput, Select, Text, Textarea } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
+import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import ClipboardLabel from "../../ClipboardLabel";
-import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
-import { EMPTY_STRING } from "../../../constants";
-import { randomDates } from "../../../utils/random-utils";
+import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
+import { randomDates } from "../../../commons/utils.random";
+import { combineDateTime } from "../../../commons/utils.datetime";
 
 const DateTimeGenerator = () => {
   const ERROR_MESSAGE = "* start date and time should be < end date time";
@@ -27,21 +28,21 @@ const DateTimeGenerator = () => {
     { value: "DD-MM-YYYY", label: "20-12-2020" },
     { value: "DD/MM/YYYY", label: "20/12/2020" },
     { value: "MM-DD-YYYY", label: "12-20-2020" },
-    { value: "MMM D, YYYY", label: "Dec 2, 2020" }
+    { value: "MMM D, YYYY", label: "Dec 2, 2020" },
+    { value: "UNIX_MILLIS", label: "Unix Timestamp (milliseconds)" },
+    { value: "UNIX", label: "Unix Timestamp" },
+    { value: "ISO_8601", label: "ISO 8601 (2019-01-25T02:00:00.000Z)" }
   ];
 
-  const [ startDate, onStartDateChange ] = useState(START_DATE);
+  const [ startDate, onStartDateChange ] = useInputState(START_DATE);
   const [ startTime, onStartTimeChange ] = useState(START_TIME);
   const [ endDate, onEndDateChange ] = useState(END_DATE);
   const [ endTime, onEndTimeChange ] = useState(END_TIME);
-  const [ count, setCount ] = useInputState(5);
+  const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
   const [ errorFlag, setErrorFlag ] = useState(false);
   const [ output, setOutput ] = useState(EMPTY_STRING);
   const [ generateDisabled, setGenerateDisabled ] = useInputState(false);
   const [ format, setFormat ] = useState(DEFAULT_FORMAT);
-
-  const combineDateTime = (date: Date, time: Date): Date =>
-    dayjs(date).hour(time.getHours()).minute(time.getMinutes()).toDate();
 
   useEffect(() => {
     const flag = combineDateTime(startDate, startTime) > combineDateTime(endDate, endTime);
@@ -65,8 +66,6 @@ const DateTimeGenerator = () => {
           onChange={v => onStartDateChange(v || START_DATE)}/>
         <TimeInput value={startTime} error={errorFlag} onChange={onStartTimeChange}/>
         <Text color="red" size="sm">{errorFlag ? ERROR_MESSAGE : EMPTY_STRING}</Text>
-      </Group>
-      <Group align="end" sx={defaultMargin}>
         <DatePicker
           label={<ComponentLabel text="End date & time"/>}
           amountOfMonths={2}
@@ -75,20 +74,26 @@ const DateTimeGenerator = () => {
           onChange={v => onEndDateChange(v || END_DATE)}/>
         <TimeInput value={endTime} onChange={onEndTimeChange}/>
       </Group>
-      <Group sx={defaultMargin} align="end">
-        <Select
-          data={FORMATS}
-          label={<ComponentLabel text="Format"/>}
-          value={format}
-          onChange={v => setFormat(v || DEFAULT_FORMAT)}/>
-        <NumberInput
-          label={<ComponentLabel text="How many?"/>}
-          value={count}
-          min={1}
-          max={25}
-          onChange={setCount}/>
-        <Button onClick={() => generateOutput()} disabled={generateDisabled}>Generate</Button>
-      </Group>
+      <Grid align="end" sx={defaultMargin}>
+        <Grid.Col span={3}>
+          <Select
+            data={FORMATS}
+            label={<ComponentLabel text="Format"/>}
+            value={format}
+            onChange={v => setFormat(v || DEFAULT_FORMAT)}/>
+        </Grid.Col>
+        <Grid.Col span={1}>
+          <NumberInput
+            label={<ComponentLabel text="How many?"/>}
+            value={count}
+            min={MIN_OUTPUT_ITEMS}
+            max={MAX_OUTPUT_ITEMS}
+            onChange={setCount}/>
+        </Grid.Col>
+        <Grid.Col span={1}>
+          <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>
+        </Grid.Col>
+      </Grid>
       <Textarea
         readOnly
         spellCheck="false"

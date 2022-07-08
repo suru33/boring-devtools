@@ -21,7 +21,7 @@ const App = () => {
   const [ colorScheme, setColorScheme ] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
-  const appFontFamily = "'Courier Prime', monospace";
+  const appFontFamily = "'JetBrains Mono', monospace";
   const appTheme = {
     fontFamily: appFontFamily,
     fontFamilyMonospace: appFontFamily,
@@ -35,11 +35,7 @@ const App = () => {
         <NotificationsProvider>
           <AppShell
             fixed
-            header={
-              <AppHeader
-                colorScheme={colorScheme}
-                colorSchemeToggleFn={toggleColorScheme}/>
-            }
+            header={<AppHeader colorScheme={colorScheme} colorSchemeToggleFn={toggleColorScheme}/>}
             navbar={
               <Navbar width={{ base: 350 }}>
                 <Navbar.Section grow component={ScrollArea}>

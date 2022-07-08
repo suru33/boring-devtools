@@ -1,21 +1,24 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { Button, Checkbox, Group, NumberInput, Textarea } from "@mantine/core";
+import { useEffect, useState } from "react";
+import { Button, Checkbox, Group, NumberInput, Select, Textarea } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
-import { randomNumbers } from "../../../utils/random-utils";
-import { EMPTY_STRING } from "../../../constants";
+import { randomNumbers } from "../../../commons/utils.random";
+import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 import ClipboardLabel from "../../ClipboardLabel";
+import { range } from "../../../commons/utils.numbers";
 
 const NumbersGenerator = () => {
   const [ min, setMin ] = useInputState(0);
   const [ max, setMax ] = useInputState(1000);
-  const [ count, setCount ] = useInputState(5);
+  const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
   const [ floatValue, setFloatValue ] = useState(false);
   const [ output, setOutput ] = useState(EMPTY_STRING);
-  const [ precision, setPrecision ] = useState(0);
+  const [ precision, setPrecision ] = useInputState("2");
   const [ minError, setMinError ] = useState(EMPTY_STRING);
   const [ generateDisabled, setGenerateDisabled ] = useInputState(false);
+
+  const PRECISIONS = range(1, 15).map(i => ({ value: i.toString(), label: i.toString() }));
 
   useEffect(() => {
     if (min >= max) {
@@ -27,14 +30,8 @@ const NumbersGenerator = () => {
     }
   }, [ min, max ]);
 
-  const floatValueSelected = (value: ChangeEvent<HTMLInputElement>) => {
-    const checked = value.target.checked;
-    setFloatValue(checked);
-    setPrecision(checked ? 5 : 0);
-  };
-
   const generateOutput = () => {
-    setOutput(randomNumbers(min, max, floatValue, count));
+    setOutput(randomNumbers(min, max, floatValue, count, parseInt(precision)));
   };
 
   return (
@@ -46,7 +43,7 @@ const NumbersGenerator = () => {
           error={minError}
           min={Number.MIN_SAFE_INTEGER}
           max={Number.MAX_SAFE_INTEGER}
-          precision={precision}
+          precision={floatValue ? parseInt(precision) : 0}
           step={1}
           onChange={setMin}/>
         <NumberInput
@@ -54,19 +51,25 @@ const NumbersGenerator = () => {
           value={max}
           min={Number.MIN_SAFE_INTEGER}
           max={Number.MAX_SAFE_INTEGER}
-          precision={precision}
+          precision={floatValue ? parseInt(precision) : 0}
           step={1}
           onChange={setMax}/>
+        <Select
+          label={<ComponentLabel text="Precision"/>}
+          data={PRECISIONS}
+          value={precision}
+          disabled={!floatValue}
+          onChange={setPrecision}/>
         <NumberInput
           label={<ComponentLabel text="How many?"/>}
           value={count}
-          min={1}
-          max={25}
+          min={MIN_OUTPUT_ITEMS}
+          max={MAX_OUTPUT_ITEMS}
           onChange={setCount}/>
       </Group>
       <Group sx={defaultMargin} align="center">
-        <Checkbox checked={floatValue} label="Float values" onChange={floatValueSelected}/>
-        <Button onClick={() => generateOutput()} disabled={generateDisabled}>Generate</Button>
+        <Checkbox checked={floatValue} label="Float values" onChange={e => setFloatValue(e.target.checked)}/>
+        <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>
       </Group>
       <Textarea
         readOnly

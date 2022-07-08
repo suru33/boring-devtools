@@ -8,7 +8,7 @@ type ToolContainerProps = {
 
 const ToolContainer = ({ title, children }: ToolContainerProps) =>
   <Box>
-    <Title order={2} align="center">{title}</Title>
+    <Title order={2} align="center" sx={{ marginBottom: 20 }}>{title}</Title>
     {children}
   </Box>;
 export default ToolContainer;

@@ -1,8 +1,8 @@
 import { useInputState } from "@mantine/hooks";
 import { Button, Checkbox, Group, NumberInput, Stack, Textarea, TextInput } from "@mantine/core";
-import { randomStrings } from "../../../utils/random-utils";
+import { randomStrings } from "../../../commons/utils.random";
 import { defaultMargin, textAreaDefaultRows, verticalGroupIndent } from "../../../app-sx";
-import { EMPTY_STRING } from "../../../constants";
+import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 import ClipboardLabel from "../../ClipboardLabel";
 import ComponentLabel from "../../ComponentLabel";
 
@@ -13,7 +13,7 @@ const StringsGenerator = () => {
   const [ symbols, setSymbols ] = useInputState(false);
   const [ extras, setExtras ] = useInputState(false);
   const [ pool, setPool ] = useInputState(EMPTY_STRING);
-  const [ count, setCount ] = useInputState(5);
+  const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
   const [ length, setLength ] = useInputState(20);
   const [ output, setOutput ] = useInputState(EMPTY_STRING);
 
@@ -45,10 +45,10 @@ const StringsGenerator = () => {
         <NumberInput
           label={<ComponentLabel text="How many?"/>}
           value={count}
-          min={1}
-          max={20}
+          min={MIN_OUTPUT_ITEMS}
+          max={MAX_OUTPUT_ITEMS}
           onChange={setCount}/>
-        <Button onClick={() => generateOutput()}>Generate</Button>
+        <Button onClick={generateOutput}>Generate</Button>
       </Group>
       <Textarea
         readOnly

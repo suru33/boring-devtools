@@ -1,9 +1,8 @@
-import { ChangeEvent } from "react";
 import { defaultMargin, textAreaDefaultRowsBig } from "../../../app-sx";
 import { Group, NumberInput, SimpleGrid, Textarea } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
-import { EMPTY_STRING } from "../../../constants";
-import { repeat } from "../../../utils/string-utils";
+import { EMPTY_STRING } from "../../../commons/constants";
+import { repeat } from "../../../commons/utils.strings";
 import ClipboardLabel from "../../ClipboardLabel";
 import ComponentLabel from "../../ComponentLabel";
 
@@ -21,10 +20,9 @@ const StringRepeater = () => {
     updateOutput(input, n);
   };
 
-  const onInputChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const s = e.target.value;
-    setInput(s);
-    updateOutput(s, times);
+  const onInputChanged = (value: string) => {
+    setInput(value);
+    updateOutput(value, times);
   };
 
   return (
@@ -43,7 +41,7 @@ const StringRepeater = () => {
           minRows={textAreaDefaultRowsBig}
           label={<ComponentLabel text="Input"/>}
           value={input}
-          onChange={onInputChanged}/>
+          onChange={e => onInputChanged(e.target.value)}/>
         <Textarea
           readOnly
           spellCheck="false"
