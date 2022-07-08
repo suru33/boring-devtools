@@ -23,3 +23,5 @@ export const changeCase = (stringCase: StringCase, s: string): string =>
   s === EMPTY_STRING ? EMPTY_STRING : caseFunctions[stringCase](s);
 
 export const repeat = (s: string, n: number): string => _.repeat(s, n);
+
+export const uniqueCharacters = (s: string) => _.uniq(s);
