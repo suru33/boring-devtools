@@ -65,12 +65,12 @@ export const randomUUIDs = (count: number): string =>
     .map(faker.datatype.uuid)
     .join(NEW_LINE);
 
-export const randomNumber = (min: number, max: number, floatValue: boolean): number =>
-  faker.datatype.number({ min: min, max: max, precision: floatValue ? 1 / 10000 : 1 });
+export const randomNumber = (min: number, max: number, floatValue: boolean, precision: number): number =>
+  faker.datatype.number({ min: min, max: max, precision: floatValue ? 1 / Math.pow(10, precision) : 1 });
 
-export const randomNumbers = (min: number, max: number, floatValue: boolean, count: number): string =>
+export const randomNumbers = (min: number, max: number, floatValue: boolean, count: number, precision: number): string =>
   _.range(count)
-    .map(() => randomNumber(min, max, floatValue))
+    .map(() => randomNumber(min, max, floatValue, precision))
     .join(NEW_LINE);
 
 export const randomDates = (from: Date, to: Date, count: number, format = DEFAULT_DATETIME_FORMAT): string =>
