@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { useInputState } from "@mantine/hooks";
 import { SimpleGrid, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRowsBig } from "../../../app-sx";
@@ -11,10 +10,9 @@ const StringReverser = () => {
   const [ input, setInput ] = useInputState(EMPTY_STRING);
   const [ output, setOutput ] = useInputState(EMPTY_STRING);
 
-  const onTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const s = e.target.value;
-    setInput(s);
-    setOutput(reverse(s));
+  const onTextChange = (value: string) => {
+    setInput(value);
+    setOutput(reverse(value));
   };
 
   return (
@@ -24,7 +22,7 @@ const StringReverser = () => {
         minRows={textAreaDefaultRowsBig}
         label={<ComponentLabel text="Input"/>}
         value={input}
-        onChange={onTextChange}/>
+        onChange={e => onTextChange(e.target.value)}/>
       <Textarea
         readOnly
         spellCheck="false"

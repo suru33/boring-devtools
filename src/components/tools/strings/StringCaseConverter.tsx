@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { useInputState } from "@mantine/hooks";
 import { Radio, RadioGroup, SimpleGrid, Text, Textarea, Tooltip } from "@mantine/core";
 import ClipboardLabel from "../../ClipboardLabel";
@@ -23,10 +22,9 @@ const StringCaseConverter = () => {
     updateOutput(stringCase as StringCase, input);
   };
 
-  const onInputChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const str = e.target.value;
-    setInput(str);
-    updateOutput(stringCase as StringCase, str);
+  const onInputChanged = (value: string) => {
+    setInput(value);
+    updateOutput(stringCase as StringCase, value);
   };
 
   const radioLabel = (text: string, tooltipText: string) =>
@@ -67,7 +65,7 @@ const StringCaseConverter = () => {
           minRows={textAreaDefaultRowsBig}
           label={<ComponentLabel text="Input"/>}
           value={input}
-          onChange={onInputChanged}/>
+          onChange={e => onInputChanged(e.target.value)}/>
         <Textarea
           readOnly
           spellCheck="false"

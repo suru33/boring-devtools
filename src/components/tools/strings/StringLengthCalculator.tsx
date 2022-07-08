@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { Checkbox, Text, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import { useInputState } from "@mantine/hooks";
@@ -10,10 +9,9 @@ const StringLengthCalculator = () => {
   const [ length, setLength ] = useInputState(0);
   const [ strip, setStrip ] = useInputState(true);
 
-  const onTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const s = e.target.value;
-    setInput(s);
-    setLength(strip ? s.trim().length : s.length);
+  const onTextChange = (value: string) => {
+    setInput(value);
+    setLength(strip ? value.trim().length : value.length);
   };
 
   return (
@@ -23,7 +21,7 @@ const StringLengthCalculator = () => {
         minRows={textAreaDefaultRows}
         label={<ComponentLabel text="Input"/>}
         value={input}
-        onChange={onTextChange}>
+        onChange={e => onTextChange(e.target.value)}>
       </Textarea>
       <Checkbox sx={defaultMargin} checked={strip} label="Strip" onChange={setStrip}/>
       <Text weight={700} sx={defaultMargin}>Length: <Text color="blue" inherit component="span">{length}</Text></Text>
