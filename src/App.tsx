@@ -35,11 +35,7 @@ const App = () => {
         <NotificationsProvider>
           <AppShell
             fixed
-            header={
-              <AppHeader
-                colorScheme={colorScheme}
-                colorSchemeToggleFn={toggleColorScheme}/>
-            }
+            header={<AppHeader colorScheme={colorScheme} colorSchemeToggleFn={toggleColorScheme}/>}
             navbar={
               <Navbar width={{ base: 350 }}>
                 <Navbar.Section grow component={ScrollArea}>
