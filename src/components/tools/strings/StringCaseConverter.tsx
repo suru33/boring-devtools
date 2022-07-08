@@ -1,9 +1,9 @@
 import { useInputState } from "@mantine/hooks";
 import { Radio, RadioGroup, SimpleGrid, Text, Textarea, Tooltip } from "@mantine/core";
 import ClipboardLabel from "../../ClipboardLabel";
+import { StringCase } from "../../../commons/types";
 import { EMPTY_STRING } from "../../../commons/constants";
 import { defaultMargin, defaultTooltipWidth, textAreaDefaultRowsBig } from "../../../app-sx";
-import { StringCase } from "../../../types";
 import { changeCase } from "../../../commons/utils.strings";
 import ComponentLabel from "../../ComponentLabel";
 

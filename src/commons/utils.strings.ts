@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import { StringCase, StringCaseFunction } from "../types";
+import { StringCase, StringCaseFunction } from "./types";
 import { EMPTY_STRING, NO_SPACE } from "./constants";
 
 export const reverse = (s: string): string =>

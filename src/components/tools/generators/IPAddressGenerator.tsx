@@ -1,4 +1,4 @@
-import { IPv } from "../../../types";
+import { IPv } from "../../../commons/types";
 import { useInputState } from "@mantine/hooks";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 import { randomIPs } from "../../../commons/utils.random";
