@@ -66,7 +66,7 @@ const NumbersGenerator = () => {
       </Group>
       <Group sx={defaultMargin} align="center">
         <Checkbox checked={floatValue} label="Float values" onChange={floatValueSelected}/>
-        <Button onClick={() => generateOutput()} disabled={generateDisabled}>Generate</Button>
+        <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>
       </Group>
       <Textarea
         readOnly

@@ -91,7 +91,7 @@ const DateTimeGenerator = () => {
             onChange={setCount}/>
         </Grid.Col>
         <Grid.Col span={1}>
-          <Button onClick={() => generateOutput()} disabled={generateDisabled}>Generate</Button>
+          <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>
         </Grid.Col>
       </Grid>
       <Textarea

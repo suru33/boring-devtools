@@ -48,7 +48,7 @@ const StringsGenerator = () => {
           min={MIN_OUTPUT_ITEMS}
           max={MAX_OUTPUT_ITEMS}
           onChange={setCount}/>
-        <Button onClick={() => generateOutput()}>Generate</Button>
+        <Button onClick={generateOutput}>Generate</Button>
       </Group>
       <Textarea
         readOnly
