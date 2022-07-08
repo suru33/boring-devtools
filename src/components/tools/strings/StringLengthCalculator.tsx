@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 import { Checkbox, Text, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import { useInputState } from "@mantine/hooks";
-import { EMPTY_STRING } from "../../../constants";
+import { EMPTY_STRING } from "../../../commons/constants";
 import ComponentLabel from "../../ComponentLabel";
 
 const StringLengthCalculator = () => {

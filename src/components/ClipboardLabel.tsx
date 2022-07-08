@@ -2,7 +2,7 @@ import { useClipboard } from "@mantine/hooks";
 import { showNotification } from "@mantine/notifications";
 import { ActionIcon, Group, Tooltip } from "@mantine/core";
 import { clipboardIcon } from "../resources/icons";
-import { EMPTY_STRING } from "../constants";
+import { EMPTY_STRING } from "../commons/constants";
 import ComponentLabel from "./ComponentLabel";
 
 const ClipboardLabel = (props: { title: string, clipboardData: string }) => {

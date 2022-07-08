@@ -3,14 +3,14 @@ import { Button, Checkbox, Group, NumberInput, Textarea } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
-import { randomNumbers } from "../../../utils/random-utils";
-import { EMPTY_STRING } from "../../../constants";
+import { randomNumbers } from "../../../commons/utils.random";
+import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 import ClipboardLabel from "../../ClipboardLabel";
 
 const NumbersGenerator = () => {
   const [ min, setMin ] = useInputState(0);
   const [ max, setMax ] = useInputState(1000);
-  const [ count, setCount ] = useInputState(5);
+  const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
   const [ floatValue, setFloatValue ] = useState(false);
   const [ output, setOutput ] = useState(EMPTY_STRING);
   const [ precision, setPrecision ] = useState(0);
@@ -60,8 +60,8 @@ const NumbersGenerator = () => {
         <NumberInput
           label={<ComponentLabel text="How many?"/>}
           value={count}
-          min={1}
-          max={25}
+          min={MIN_OUTPUT_ITEMS}
+          max={MAX_OUTPUT_ITEMS}
           onChange={setCount}/>
       </Group>
       <Group sx={defaultMargin} align="center">

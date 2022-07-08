@@ -2,10 +2,10 @@ import { ChangeEvent } from "react";
 import { useInputState } from "@mantine/hooks";
 import { Radio, RadioGroup, SimpleGrid, Text, Textarea, Tooltip } from "@mantine/core";
 import ClipboardLabel from "../../ClipboardLabel";
-import { EMPTY_STRING } from "../../../constants";
+import { EMPTY_STRING } from "../../../commons/constants";
 import { defaultMargin, defaultTooltipWidth, textAreaDefaultRowsBig } from "../../../app-sx";
 import { StringCase } from "../../../types";
-import { changeCase } from "../../../utils/string-utils";
+import { changeCase } from "../../../commons/utils.strings";
 import ComponentLabel from "../../ComponentLabel";
 
 const StringCaseConverter = () => {

@@ -2,8 +2,8 @@ import { ChangeEvent } from "react";
 import { defaultMargin, textAreaDefaultRowsBig } from "../../../app-sx";
 import { Group, NumberInput, SimpleGrid, Textarea } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
-import { EMPTY_STRING } from "../../../constants";
-import { repeat } from "../../../utils/string-utils";
+import { EMPTY_STRING } from "../../../commons/constants";
+import { repeat } from "../../../commons/utils.strings";
 import ClipboardLabel from "../../ClipboardLabel";
 import ComponentLabel from "../../ComponentLabel";
 

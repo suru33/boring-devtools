@@ -1,6 +1,6 @@
 import { useInputState } from "@mantine/hooks";
-import { EMPTY_STRING } from "../../../constants";
-import { randomSentences } from "../../../utils/random-utils";
+import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
+import { randomSentences } from "../../../commons/utils.random";
 import { Button, Group, NumberInput, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import ClipboardLabel from "../../ClipboardLabel";
@@ -8,7 +8,7 @@ import ComponentLabel from "../../ComponentLabel";
 
 const SentencesGenerator = () => {
 
-  const [ count, setCount ] = useInputState(5);
+  const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
   const [ output, setOutput ] = useInputState(EMPTY_STRING);
 
   const generateOutput = () => {
@@ -22,8 +22,8 @@ const SentencesGenerator = () => {
         <NumberInput
           label={<ComponentLabel text="How many?"/>}
           value={count}
-          min={1}
-          max={20}
+          min={MIN_OUTPUT_ITEMS}
+          max={MAX_OUTPUT_ITEMS}
           onChange={setCount}/>
         <Button onClick={() => generateOutput()}>Generate</Button>
       </Group>
