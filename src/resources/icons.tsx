@@ -1,47 +1,53 @@
 import {
-  AddressBook,
-  AlignJustified,
-  ArrowLeftCircle,
-  ArrowsSort,
-  CalendarStats,
-  CalendarTime,
-  Clipboard,
-  Code,
-  Id,
-  LetterCase,
-  LetterCaseToggle,
-  List,
-  Numbers,
-  Repeat,
-  Ruler2,
-  Separator,
-  World,
-  WorldLongitude,
-  Writing
-} from "tabler-icons-react";
+  IconAddressBook,
+  IconAlignJustified,
+  IconArrowLeftCircle,
+  IconArrowsSort,
+  IconCalendarStats,
+  IconCalendarTime,
+  IconCheck,
+  IconClipboard,
+  IconCode,
+  IconId,
+  IconLetterCase,
+  IconLetterCaseToggle,
+  IconList,
+  IconMoonStars,
+  IconNumbers,
+  IconRepeat,
+  IconRuler2,
+  IconSeparator,
+  IconSun,
+  IconWorld,
+  IconWorldLongitude,
+  IconWriting
+} from "@tabler/icons";
 
-const navbarIconSize = 16;
+const size = 16;
 
 export const navbarIcons = {
-  string: <LetterCase size={navbarIconSize}/>,
-  words: <List size={navbarIconSize}/>,
-  sentence: <Separator size={navbarIconSize}/>,
-  writing: <Writing size={navbarIconSize}/>,
-  paragraph: <AlignJustified size={navbarIconSize}/>,
-  numbers: <Numbers size={navbarIconSize}/>,
-  ip: <World size={navbarIconSize}/>,
-  dateTime: <CalendarTime size={navbarIconSize}/>,
-  uuid: <Id size={navbarIconSize}/>,
-  address: <AddressBook size={navbarIconSize}/>,
-  length: <Ruler2 size={navbarIconSize}/>,
-  caseConvert: <LetterCaseToggle size={navbarIconSize}/>,
-  reverse: <ArrowLeftCircle size={navbarIconSize}/>,
-  repeat: <Repeat size={navbarIconSize}/>,
-  sort: <ArrowsSort size={navbarIconSize}/>,
-  code: <Code size={navbarIconSize}/>,
-  dateDifference: <CalendarStats size={navbarIconSize}/>,
-  timeZone: <WorldLongitude size={navbarIconSize}/>
+  string: <IconLetterCase size={size}/>,
+  words: <IconList size={size}/>,
+  sentence: <IconSeparator size={size}/>,
+  writing: <IconWriting size={size}/>,
+  paragraph: <IconAlignJustified size={size}/>,
+  numbers: <IconNumbers size={size}/>,
+  ip: <IconWorld size={size}/>,
+  dateTime: <IconCalendarTime size={size}/>,
+  uuid: <IconId size={size}/>,
+  address: <IconAddressBook size={size}/>,
+  length: <IconRuler2 size={size}/>,
+  caseConvert: <IconLetterCaseToggle size={size}/>,
+  reverse: <IconArrowLeftCircle size={size}/>,
+  repeat: <IconRepeat size={size}/>,
+  sort: <IconArrowsSort size={size}/>,
+  code: <IconCode size={size}/>,
+  dateDifference: <IconCalendarStats size={size}/>,
+  timeZone: <IconWorldLongitude size={size}/>
 };
 
-export const clipboardIcon = <Clipboard size={16}/>;
+export const iconCheck = <IconCheck size={size}/>;
+export const iconClipboard = <IconClipboard size={size}/>;
 
+export const iconMoonStars = <IconMoonStars size={size}/>;
+export const iconSun = <IconSun size={size}/>;
