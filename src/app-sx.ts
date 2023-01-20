@@ -12,4 +12,4 @@ export const verticalGroupIndent: Sx = {
 export const textAreaDefaultRowsSmall = 10;
 export const textAreaDefaultRows = 15;
 export const textAreaDefaultRowsBig = 20;
-export const defaultTooltipWidth = 220;
+export const defaultTooltipWidth = 280;
