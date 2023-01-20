@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import faker from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import { IPv } from "./types";
 import { LOWERCASE_LETTERS, NEW_LINE, NO_SPACE, NUMERIC_LETTERS, SYMBOL_LETTERS, UPPERCASE_LETTERS } from "./constants";
 import { dateFormatFunction, DEFAULT_DATETIME_FORMAT } from "./utils.datetime";
