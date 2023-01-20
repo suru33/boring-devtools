@@ -30,10 +30,10 @@ module.exports = {
   ],
   rules: {
     "react/react-in-jsx-scope": "off",
-    "indent": [ "error", 2 ],
+    "indent": [ "error", 2, { "SwitchCase": 1 } ],
     "eqeqeq": "error",
     "array-bracket-spacing": [ "error", "always", { "singleValue": false } ],
-    "linebreak-style":  [ "error", "unix" ],
+    "linebreak-style": [ "error", "unix" ],
     "quotes": [ "error", "double" ],
     "semi": [ "error", "always" ],
     "semi-spacing": [ "error", { "before": false, "after": true } ],
