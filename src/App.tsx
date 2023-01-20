@@ -42,7 +42,7 @@ const App = () => {
                   <Accordion multiple>
                     {
                       allTools.map((tc, i) =>
-                        <Accordion.Item key={`${i}-${tc.label}`} label={tc.label}>
+                        <Accordion.Item key={`${i}-${tc.label}`} value={tc.label}>
                           <Box>
                             <NavbarLinks key={i} parentPath={tc.path} tools={tc.tools}/>
                           </Box>

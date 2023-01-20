@@ -1,10 +1,10 @@
 import { useInputState } from "@mantine/hooks";
-import { Button, Checkbox, Group, NumberInput, Stack, Textarea, TextInput } from "@mantine/core";
+import { Button, Checkbox, Group, NumberInput, Stack, TextInput } from "@mantine/core";
 import { randomStrings } from "../../../commons/utils.random";
-import { defaultMargin, textAreaDefaultRows, verticalGroupIndent } from "../../../app-sx";
+import { textAreaDefaultRowsBig, verticalGroupIndent } from "../../../app-sx";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
-import ClipboardLabel from "../../ClipboardLabel";
 import ComponentLabel from "../../ComponentLabel";
+import CopyTextArea from "../../CopyTextArea";
 
 const StringsGenerator = () => {
   const [ upper, setUpper ] = useInputState(true);
@@ -23,7 +23,7 @@ const StringsGenerator = () => {
   };
 
   return (
-    <>
+    <Stack>
       <ComponentLabel text="Character Set"/>
       <Stack sx={verticalGroupIndent}>
         <Checkbox checked={upper} label="Uppercase alphabets" onChange={setUpper}/>
@@ -35,7 +35,7 @@ const StringsGenerator = () => {
           <TextInput placeholder="add more characters" sx={{ width: 300 }} value={pool} onChange={setPool}/>
         </Group>
       </Stack>
-      <Group sx={defaultMargin} align="end">
+      <Group align="end">
         <NumberInput
           label={<ComponentLabel text="Length"/>}
           value={length}
@@ -50,15 +50,14 @@ const StringsGenerator = () => {
           onChange={setCount}/>
         <Button onClick={generateOutput}>Generate</Button>
       </Group>
-      <Textarea
+      <CopyTextArea
         readOnly
         spellCheck="false"
-        sx={defaultMargin}
-        minRows={textAreaDefaultRows}
+        minRows={textAreaDefaultRowsBig}
         variant="filled"
-        label={<ClipboardLabel title="Output" clipboardData={output}/>}
-        value={output}/>
-    </>
+        label={<ComponentLabel text="Output" />}
+        value={output} />
+    </Stack>
   );
 };
 

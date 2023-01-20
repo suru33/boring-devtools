@@ -1,15 +1,44 @@
 import { useInputState } from "@mantine/hooks";
-import { Radio, RadioGroup, SimpleGrid, Text, Textarea, Tooltip } from "@mantine/core";
-import ClipboardLabel from "../../ClipboardLabel";
+import { Radio, SimpleGrid, Stack, Text, Textarea, Tooltip } from "@mantine/core";
 import { StringCase } from "../../../commons/types";
 import { EMPTY_STRING } from "../../../commons/constants";
-import { defaultMargin, defaultTooltipWidth, textAreaDefaultRowsBig } from "../../../app-sx";
+import { defaultTooltipWidth, textAreaDefaultRowsBig } from "../../../app-sx";
 import { changeCase } from "../../../commons/utils.strings";
 import ComponentLabel from "../../ComponentLabel";
+import CopyTextArea from "../../CopyTextArea";
+
+interface StringCaseRadio {
+  case: StringCase,
+  text: string,
+  help: string,
+  multiline?: boolean
+}
 
 const StringCaseConverter = () => {
 
-  const [ stringCase, setStringCase ] = useInputState("lower");
+  const allOptions: StringCaseRadio[] = [
+    { case: "lower", text: "Lower", help: "Converts string, as a whole, to lower case" },
+    { case: "upper", text: "Upper", help: "Converts string, as a whole, to upper case" },
+    {
+      case: "capitalize",
+      text: "Capitalize",
+      help: "Converts the first character of string to upper case and the remaining to lower case.",
+      multiline: true
+    },
+    { case: "upper-first", text: "Upper first", help: "Converts the first character of string to upper case." },
+    { case: "lower-first", text: "Lower first", help: "Converts the first character of string to lower case." },
+    { case: "camel", text: "Camel", help: "Converts string to camel case." },
+    { case: "kebab", text: "Kebab", help: "Converts string to kebab case." },
+    { case: "snake", text: "Snake", help: "Converts string to snake case." },
+    {
+      case: "deburr",
+      text: "Deburr",
+      help: "Deburrs string by converting Latin-1 Supplement and Latin Extended-A letters to basic Latin letters and removing combining diacritical marks.",
+      multiline: true
+    }
+  ];
+
+  const [ stringCase, setStringCase ] = useInputState<StringCase>("lower");
   const [ input, setInput ] = useInputState(EMPTY_STRING);
   const [ output, setOutput ] = useInputState(EMPTY_STRING);
 
@@ -17,9 +46,9 @@ const StringCaseConverter = () => {
     setOutput(changeCase(stringCase, s));
   };
 
-  const onStringCaseChanged = (stringCase: string) => {
+  const onStringCaseChanged = (stringCase: StringCase) => {
     setStringCase(stringCase);
-    updateOutput(stringCase as StringCase, input);
+    updateOutput(stringCase, input);
   };
 
   const onInputChanged = (value: string) => {
@@ -27,55 +56,42 @@ const StringCaseConverter = () => {
     updateOutput(stringCase as StringCase, value);
   };
 
-  const radioLabel = (text: string, tooltipText: string) =>
-    <Tooltip wrapLines width={defaultTooltipWidth} label={tooltipText}>
-      <Text>{text}</Text>
-    </Tooltip>;
-
   return (
-    <>
-      {/* https://lodash.com/docs/4.17.15#camelCase */}
-      <RadioGroup
+    <Stack>
+      <Radio.Group
         label={<ComponentLabel text="String case"/>}
         onChange={onStringCaseChanged}
         value={stringCase}>
-        <Radio value="lower"
-          label={radioLabel("Lower", "Converts string, as a whole, to lower case")}/>
-        <Radio value="upper"
-          label={radioLabel("Upper", "Converts string, as a whole, to upper case")}/>
-        <Radio value="capitalize"
-          label={radioLabel("Capitalize", "Converts the first character of string to upper case and the remaining to lower case.")}/>
-        <Radio value="upper-first"
-          label={radioLabel("Upper first", "Converts the first character of string to upper case.")}/>
-        <Radio value="lower-first"
-          label={radioLabel("Lower first", "Converts the first character of string to lower case.")}/>
-        <Radio value="camel"
-          label={radioLabel("Camel", "Converts string to camel case.")}/>
-        <Radio value="kebab"
-          label={radioLabel("Kebab", "Converts string to kebab case.")}/>
-        <Radio value="snake"
-          label={radioLabel("Snake", "Converts string to snake case.")}/>
-        <Radio value="deburr"
-          label={radioLabel("Deburr", "Deburrs string by converting Latin-1 Supplement and Latin Extended-A letters to basic Latin letters and removing combining diacritical marks.")}/>
-      </RadioGroup>
+        {
+          allOptions.map((opt) => {
+            const label = <Tooltip
+              withArrow
+              multiline={opt.multiline}
+              label={opt.help}
+              width={opt.multiline ? defaultTooltipWidth : "auto"}>
+              <Text>{opt.text}</Text>
+            </Tooltip>;
+            return <Radio key={opt.case} value={opt.case} label={label}/>;
+          })
+        }
+      </Radio.Group>
 
-      <SimpleGrid sx={defaultMargin} cols={2}>
+      <SimpleGrid cols={2}>
         <Textarea
           spellCheck="false"
           minRows={textAreaDefaultRowsBig}
           label={<ComponentLabel text="Input"/>}
           value={input}
           onChange={e => onInputChanged(e.target.value)}/>
-        <Textarea
+        <CopyTextArea
           readOnly
           spellCheck="false"
           minRows={textAreaDefaultRowsBig}
           variant="filled"
-          label={<ClipboardLabel title="Output" clipboardData={output}/>}
+          label={<ComponentLabel text="Output"/>}
           value={output}/>
       </SimpleGrid>
-    </>
+    </Stack>
   );
 };
-
 export default StringCaseConverter;

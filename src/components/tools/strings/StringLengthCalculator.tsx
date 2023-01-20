@@ -1,6 +1,6 @@
-import { Checkbox, Text, Textarea } from "@mantine/core";
+import { Checkbox, Stack, Text, Textarea } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
-import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
+import { textAreaDefaultRows } from "../../../app-sx";
 import { EMPTY_STRING } from "../../../commons/constants";
 import ComponentLabel from "../../ComponentLabel";
 import { uniqueCharacters } from "../../../commons/utils.strings";
@@ -19,7 +19,7 @@ const StringLengthCalculator = () => {
   };
 
   return (
-    <>
+    <Stack>
       <Textarea
         spellCheck="false"
         minRows={textAreaDefaultRows}
@@ -27,14 +27,14 @@ const StringLengthCalculator = () => {
         value={input}
         onChange={e => onTextChange(e.target.value)}>
       </Textarea>
-      <Checkbox sx={defaultMargin} checked={strip} label="Strip" onChange={setStrip}/>
-      <Text weight={700} sx={defaultMargin}>
+      <Checkbox checked={strip} label="Strip" onChange={setStrip}/>
+      <Text weight={700}>
         Length: <Text color="blue" inherit component="span">{length}</Text>
       </Text>
-      <Text weight={700} sx={defaultMargin}>
+      <Text weight={700}>
         Unique Characters: <Text color="blue" inherit component="span">{uniqueCharactersCount}</Text>
       </Text>
-    </>
+    </Stack>
   );
 };
 

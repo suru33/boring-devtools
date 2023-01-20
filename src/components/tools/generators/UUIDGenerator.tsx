@@ -1,10 +1,10 @@
 import { useInputState } from "@mantine/hooks";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 import { randomUUIDs } from "../../../commons/utils.random";
-import { Button, Group, NumberInput, Textarea } from "@mantine/core";
-import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
-import ClipboardLabel from "../../ClipboardLabel";
+import { Button, Group, NumberInput, Stack } from "@mantine/core";
+import { textAreaDefaultRowsBig } from "../../../app-sx";
 import ComponentLabel from "../../ComponentLabel";
+import CopyTextArea from "../../CopyTextArea";
 
 const UUIDGenerator = () => {
 
@@ -17,7 +17,7 @@ const UUIDGenerator = () => {
   };
 
   return (
-    <>
+    <Stack>
       <Group align="end">
         <NumberInput
           label={<ComponentLabel text="How many?"/>}
@@ -27,15 +27,14 @@ const UUIDGenerator = () => {
           onChange={setCount}/>
         <Button onClick={generateOutput}>Generate</Button>
       </Group>
-      <Textarea
+      <CopyTextArea
         readOnly
         spellCheck="false"
-        sx={defaultMargin}
-        minRows={textAreaDefaultRows}
+        minRows={textAreaDefaultRowsBig}
         variant="filled"
-        label={<ClipboardLabel title="Output" clipboardData={output}/>}
+        label={<ComponentLabel text="Output"/>}
         value={output}/>
-    </>
+    </Stack>
   );
 };
 
