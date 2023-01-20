@@ -2,7 +2,7 @@ import { IPv } from "../../../commons/types";
 import { useInputState } from "@mantine/hooks";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 import { randomIPs } from "../../../commons/utils.random";
-import { Button, Group, NumberInput, Radio, RadioGroup, Textarea } from "@mantine/core";
+import { Button, Group, NumberInput, Radio, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import ClipboardLabel from "../../ClipboardLabel";
 import ComponentLabel from "../../ComponentLabel";
@@ -20,13 +20,13 @@ const IPAddressGenerator = () => {
 
   return (
     <>
-      <RadioGroup
+      <Radio.Group
         label={<ComponentLabel text="IP version?"/>}
         onChange={setVersion}
         value={version}>
         <Radio value="v4" label="IPv4"/>
         <Radio value="v6" label="IPv6"/>
-      </RadioGroup>
+      </Radio.Group>
 
       <Group align="end" sx={defaultMargin}>
         <NumberInput

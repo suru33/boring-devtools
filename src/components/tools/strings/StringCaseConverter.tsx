@@ -1,5 +1,5 @@
 import { useInputState } from "@mantine/hooks";
-import { Radio, RadioGroup, SimpleGrid, Text, Textarea, Tooltip } from "@mantine/core";
+import { Radio, SimpleGrid, Text, Textarea, Tooltip } from "@mantine/core";
 import ClipboardLabel from "../../ClipboardLabel";
 import { StringCase } from "../../../commons/types";
 import { EMPTY_STRING } from "../../../commons/constants";
@@ -28,14 +28,14 @@ const StringCaseConverter = () => {
   };
 
   const radioLabel = (text: string, tooltipText: string) =>
-    <Tooltip wrapLines width={defaultTooltipWidth} label={tooltipText}>
+    <Tooltip multiline width={defaultTooltipWidth} label={tooltipText}>
       <Text>{text}</Text>
     </Tooltip>;
 
   return (
     <>
       {/* https://lodash.com/docs/4.17.15#camelCase */}
-      <RadioGroup
+      <Radio.Group
         label={<ComponentLabel text="String case"/>}
         onChange={onStringCaseChanged}
         value={stringCase}>
@@ -57,7 +57,7 @@ const StringCaseConverter = () => {
           label={radioLabel("Snake", "Converts string to snake case.")}/>
         <Radio value="deburr"
           label={radioLabel("Deburr", "Deburrs string by converting Latin-1 Supplement and Latin Extended-A letters to basic Latin letters and removing combining diacritical marks.")}/>
-      </RadioGroup>
+      </Radio.Group>
 
       <SimpleGrid sx={defaultMargin} cols={2}>
         <Textarea
