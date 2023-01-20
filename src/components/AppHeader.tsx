@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ActionIcon, ColorScheme, Group, Header, Text, UnstyledButton } from "@mantine/core";
-import { MoonStars, Sun } from "tabler-icons-react";
 import AppLogo from "../resources/AppLogo";
+import { iconMoonStars, iconSun } from "../resources/icons";
 
 interface AppHeaderProps {
   colorScheme: ColorScheme,
@@ -25,7 +25,7 @@ const AppHeader = (props: AppHeaderProps) => {
         </UnstyledButton>
       </Group>
       <ActionIcon variant="default" onClick={() => colorSchemeToggleFn()} size={30}>
-        {colorScheme === "dark" ? <Sun size={16}/> : <MoonStars size={16}/>}
+        {colorScheme === "dark" ? iconSun : iconMoonStars}
       </ActionIcon>
     </Group>
   </Header>;
