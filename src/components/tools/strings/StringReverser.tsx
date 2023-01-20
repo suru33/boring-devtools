@@ -3,10 +3,10 @@ import { SimpleGrid, Stack, Text, Textarea } from "@mantine/core";
 import { defaultMargin, textAreaDefaultRowsBig } from "../../../app-sx";
 import { EMPTY_STRING } from "../../../commons/constants";
 import { reverse } from "../../../commons/utils.strings";
-import ClipboardLabel from "../../ClipboardLabel";
 import ComponentLabel from "../../ComponentLabel";
 import { isEmpty } from "lodash";
 import { useEffect, useState } from "react";
+import CopyTextArea from "../../CopyTextArea";
 
 const StringReverser = () => {
   const initialStatus = { message: "Input is empty", color: "grey" };
@@ -30,26 +30,25 @@ const StringReverser = () => {
   }, [ input, output ]);
 
   return (
-    <>
-      <Stack>
-        <SimpleGrid cols={2} sx={defaultMargin}>
-          <Textarea
-            spellCheck="false"
-            minRows={textAreaDefaultRowsBig}
-            label={<ComponentLabel text="Input"/>}
-            value={input}
-            onChange={e => onTextChange(e.target.value)}/>
-          <Textarea
-            readOnly
-            spellCheck="false"
-            variant="filled"
-            minRows={textAreaDefaultRowsBig}
-            label={<ClipboardLabel title="Output" clipboardData={output}/>}
-            value={output}/>
-        </SimpleGrid>
-        <Text weight={700} color={status.color}>{status.message}</Text>
-      </Stack>
-    </>
+    <Stack>
+      <SimpleGrid cols={2} sx={defaultMargin}>
+        <Textarea
+          spellCheck="false"
+          minRows={textAreaDefaultRowsBig}
+          label={<ComponentLabel text="Input"/>}
+          value={input}
+          onChange={e => onTextChange(e.target.value)}/>
+        <CopyTextArea
+          readOnly
+          spellCheck="false"
+          variant="filled"
+          minRows={textAreaDefaultRowsBig}
+          label={<ComponentLabel text="Output"/>}
+          value={output}
+        />
+      </SimpleGrid>
+      <Text weight={700} color={status.color}>{status.message}</Text>
+    </Stack>
   );
 };
 

@@ -1,10 +1,10 @@
 import { useInputState } from "@mantine/hooks";
-import { Button, Group, NumberInput, Textarea } from "@mantine/core";
-import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
+import { Button, Group, NumberInput, Stack } from "@mantine/core";
+import { textAreaDefaultRowsBig } from "../../../app-sx";
 import { randomWords } from "../../../commons/utils.random";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
-import ClipboardLabel from "../../ClipboardLabel";
 import ComponentLabel from "../../ComponentLabel";
+import CopyTextArea from "../../CopyTextArea";
 
 const WordsGenerator = () => {
   const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
@@ -16,8 +16,8 @@ const WordsGenerator = () => {
   };
 
   return (
-    <>
-      <Group align="end">
+    <Stack>
+      <Group align="end" >
         <NumberInput
           label={<ComponentLabel text="How many?"/>}
           value={count}
@@ -26,15 +26,14 @@ const WordsGenerator = () => {
           onChange={setCount}/>
         <Button onClick={generateOutput}>Generate</Button>
       </Group>
-      <Textarea
+      <CopyTextArea
         readOnly
         spellCheck="false"
-        sx={defaultMargin}
-        minRows={textAreaDefaultRows}
+        minRows={textAreaDefaultRowsBig}
         variant="filled"
-        label={<ClipboardLabel title="Output" clipboardData={output}/>}
+        label={<ComponentLabel text="Output"/>}
         value={output}/>
-    </>
+    </Stack>
   );
 };
 

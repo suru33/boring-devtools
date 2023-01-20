@@ -1,14 +1,14 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { Button, Grid, Group, NumberInput, Select, Text, Textarea } from "@mantine/core";
+import { Button, Grid, Group, NumberInput, Select, Stack, Text } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
-import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
+import { textAreaDefaultRowsBig } from "../../../app-sx";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
-import ClipboardLabel from "../../ClipboardLabel";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 import { randomDates } from "../../../commons/utils.random";
 import { combineDateTime } from "../../../commons/utils.datetime";
+import CopyTextArea from "../../CopyTextArea";
 
 const DateTimeGenerator = () => {
   const ERROR_MESSAGE = "* start date and time should be < end date time";
@@ -55,7 +55,7 @@ const DateTimeGenerator = () => {
   };
 
   return (
-    <>
+    <Stack>
       <Group align="end">
         <DatePicker
           label={<ComponentLabel text="Start date & time"/>}
@@ -74,7 +74,7 @@ const DateTimeGenerator = () => {
           onChange={v => onEndDateChange(v || END_DATE)}/>
         <TimeInput value={endTime} onChange={onEndTimeChange}/>
       </Group>
-      <Grid align="end" sx={defaultMargin}>
+      <Grid align="end">
         <Grid.Col span={3}>
           <Select
             data={FORMATS}
@@ -94,15 +94,14 @@ const DateTimeGenerator = () => {
           <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>
         </Grid.Col>
       </Grid>
-      <Textarea
+      <CopyTextArea
         readOnly
         spellCheck="false"
-        sx={defaultMargin}
-        minRows={textAreaDefaultRows}
+        minRows={textAreaDefaultRowsBig}
         variant="filled"
-        label={<ClipboardLabel title="Output" clipboardData={output}/>}
+        label={<ComponentLabel text="Output"/>}
         value={output}/>
-    </>
+    </Stack>
   );
 };
 

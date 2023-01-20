@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Checkbox, Group, NumberInput, Select, Textarea } from "@mantine/core";
+import { Button, Checkbox, Group, NumberInput, Select, Stack } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
-import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
+import { textAreaDefaultRowsBig } from "../../../app-sx";
 import { randomNumbers } from "../../../commons/utils.random";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
-import ClipboardLabel from "../../ClipboardLabel";
 import { range } from "../../../commons/utils.numbers";
+import CopyTextArea from "../../CopyTextArea";
 
 const NumbersGenerator = () => {
   const [ min, setMin ] = useInputState(0);
@@ -35,7 +35,7 @@ const NumbersGenerator = () => {
   };
 
   return (
-    <>
+    <Stack>
       <Group align="initial">
         <NumberInput
           label={<ComponentLabel text="Min"/>}
@@ -67,19 +67,18 @@ const NumbersGenerator = () => {
           max={MAX_OUTPUT_ITEMS}
           onChange={setCount}/>
       </Group>
-      <Group sx={defaultMargin} align="center">
+      <Group align="center">
         <Checkbox checked={floatValue} label="Float values" onChange={e => setFloatValue(e.target.checked)}/>
         <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>
       </Group>
-      <Textarea
+      <CopyTextArea
         readOnly
         spellCheck="false"
-        sx={defaultMargin}
-        minRows={textAreaDefaultRows}
+        minRows={textAreaDefaultRowsBig}
         variant="filled"
-        label={<ClipboardLabel title="Output" clipboardData={output}/>}
+        label={<ComponentLabel text="Output"/>}
         value={output}/>
-    </>
+    </Stack>
   );
 };
 export default NumbersGenerator;
