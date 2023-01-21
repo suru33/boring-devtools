@@ -21,7 +21,8 @@ import {
   IconTransform,
   IconWorld,
   IconWorldLongitude,
-  IconWriting
+  IconWriting,
+  IconSearch
 } from "@tabler/icons";
 
 const size = 16;
@@ -50,6 +51,7 @@ export const navbarIcons = {
 
 export const iconCheck = <IconCheck size={size}/>;
 export const iconClipboard = <IconClipboard size={size}/>;
-
 export const iconMoonStars = <IconMoonStars size={size}/>;
 export const iconSun = <IconSun size={size}/>;
+export const iconSearch = <IconSearch size={size}/>;
+export const iconSearchBig = <IconSearch size={18}/>;
