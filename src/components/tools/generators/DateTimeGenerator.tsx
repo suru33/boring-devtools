@@ -1,14 +1,14 @@
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Button, Grid, Group, NumberInput, Select, Stack, Text } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
-import { textAreaDefaultRows } from "../../../app-sx";
 import { useInputState } from "@mantine/hooks";
+import dayjs from "dayjs";
 import ComponentLabel from "../../ComponentLabel";
-import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
+import CopyTextArea from "../../CopyTextArea";
+import { textAreaDefaultRows } from "../../../app-sx";
 import { randomDates } from "../../../commons/utils.random";
 import { combineDateTime } from "../../../commons/utils.datetime";
-import CopyTextArea from "../../CopyTextArea";
+import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 
 const DateTimeGenerator = () => {
   const ERROR_MESSAGE = "* start date and time should be < end date time";

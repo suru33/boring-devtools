@@ -1,9 +1,9 @@
 import { Checkbox, Stack, Text, Textarea } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
-import { textAreaDefaultRows } from "../../../app-sx";
-import { EMPTY_STRING } from "../../../commons/constants";
 import ComponentLabel from "../../ComponentLabel";
+import { textAreaDefaultRows } from "../../../app-sx";
 import { uniqueCharacters } from "../../../commons/utils.strings";
+import { EMPTY_STRING } from "../../../commons/constants";
 
 const StringLengthCalculator = () => {
   const [ input, setInput ] = useInputState(EMPTY_STRING);

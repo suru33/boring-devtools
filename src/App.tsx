@@ -9,12 +9,12 @@ import {
   Navbar,
   ScrollArea
 } from "@mantine/core";
+import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import Home from "./pages/Home";
 import NavbarLinks from "./components/NavbarLinks";
 import AppHeader from "./components/AppHeader";
 import ToolContainer from "./components/ToolContainer";
 import { allTools } from "./components/tools";
-import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useLocalStorage<ColorScheme>({

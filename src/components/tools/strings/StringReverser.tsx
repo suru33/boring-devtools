@@ -1,12 +1,12 @@
-import { useInputState } from "@mantine/hooks";
+import { useEffect, useState } from "react";
 import { SimpleGrid, Stack, Text, Textarea } from "@mantine/core";
+import { useInputState } from "@mantine/hooks";
+import ComponentLabel from "../../ComponentLabel";
+import CopyTextArea from "../../CopyTextArea";
+import { reverse } from "../../../commons/utils.strings";
+import { isEmpty } from "lodash";
 import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import { EMPTY_STRING } from "../../../commons/constants";
-import { reverse } from "../../../commons/utils.strings";
-import ComponentLabel from "../../ComponentLabel";
-import { isEmpty } from "lodash";
-import { useEffect, useState } from "react";
-import CopyTextArea from "../../CopyTextArea";
 
 const StringReverser = () => {
   const initialStatus = { message: "Input is empty", color: "grey" };
