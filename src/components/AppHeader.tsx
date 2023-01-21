@@ -6,8 +6,8 @@ import AppLogo from "../resources/AppLogo";
 import { iconMoonStars, iconSearch, iconSun } from "../resources/icons";
 
 interface AppHeaderProps {
-    colorScheme: ColorScheme,
-    colorSchemeToggleFn: (value?: ColorScheme) => void
+  colorScheme: ColorScheme,
+  colorSchemeToggleFn: (value?: ColorScheme) => void
 }
 
 const AppHeader = (props: AppHeaderProps) => {
