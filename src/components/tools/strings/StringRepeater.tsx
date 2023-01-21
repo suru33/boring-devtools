@@ -1,10 +1,10 @@
-import { defaultMargin, textAreaDefaultRowsBig } from "../../../app-sx";
 import { Group, NumberInput, SimpleGrid, Stack, Textarea } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
-import { EMPTY_STRING } from "../../../commons/constants";
-import { repeat } from "../../../commons/utils.strings";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
+import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
+import { repeat } from "../../../commons/utils.strings";
+import { EMPTY_STRING } from "../../../commons/constants";
 
 const StringRepeater = () => {
   const [ times, setTimes ] = useInputState(3);
@@ -38,14 +38,14 @@ const StringRepeater = () => {
       <SimpleGrid cols={2}>
         <Textarea
           spellCheck="false"
-          minRows={textAreaDefaultRowsBig}
+          minRows={textAreaDefaultRows}
           label={<ComponentLabel text="Input"/>}
           value={input}
           onChange={e => onInputChanged(e.target.value)}/>
         <CopyTextArea
           readOnly
           spellCheck="false"
-          minRows={textAreaDefaultRowsBig}
+          minRows={textAreaDefaultRows}
           variant="filled"
           label={<ComponentLabel text="Output"/>}
           value={output}/>

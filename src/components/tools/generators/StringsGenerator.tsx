@@ -1,10 +1,10 @@
-import { useInputState } from "@mantine/hooks";
 import { Button, Checkbox, Group, NumberInput, Stack, TextInput } from "@mantine/core";
-import { randomStrings } from "../../../commons/utils.random";
-import { textAreaDefaultRowsBig, verticalGroupIndent } from "../../../app-sx";
-import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
+import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
+import { randomStrings } from "../../../commons/utils.random";
+import { textAreaDefaultRows, verticalGroupIndent } from "../../../app-sx";
+import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 
 const StringsGenerator = () => {
   const [ upper, setUpper ] = useInputState(true);
@@ -53,7 +53,7 @@ const StringsGenerator = () => {
       <CopyTextArea
         readOnly
         spellCheck="false"
-        minRows={textAreaDefaultRowsBig}
+        minRows={textAreaDefaultRows}
         variant="filled"
         label={<ComponentLabel text="Output" />}
         value={output} />
