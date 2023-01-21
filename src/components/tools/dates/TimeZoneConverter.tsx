@@ -5,9 +5,8 @@ import { useInputState } from "@mantine/hooks";
 import dayjs from "dayjs";
 import * as utcPlugin from "dayjs/plugin/utc";
 import * as timezonePlugin from "dayjs/plugin/timezone";
-import { flatten } from "lodash";
+import { flatten, isEmpty } from "lodash";
 import ComponentLabel from "../../ComponentLabel";
-import { isEmpty } from "../../../commons/utils.strings";
 import { allTimeZones } from "../../../resources/countries";
 import { combineDateTime } from "../../../commons/utils.datetime";
 

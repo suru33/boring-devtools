@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button, Checkbox, Group, NumberInput, Select, Stack } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
+import { range } from "lodash";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
 import { textAreaDefaultRows } from "../../../app-sx";
 import { randomNumbers } from "../../../commons/utils.random";
-import { range } from "../../../commons/utils.numbers";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 
 const NumbersGenerator = () => {
