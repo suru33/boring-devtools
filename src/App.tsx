@@ -44,6 +44,7 @@ const App = () => {
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={appTheme} withGlobalStyles withNormalizeCSS>
         <SpotlightProvider
+          highlightQuery
           searchIcon={iconSearchBig}
           searchPlaceholder={SEARCH}
           nothingFoundMessage={NOTHING_FOUND}
