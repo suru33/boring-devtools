@@ -8,6 +8,7 @@ import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { allCountryCodes, CountryCode, defaultLocale, fakerLocales } from "../../../resources/countries";
 import { textAreaDefaultRows } from "../../../app-sx";
 import { countryDropdownOptions, generateAddress } from "../../../commons/utils.country";
+import { NOTHING_FOUND } from "../../../commons/constants";
 
 const AddressGenerator = () => {
 
@@ -26,8 +27,7 @@ const AddressGenerator = () => {
       <Group>
         <Select
           searchable
-          clearButtonLabel="Clear selection"
-          nothingFound="Nothing found"
+          nothingFound={NOTHING_FOUND}
           label={<ComponentLabel text="Select locale" />}
           value={locale}
           onChange={setLocale}
@@ -37,8 +37,7 @@ const AddressGenerator = () => {
       <MultiSelect
         searchable
         clearable
-        clearButtonLabel="Clear selection"
-        nothingFound="Nothing found"
+        nothingFound={NOTHING_FOUND}
         label={<ComponentLabel text="Select countries" />}
         value={selectedCountries}
         onChange={(v) => setSelectedCountries(v as CountryCode[])}
