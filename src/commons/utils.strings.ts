@@ -25,3 +25,6 @@ export const changeCase = (stringCase: StringCase, s: string): string =>
 export const repeat = (s: string, n: number): string => _.repeat(s, n);
 
 export const uniqueCharacters = (s: string) => _.uniq(s);
+
+export const sortLines = (s: string): string =>
+  s.split("\n").map(s => s.trim()).sort().join("\n");
