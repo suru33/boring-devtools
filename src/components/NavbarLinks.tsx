@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Group, MantineTheme, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
+import { Group, MantineTheme, Sx, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { Tool } from "./tools";
 
 interface NavbarLinkProps {
@@ -43,18 +43,20 @@ const NavbarLink = (props: NavbarLinkProps) => {
     return {}; // should never reach
   };
 
+  const navBarSx: Sx = (theme) => {
+    const defaultColors =  getColors(theme);
+    return {
+      display: "block",
+      width: "100%",
+      padding: theme.spacing.xs,
+      background: defaultColors.background,
+      color: defaultColors.text,
+      "&:hover": { backgroundColor: getColors(theme, true).hover }
+    };
+  };
+
   return (
-    <UnstyledButton
-      sx={(theme) => ({
-        display: "block",
-        width: "100%",
-        padding: theme.spacing.xs,
-        background: getColors(theme).background,
-        color: getColors(theme).text,
-        "&:hover": { backgroundColor: getColors(theme, true).hover }
-      })}
-      component={Link}
-      to={path}>
+    <UnstyledButton sx={navBarSx} component={Link} to={path}>
       <Group>
         <ThemeIcon color={tool.color} variant="light">{tool.icon}</ThemeIcon>
         <Text size="sm">{tool.label}</Text>
