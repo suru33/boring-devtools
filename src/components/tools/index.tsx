@@ -1,5 +1,8 @@
 import { ReactNode } from "react";
+import { NavigateFunction } from "react-router-dom";
+import { SpotlightAction } from "@mantine/spotlight";
 import { MantineColor } from "@mantine/styles/lib/theme/types/MantineColor";
+import { flatten, isEqual } from "lodash";
 import StringsGenerator from "./generators/StringsGenerator";
 import WordsGenerator from "./generators/WordsGenerator";
 import SentencesGenerator from "./generators/SentencesGenerator";
@@ -158,7 +161,6 @@ const dateToolsCategory: ToolCategory = {
   path: "date-tools",
   tools: [
     {
-
       label: "Date Difference Calculator",
       path: "date-difference-calculator",
       component: <DateDifferenceCalculator/>,
@@ -166,7 +168,6 @@ const dateToolsCategory: ToolCategory = {
       color: colors.dates
     },
     {
-
       label: "Time Zone Converter",
       path: "time-zone-converter",
       component: <TimeZoneConverter/>,
@@ -181,3 +182,25 @@ export const allTools: ToolCategory[] = [
   stringToolsCategory,
   dateToolsCategory
 ];
+
+export const getToolPath = (tc: ToolCategory, t: Tool) => {
+  if(tc.tools.find(i => isEqual(i, t))) {
+    return `/${tc.path}/${t.path}`;
+  } else {
+    throw new Error(`${t.label} does not belongs to ${tc.label}`);
+  }
+};
+
+export const buildSpotlightActions = (navigateFn: NavigateFunction): SpotlightAction[] => flatten(
+  allTools.map((tc) =>
+    tc.tools.map(t => {
+      const action: SpotlightAction = {
+        id: `${tc.path}-${t.path}`,
+        title: t.label,
+        icon: t.icon,
+        group: tc.label,
+        onTrigger: () => navigateFn(getToolPath(tc, t))
+      };
+      return action;
+    })
+  ));
