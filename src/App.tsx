@@ -10,14 +10,15 @@ import {
   Navbar,
   ScrollArea
 } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 import Home from "./pages/Home";
-import { allTools } from "./components/tools";
 import NavbarLinks from "./components/NavbarLinks";
 import AppHeader from "./components/AppHeader";
 import ToolContainer from "./components/ToolContainer";
-import { NotificationsProvider } from "@mantine/notifications";
+import { allTools } from "./components/tools";
 
 const App = () => {
+  // TODO: implement theme local storage
   const [ colorScheme, setColorScheme ] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
@@ -65,8 +66,7 @@ const App = () => {
                           <Route
                             key={`${tc.path}-${t.path}`}
                             path={t.path}
-                            element={<ToolContainer title={t.label}>{t.component}</ToolContainer>}
-                          />)
+                            element={<ToolContainer title={t.label}>{t.component}</ToolContainer>}/>)
                       }
                     </Route>
                   )
