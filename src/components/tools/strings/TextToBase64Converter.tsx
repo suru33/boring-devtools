@@ -1,4 +1,4 @@
-import { SimpleGrid, Textarea } from "@mantine/core";
+import { SimpleGrid } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
