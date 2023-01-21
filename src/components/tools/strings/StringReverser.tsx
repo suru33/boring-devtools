@@ -1,6 +1,6 @@
 import { useInputState } from "@mantine/hooks";
 import { SimpleGrid, Stack, Text, Textarea } from "@mantine/core";
-import { defaultMargin, textAreaDefaultRowsBig } from "../../../app-sx";
+import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
 import { EMPTY_STRING } from "../../../commons/constants";
 import { reverse } from "../../../commons/utils.strings";
 import ComponentLabel from "../../ComponentLabel";
@@ -34,7 +34,7 @@ const StringReverser = () => {
       <SimpleGrid cols={2} sx={defaultMargin}>
         <Textarea
           spellCheck="false"
-          minRows={textAreaDefaultRowsBig}
+          minRows={textAreaDefaultRows}
           label={<ComponentLabel text="Input"/>}
           value={input}
           onChange={e => onTextChange(e.target.value)}/>
@@ -42,7 +42,7 @@ const StringReverser = () => {
           readOnly
           spellCheck="false"
           variant="filled"
-          minRows={textAreaDefaultRowsBig}
+          minRows={textAreaDefaultRows}
           label={<ComponentLabel text="Output"/>}
           value={output}
         />

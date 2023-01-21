@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Button, Grid, Group, NumberInput, Select, Stack, Text } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
-import { textAreaDefaultRowsBig } from "../../../app-sx";
+import { textAreaDefaultRows } from "../../../app-sx";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
@@ -82,7 +82,7 @@ const DateTimeGenerator = () => {
             value={format}
             onChange={v => setFormat(v || DEFAULT_FORMAT)}/>
         </Grid.Col>
-        <Grid.Col span={1}>
+        <Grid.Col span={2}>
           <NumberInput
             label={<ComponentLabel text="How many?"/>}
             value={count}
@@ -97,7 +97,7 @@ const DateTimeGenerator = () => {
       <CopyTextArea
         readOnly
         spellCheck="false"
-        minRows={textAreaDefaultRowsBig}
+        minRows={textAreaDefaultRows}
         variant="filled"
         label={<ComponentLabel text="Output"/>}
         value={output}/>

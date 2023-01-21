@@ -2,7 +2,7 @@ import { useInputState } from "@mantine/hooks";
 import { Radio, SimpleGrid, Stack, Text, Textarea, Tooltip } from "@mantine/core";
 import { StringCase } from "../../../commons/types";
 import { EMPTY_STRING } from "../../../commons/constants";
-import { defaultTooltipWidth, textAreaDefaultRowsBig } from "../../../app-sx";
+import { defaultTooltipWidth, textAreaDefaultRows } from "../../../app-sx";
 import { changeCase } from "../../../commons/utils.strings";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
@@ -79,14 +79,14 @@ const StringCaseConverter = () => {
       <SimpleGrid cols={2}>
         <Textarea
           spellCheck="false"
-          minRows={textAreaDefaultRowsBig}
+          minRows={textAreaDefaultRows}
           label={<ComponentLabel text="Input"/>}
           value={input}
           onChange={e => onInputChanged(e.target.value)}/>
         <CopyTextArea
           readOnly
           spellCheck="false"
-          minRows={textAreaDefaultRowsBig}
+          minRows={textAreaDefaultRows}
           variant="filled"
           label={<ComponentLabel text="Output"/>}
           value={output}/>

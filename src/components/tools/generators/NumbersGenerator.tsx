@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Checkbox, Group, NumberInput, Select, Stack } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
-import { textAreaDefaultRowsBig } from "../../../app-sx";
+import { textAreaDefaultRows } from "../../../app-sx";
 import { randomNumbers } from "../../../commons/utils.random";
 import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 import { range } from "../../../commons/utils.numbers";
@@ -74,7 +74,7 @@ const NumbersGenerator = () => {
       <CopyTextArea
         readOnly
         spellCheck="false"
-        minRows={textAreaDefaultRowsBig}
+        minRows={textAreaDefaultRows}
         variant="filled"
         label={<ComponentLabel text="Output"/>}
         value={output}/>
