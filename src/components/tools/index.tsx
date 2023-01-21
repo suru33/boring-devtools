@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { MantineColor } from "@mantine/styles/lib/theme/types/MantineColor";
-
 import StringsGenerator from "./generators/StringsGenerator";
 import WordsGenerator from "./generators/WordsGenerator";
 import SentencesGenerator from "./generators/SentencesGenerator";
@@ -15,7 +14,7 @@ import StringCaseConverter from "./strings/StringCaseConverter";
 import StringReverser from "./strings/StringReverser";
 import StringRepeater from "./strings/StringRepeater";
 import WordsSorter from "./strings/WordsSorter";
-import HEXtoStringConverter from "./strings/HEXtoStringConverter";
+import TextToBase64Converter from "./strings/TextToBase64Converter";
 import DateDifferenceCalculator from "./dates/DateDifferenceCalculator";
 import TimeZoneConverter from "./dates/TimeZoneConverter";
 import { navbarColors as colors } from "../../resources/colors";
@@ -145,10 +144,10 @@ const stringToolsCategory: ToolCategory = {
       color: colors.strings
     },
     {
-      label: "HEX to String Converter",
-      path: "hex-to-string-converter",
-      component: <HEXtoStringConverter/>,
-      icon: icons.code,
+      label: "Text to Base64 Converter",
+      path: "text-to-base64-converter",
+      component: <TextToBase64Converter/>,
+      icon: icons.transform,
       color: colors.code
     }
   ]
