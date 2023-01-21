@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import Flag from "react-world-flags";
 
 export const allContinents =
     [ "Africa", "Antarctica", "Asia", "Europe", "North America", "Oceania", "South America" ] as const;
@@ -468,7 +467,11 @@ export const allTimeZones: Record<Continent, string[]> = {
   ]
 };
 
-interface CountryData {name: string, postal_code_format: string, phone_format: string}
+interface CountryData {
+    name: string,
+    postal_code_format: string,
+    phone_format: string
+}
 
 const allCountries: Record<CountryCode, CountryData> = {
   "AD": {
@@ -1737,5 +1740,3 @@ export const getCountryData = (code: CountryCode) => allCountries[code];
 export const getCountryName = (code: CountryCode) => allCountries[code].name;
 export const getZipCodeFormat = (code: CountryCode) => allCountries[code].postal_code_format;
 export const getPhoneFormat = (code: CountryCode) => allCountries[code].phone_format;
-export const getCountryFlag = (code: CountryCode): ReactNode =>
-  <Flag code={code} width={24} fallback={<span></span>}/>;
