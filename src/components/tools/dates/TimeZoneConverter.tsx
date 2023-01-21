@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Group, Mark, Select, SelectItem, Stack, Text } from "@mantine/core";
+import { Button, Group, Mark, Select, SelectItem, Stack, Text } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
 import { useInputState } from "@mantine/hooks";
 import dayjs from "dayjs";
@@ -25,9 +25,11 @@ const TimeZoneConverter = () => {
       return timezones.map((t) => ({ value: t, label: t, group: continent }));
     })) ];
 
+  const getUserTimezone = () => isEmpty(userTimezone) ? utc : userTimezone;
+
   const [ inputDate, onInputDateChange ] = useInputState(now);
   const [ inputTime, onInputTimeChange ] = useState(now);
-  const [ inputTimezone, setInputTimezone ] = useInputState(isEmpty(userTimezone) ? utc : userTimezone);
+  const [ inputTimezone, setInputTimezone ] = useInputState(getUserTimezone());
   const [ outputTimezone, setOutputTimezone ] = useInputState(utc);
   const [ input, setInput ] = useState<string[]>([]);
   const [ output, setOutput ] = useState<string[]>([]);
@@ -45,6 +47,13 @@ const TimeZoneConverter = () => {
         <Text span color="lightgrey">{" UTC Offset "}</Text>
         <Text span color="cyan">{Z}</Text>
       </Text>);
+  };
+
+  const setNow = () => {
+    const now = new Date();
+    onInputDateChange(now);
+    onInputTimeChange(now);
+    setInputTimezone(getUserTimezone());
   };
 
   useEffect(() => {
@@ -65,7 +74,7 @@ const TimeZoneConverter = () => {
             <Text span color="blue"><Mark>{userTimezone}</Mark></Text>
           </Text>
       }
-      <Group>
+      <Group align="end">
         <DatePicker
           label={<ComponentLabel text="Date"/>}
           value={inputDate}
@@ -85,6 +94,7 @@ const TimeZoneConverter = () => {
           data={timezoneDropdownData}
           value={inputTimezone}
           onChange={setInputTimezone}/>
+        <Button onClick={setNow}>Now</Button>
       </Group>
       {displayDatetime(inputTimezone, input)}
       <Select
