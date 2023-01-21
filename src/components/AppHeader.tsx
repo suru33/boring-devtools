@@ -24,7 +24,7 @@ const AppHeader = (props: AppHeaderProps) => {
           </Group>
         </UnstyledButton>
       </Group>
-      <ActionIcon variant="default" onClick={() => colorSchemeToggleFn()} size={30}>
+      <ActionIcon variant="default" onClick={() => colorSchemeToggleFn()} size={30} title="Toggle color scheme">
         {colorScheme === "dark" ? iconSun : iconMoonStars}
       </ActionIcon>
     </Group>

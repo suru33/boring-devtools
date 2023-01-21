@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
   Accordion,
@@ -16,12 +15,19 @@ import NavbarLinks from "./components/NavbarLinks";
 import AppHeader from "./components/AppHeader";
 import ToolContainer from "./components/ToolContainer";
 import { allTools } from "./components/tools";
+import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 
 const App = () => {
-  // TODO: implement theme local storage
-  const [ colorScheme, setColorScheme ] = useState<ColorScheme>("light");
+  const [ colorScheme, setColorScheme ] = useLocalStorage<ColorScheme>({
+    key: "app-color-scheme",
+    defaultValue: "light",
+    getInitialValueInEffect: true
+  });
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+
+  useHotkeys([[ "mod+J", () => toggleColorScheme() ]]);
+
   const appFontFamily = "'JetBrains Mono', monospace";
   const appTheme = {
     fontFamily: appFontFamily,
@@ -32,7 +38,7 @@ const App = () => {
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider theme={appTheme} withGlobalStyles>
+      <MantineProvider theme={appTheme} withGlobalStyles withNormalizeCSS>
         <NotificationsProvider>
           <AppShell
             fixed
