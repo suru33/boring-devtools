@@ -14,7 +14,7 @@ const DateTimeGenerator = () => {
   const ERROR_MESSAGE = "* start date and time should be < end date time";
   const START_DATE = dayjs().hour(0).minute(0).second(0).toDate();
   const START_TIME = dayjs().hour(0).minute(0).second(0).toDate();
-  const END_DATE = dayjs().add(10, "days").toDate();
+  const END_DATE = dayjs(START_DATE).add(10, "days").toDate();
   const END_TIME = dayjs().hour(23).minute(59).second(59).toDate();
   const DEFAULT_FORMAT = "YYYY-MM-DD HH:mm";
   const FORMATS = [
