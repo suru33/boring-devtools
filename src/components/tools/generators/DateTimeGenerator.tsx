@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { Button, Grid, Group, NumberInput, Select, Stack, Text } from "@mantine/core";
+import { Button, Grid, Group, Select, Stack, Text } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
 import { useInputState } from "@mantine/hooks";
 import dayjs from "dayjs";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
+import HowMany, { useHowManyInputState } from "../../HowMany";
+import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { textAreaDefaultRows } from "../../../app-sx";
 import { randomDates } from "../../../commons/utils.random";
 import { combineDateTime } from "../../../commons/utils.datetime";
-import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
+import { EMPTY_STRING } from "../../../commons/constants";
 
 const DateTimeGenerator = () => {
   const ERROR_MESSAGE = "* start date and time should be < end date time";
@@ -38,9 +40,9 @@ const DateTimeGenerator = () => {
   const [ startTime, onStartTimeChange ] = useState(START_TIME);
   const [ endDate, onEndDateChange ] = useState(END_DATE);
   const [ endTime, onEndTimeChange ] = useState(END_TIME);
-  const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
   const [ errorFlag, setErrorFlag ] = useState(false);
-  const [ output, setOutput ] = useState(EMPTY_STRING);
+  const [ count, setCount ] = useHowManyInputState();
+  const [ output, setOutput ] = useEmptyStringInputState();
   const [ generateDisabled, setGenerateDisabled ] = useInputState(false);
   const [ format, setFormat ] = useState(DEFAULT_FORMAT);
 
@@ -59,7 +61,6 @@ const DateTimeGenerator = () => {
       <Group align="end">
         <DatePicker
           label={<ComponentLabel text="Start date & time"/>}
-          amountOfMonths={2}
           value={startDate}
           error={errorFlag}
           clearable={false}
@@ -68,7 +69,6 @@ const DateTimeGenerator = () => {
         <Text color="red" size="sm">{errorFlag ? ERROR_MESSAGE : EMPTY_STRING}</Text>
         <DatePicker
           label={<ComponentLabel text="End date & time"/>}
-          amountOfMonths={2}
           value={endDate}
           clearable={false}
           onChange={v => onEndDateChange(v || END_DATE)}/>
@@ -83,12 +83,7 @@ const DateTimeGenerator = () => {
             onChange={v => setFormat(v || DEFAULT_FORMAT)}/>
         </Grid.Col>
         <Grid.Col span={2}>
-          <NumberInput
-            label={<ComponentLabel text="How many?"/>}
-            value={count}
-            min={MIN_OUTPUT_ITEMS}
-            max={MAX_OUTPUT_ITEMS}
-            onChange={setCount}/>
+          <HowMany value={count} onChange={setCount} />
         </Grid.Col>
         <Grid.Col span={1}>
           <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>

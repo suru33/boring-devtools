@@ -1,17 +1,18 @@
-import { Button, Group, NumberInput, Radio, Stack } from "@mantine/core";
+import { Button, Group, Radio, Stack } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
+import HowMany, { useHowManyInputState } from "../../HowMany";
+import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { IPv } from "../../../commons/types";
 import { randomIPs } from "../../../commons/utils.random";
 import { textAreaDefaultRows } from "../../../app-sx";
-import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
 
 const IPAddressGenerator = () => {
 
   const [ version, setVersion ] = useInputState("v4");
-  const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
-  const [ output, setOutput ] = useInputState(EMPTY_STRING);
+  const [ count, setCount ] = useHowManyInputState();
+  const [ output, setOutput ] = useEmptyStringInputState();
 
   const generateOutput = () => {
     const result = randomIPs(version as IPv, count);
@@ -28,12 +29,7 @@ const IPAddressGenerator = () => {
         <Radio value="v6" label="IPv6"/>
       </Radio.Group>
       <Group align="end">
-        <NumberInput
-          label={<ComponentLabel text="How many?"/>}
-          value={count}
-          min={MIN_OUTPUT_ITEMS}
-          max={MAX_OUTPUT_ITEMS}
-          onChange={setCount}/>
+        <HowMany value={count} onChange={setCount} />
         <Button onClick={generateOutput}>Generate</Button>
       </Group>
       <CopyTextArea

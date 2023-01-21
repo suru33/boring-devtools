@@ -2,9 +2,11 @@ import { Button, Checkbox, Group, NumberInput, Stack, TextInput } from "@mantine
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
+import HowMany, { useHowManyInputState } from "../../HowMany";
+import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { randomStrings } from "../../../commons/utils.random";
 import { textAreaDefaultRows, verticalGroupIndent } from "../../../app-sx";
-import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
+import { EMPTY_STRING } from "../../../commons/constants";
 
 const StringsGenerator = () => {
   const [ upper, setUpper ] = useInputState(true);
@@ -12,10 +14,10 @@ const StringsGenerator = () => {
   const [ numeric, setNumeric ] = useInputState(true);
   const [ symbols, setSymbols ] = useInputState(false);
   const [ extras, setExtras ] = useInputState(false);
-  const [ pool, setPool ] = useInputState(EMPTY_STRING);
-  const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
+  const [ pool, setPool ] = useEmptyStringInputState();
+  const [ count, setCount ] = useHowManyInputState();
   const [ length, setLength ] = useInputState(20);
-  const [ output, setOutput ] = useInputState(EMPTY_STRING);
+  const [ output, setOutput ] = useEmptyStringInputState();
 
   const generateOutput = () => {
     const result = randomStrings(length, upper, lower, numeric, symbols, extras ? pool : EMPTY_STRING, count);
@@ -42,12 +44,7 @@ const StringsGenerator = () => {
           min={1}
           max={100}
           onChange={setLength}/>
-        <NumberInput
-          label={<ComponentLabel text="How many?"/>}
-          value={count}
-          min={MIN_OUTPUT_ITEMS}
-          max={MAX_OUTPUT_ITEMS}
-          onChange={setCount}/>
+        <HowMany value={count} onChange={setCount} />
         <Button onClick={generateOutput}>Generate</Button>
       </Group>
       <CopyTextArea
