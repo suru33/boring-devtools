@@ -23,7 +23,8 @@ const TimeZoneConverter = () => {
     ...flatten(Object.entries(allTimeZones).map((i) => {
       const [ continent, timezones ] = i;
       return timezones.map((t) => ({ value: t, label: t, group: continent }));
-    })) ];
+    }))
+  ];
 
   const getUserTimezone = () => isEmpty(userTimezone) ? utc : userTimezone;
 
