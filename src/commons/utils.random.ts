@@ -1,8 +1,8 @@
-import * as _ from "lodash";
+import { isEmpty, range, uniq } from "lodash";
 import { faker } from "@faker-js/faker";
 import { IPv } from "./types";
-import { LOWERCASE_LETTERS, NEW_LINE, NO_SPACE, NUMERIC_LETTERS, SYMBOL_LETTERS, UPPERCASE_LETTERS } from "./constants";
 import { dateFormatFunction, DEFAULT_DATETIME_FORMAT } from "./utils.datetime";
+import { LOWERCASE_LETTERS, NEW_LINE, NO_SPACE, NUMERIC_LETTERS, SYMBOL_LETTERS, UPPERCASE_LETTERS } from "./constants";
 
 export const randomInt = (value: number | { min: number; max: number; }): number => {
   const fn = (a: number, b: number) => Math.floor(Math.random() * (b - a)) + a;
@@ -25,9 +25,9 @@ export const randomString = (
   charSet = lower ? [ ...charSet, ...LOWERCASE_LETTERS ] : charSet;
   charSet = numeric ? [ ...charSet, ...NUMERIC_LETTERS ] : charSet;
   charSet = symbols ? [ ...charSet, ...SYMBOL_LETTERS ] : charSet;
-  charSet = _.isEmpty(extraChars.trim()) ? charSet : _.uniq([ ...charSet, ...extraChars.trim() ]);
+  charSet = isEmpty(extraChars.trim()) ? charSet : uniq([ ...charSet, ...extraChars.trim() ]);
 
-  return _.range(length)
+  return range(length)
     .map(() => chooseRandom<string>(charSet))
     .join(NO_SPACE);
 };
@@ -40,12 +40,12 @@ export const randomStrings = (
   symbols: boolean,
   extraChars: string,
   count: number): string =>
-  _.range(count)
+  range(count)
     .map(() => randomString(length, upper, lower, numeric, symbols, extraChars))
     .join(NEW_LINE);
 
 export const randomWords = (count: number): string =>
-  _.range(count)
+  range(count)
     .map(faker.random.word)
     .join(NEW_LINE);
 
@@ -55,13 +55,13 @@ export const randomParagraphs = (count: number): string => faker.lorem.paragraph
 
 export const randomIPs = (version: IPv, count: number): string => {
   const fn = version === "v4" ? faker.internet.ipv4 : faker.internet.ipv6;
-  return _.range(count)
+  return range(count)
     .map(fn)
     .join(NEW_LINE);
 };
 
 export const randomUUIDs = (count: number): string =>
-  _.range(count)
+  range(count)
     .map(faker.datatype.uuid)
     .join(NEW_LINE);
 
@@ -69,11 +69,11 @@ export const randomNumber = (min: number, max: number, floatValue: boolean, prec
   faker.datatype.number({ min: min, max: max, precision: floatValue ? 1 / Math.pow(10, precision) : 1 });
 
 export const randomNumbers = (min: number, max: number, floatValue: boolean, count: number, precision: number): string =>
-  _.range(count)
+  range(count)
     .map(() => randomNumber(min, max, floatValue, precision))
     .join(NEW_LINE);
 
 export const randomDates = (from: Date, to: Date, count: number, format = DEFAULT_DATETIME_FORMAT): string =>
-  _.uniq(faker.date.betweens(from, to, count)
+  uniq(faker.date.betweens(from, to, count)
     .map(dateFormatFunction(format)))
     .join(NEW_LINE);

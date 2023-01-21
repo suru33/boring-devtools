@@ -1,4 +1,4 @@
-import * as _ from "lodash";
+import { range } from "lodash";
 import { faker } from "@faker-js/faker";
 import { chooseRandom } from "./utils.random";
 import { allCountryCodes, CountryCode, defaultLocale, getCountryName, getZipCodeFormat } from "../resources/countries";
@@ -11,5 +11,5 @@ export const generateAddress = (countries: CountryCode[], locale = defaultLocale
     `${faker.address.zipCode(getZipCodeFormat(country))}, ${faker.address.city()}`,
     country === "US" ? `${faker.address.state()}, ${getCountryName(country)}` : getCountryName(country)
   ].join("\n");
-  return _.range(count).map(() => address(chooseRandom(countries))).join("\n--\n");
+  return range(count).map(() => address(chooseRandom(countries))).join("\n--\n");
 };
