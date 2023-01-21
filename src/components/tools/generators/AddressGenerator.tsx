@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { Button, Group, MultiSelect, NumberInput, Select, Stack } from "@mantine/core";
+import { Button, Group, MultiSelect, Select, Stack } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
+import HowMany, { useHowManyInputState } from "../../HowMany";
+import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { allCountryCodes, CountryCode, defaultLocale, fakerLocales } from "../../../resources/countries";
 import { textAreaDefaultRows } from "../../../app-sx";
 import { countryDropdownOptions, generateAddress } from "../../../commons/utils.country";
-import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS } from "../../../commons/constants";
 
 const AddressGenerator = () => {
 
   const [ selectedCountries, setSelectedCountries ] = useState<CountryCode[]>([]);
-  const [ count, setCount ] = useInputState(1);
-  const [ output, setOutput ] = useInputState(EMPTY_STRING);
+  const [ count, setCount ] = useHowManyInputState(1);
+  const [ output, setOutput ] = useEmptyStringInputState();
   const [ locale, setLocale ] = useInputState(defaultLocale.value);
 
   const generateOutput = () => {
@@ -25,19 +26,13 @@ const AddressGenerator = () => {
       <Group>
         <Select
           searchable
-          clearable
           clearButtonLabel="Clear selection"
           nothingFound="Nothing found"
           label={<ComponentLabel text="Select locale" />}
           value={locale}
           onChange={setLocale}
           data={fakerLocales}/>
-        <NumberInput
-          label={<ComponentLabel text="How many?"/>}
-          value={count}
-          min={MIN_OUTPUT_ITEMS}
-          max={MAX_OUTPUT_ITEMS}
-          onChange={setCount}/>
+        <HowMany value={count} onChange={setCount} />
       </Group>
       <MultiSelect
         searchable

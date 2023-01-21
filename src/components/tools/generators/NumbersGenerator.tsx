@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import { Button, Checkbox, Group, NumberInput, Select, Stack } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
+import { range } from "lodash";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
+import HowMany, { useHowManyInputState } from "../../HowMany";
+import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { textAreaDefaultRows } from "../../../app-sx";
 import { randomNumbers } from "../../../commons/utils.random";
-import { range } from "../../../commons/utils.numbers";
-import { EMPTY_STRING, MAX_OUTPUT_ITEMS, MIN_OUTPUT_ITEMS, OUTPUT_ITEMS } from "../../../commons/constants";
+import { EMPTY_STRING } from "../../../commons/constants";
 
 const NumbersGenerator = () => {
   const [ min, setMin ] = useInputState(0);
   const [ max, setMax ] = useInputState(1000);
-  const [ count, setCount ] = useInputState(OUTPUT_ITEMS);
+  const [ count, setCount ] = useHowManyInputState();
   const [ floatValue, setFloatValue ] = useState(false);
-  const [ output, setOutput ] = useState(EMPTY_STRING);
+  const [ output, setOutput ] = useEmptyStringInputState();
   const [ precision, setPrecision ] = useInputState("2");
-  const [ minError, setMinError ] = useState(EMPTY_STRING);
+  const [ minError, setMinError ] = useEmptyStringInputState();
   const [ generateDisabled, setGenerateDisabled ] = useInputState(false);
 
   const PRECISIONS = range(1, 15).map(i => ({ value: i.toString(), label: i.toString() }));
@@ -60,12 +62,7 @@ const NumbersGenerator = () => {
           value={precision}
           disabled={!floatValue}
           onChange={setPrecision}/>
-        <NumberInput
-          label={<ComponentLabel text="How many?"/>}
-          value={count}
-          min={MIN_OUTPUT_ITEMS}
-          max={MAX_OUTPUT_ITEMS}
-          onChange={setCount}/>
+        <HowMany value={count} onChange={setCount} />
       </Group>
       <Group align="center">
         <Checkbox checked={floatValue} label="Float values" onChange={e => setFloatValue(e.target.checked)}/>
