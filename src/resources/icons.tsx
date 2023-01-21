@@ -18,6 +18,7 @@ import {
   IconRuler2,
   IconSeparator,
   IconSun,
+  IconTransform,
   IconWorld,
   IconWorldLongitude,
   IconWriting
@@ -43,7 +44,8 @@ export const navbarIcons = {
   sort: <IconArrowsSort size={size}/>,
   code: <IconCode size={size}/>,
   dateDifference: <IconCalendarStats size={size}/>,
-  timeZone: <IconWorldLongitude size={size}/>
+  timeZone: <IconWorldLongitude size={size}/>,
+  transform: <IconTransform size={size}/>
 };
 
 export const iconCheck = <IconCheck size={size}/>;

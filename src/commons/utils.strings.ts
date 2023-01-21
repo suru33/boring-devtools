@@ -28,3 +28,7 @@ export const uniqueCharacters = (s: string) => _.uniq(s);
 
 export const sortLines = (s: string): string =>
   s.split("\n").map(s => s.trim()).sort().join("\n");
+
+export const base64ToString = (s: string): string => atob(s);
+
+export const stringToBase64 = (s: string): string => btoa(s);

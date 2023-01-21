@@ -27,7 +27,7 @@ const App = () => {
 
   useHotkeys([[ "mod+J", () => toggleColorScheme() ]]);
 
-  const appFontFamily = "'JetBrains Mono', monospace";
+  const appFontFamily = "'JetBrains Mono NL', monospace";
   const appTheme = {
     fontFamily: appFontFamily,
     fontFamilyMonospace: appFontFamily,
