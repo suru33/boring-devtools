@@ -1,10 +1,9 @@
-import { ReactNode } from "react";
-
 export const allContinents =
     [ "Africa", "Antarctica", "Asia", "Europe", "North America", "Oceania", "South America" ] as const;
 
 export type Continent = typeof allContinents[number]
-export const allCountryCodes = [
+
+const countryCodes = [
   "AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT", "AZ", "BS", "BH",
   "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BT", "BO", "BQ", "BA", "BW", "BV", "BR", "IO", "VG", "BN", "BG",
   "BF", "BI", "CV", "KH", "CM", "CA", "KY", "CF", "TD", "CL", "CN", "CX", "CC", "CO", "KM", "CK", "CR", "HR",
@@ -21,8 +20,8 @@ export const allCountryCodes = [
   "VI", "UG", "UA", "AE", "GB", "US", "UM", "UY", "UZ", "VU", "VA", "VE", "VN", "WF", "EH", "YE", "ZM", "ZW"
 ] as const;
 
-export type CountryCode = typeof allCountryCodes[number]
-
+export type CountryCode = typeof countryCodes[number]
+export const allCountryCodes = countryCodes as unknown as CountryCode[];
 export const ibanCountries: CountryCode[] = [
   "AL", "AD", "AT", "AZ", "BH", "BY", "BE", "BA", "BR", "VG", "BG", "BI", "CR", "HR", "CY", "CZ", "DK", "DJ",
   "DO", "EG", "SV", "EE", "FO", "FI", "FR", "GE", "DE", "GI", "GR", "GL", "GT", "HU", "IS", "IQ", "IE", "IL",
@@ -1736,7 +1735,245 @@ const allCountries: Record<CountryCode, CountryData> = {
   }
 };
 
-export const getCountryData = (code: CountryCode) => allCountries[code];
+export interface FakerLocale {
+  value: string,
+  label: string
+}
+export const fakerLocales: FakerLocale[] = [
+  {
+    "value": "af_ZA",
+    "label": "Afrikaans"
+  },
+  {
+    "value": "ar",
+    "label": "Arabic"
+  },
+  {
+    "value": "az",
+    "label": "Azerbaijani"
+  },
+  {
+    "value": "cz",
+    "label": "Czech"
+  },
+  {
+    "value": "de",
+    "label": "German"
+  },
+  {
+    "value": "de_AT",
+    "label": "German (Austria)"
+  },
+  {
+    "value": "de_CH",
+    "label": "German (Switzerland)"
+  },
+  {
+    "value": "el",
+    "label": "Greek"
+  },
+  {
+    "value": "en",
+    "label": "English"
+  },
+  {
+    "value": "en_AU",
+    "label": "English (Australia)"
+  },
+  {
+    "value": "en_AU_ocker",
+    "label": "English (Australia Ocker)"
+  },
+  {
+    "value": "en_BORK",
+    "label": "English (Bork)"
+  },
+  {
+    "value": "en_CA",
+    "label": "English (Canada)"
+  },
+  {
+    "value": "en_GB",
+    "label": "English (Great Britain)"
+  },
+  {
+    "value": "en_GH",
+    "label": "English (Ghana)"
+  },
+  {
+    "value": "en_IE",
+    "label": "English (Ireland)"
+  },
+  {
+    "value": "en_IND",
+    "label": "English (India)"
+  },
+  {
+    "value": "en_NG",
+    "label": "Nigeria (English)"
+  },
+  {
+    "value": "en_US",
+    "label": "English (United States)"
+  },
+  {
+    "value": "en_ZA",
+    "label": "English (South Africa)"
+  },
+  {
+    "value": "es",
+    "label": "Spanish"
+  },
+  {
+    "value": "es_MX",
+    "label": "Spanish (Mexico)"
+  },
+  {
+    "value": "fa",
+    "label": "Farsi"
+  },
+  {
+    "value": "fi",
+    "label": "Finnish"
+  },
+  {
+    "value": "fr",
+    "label": "French"
+  },
+  {
+    "value": "fr_BE",
+    "label": "Français (Belgique)"
+  },
+  {
+    "value": "fr_CA",
+    "label": "French (Canada)"
+  },
+  {
+    "value": "fr_CH",
+    "label": "French (Switzerland)"
+  },
+  {
+    "value": "ge",
+    "label": "Georgian"
+  },
+  {
+    "value": "he",
+    "label": "Hebrew"
+  },
+  {
+    "value": "hr",
+    "label": "Hrvatski"
+  },
+  {
+    "value": "hu",
+    "label": "Hungarian"
+  },
+  {
+    "value": "hy",
+    "label": "Armenian"
+  },
+  {
+    "value": "id_ID",
+    "label": "Indonesian"
+  },
+  {
+    "value": "it",
+    "label": "Italian"
+  },
+  {
+    "value": "ja",
+    "label": "Japanese"
+  },
+  {
+    "value": "ko",
+    "label": "Korean"
+  },
+  {
+    "value": "lv",
+    "label": "Latvian"
+  },
+  {
+    "value": "mk",
+    "label": "Macedonian"
+  },
+  {
+    "value": "nb_NO",
+    "label": "Norwegian"
+  },
+  {
+    "value": "ne",
+    "label": "Nepalese"
+  },
+  {
+    "value": "nl",
+    "label": "Dutch"
+  },
+  {
+    "value": "nl_BE",
+    "label": "Dutch (Belgium)"
+  },
+  {
+    "value": "pl",
+    "label": "Polish"
+  },
+  {
+    "value": "pt_BR",
+    "label": "Portuguese (Brazil)"
+  },
+  {
+    "value": "pt_PT",
+    "label": "Portuguese (Portugal)"
+  },
+  {
+    "value": "ro",
+    "label": "Romanian"
+  },
+  {
+    "value": "ru",
+    "label": "Russian"
+  },
+  {
+    "value": "sk",
+    "label": "Slovakian"
+  },
+  {
+    "value": "sv",
+    "label": "Swedish"
+  },
+  {
+    "value": "tr",
+    "label": "Turkish"
+  },
+  {
+    "value": "uk",
+    "label": "Ukrainian"
+  },
+  {
+    "value": "ur",
+    "label": "Urdu"
+  },
+  {
+    "value": "vi",
+    "label": "Vietnamese"
+  },
+  {
+    "value": "zh_CN",
+    "label": "Chinese"
+  },
+  {
+    "value": "zh_TW",
+    "label": "Chinese (Taiwan)"
+  },
+  {
+    "value": "zu_ZA",
+    "label": "Zulu (South Africa)"
+  }
+];
+export const defaultLocale: FakerLocale = {
+  "value": "en",
+  "label": "English"
+};
+
 export const getCountryName = (code: CountryCode) => allCountries[code].name;
 export const getZipCodeFormat = (code: CountryCode) => allCountries[code].postal_code_format;
 export const getPhoneFormat = (code: CountryCode) => allCountries[code].phone_format;
