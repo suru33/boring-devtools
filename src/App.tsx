@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import {
   Accordion,
   AppShell,
@@ -10,11 +10,14 @@ import {
   ScrollArea
 } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
+import { SpotlightProvider } from "@mantine/spotlight";
 import Home from "./pages/Home";
 import NavbarLinks from "./components/NavbarLinks";
 import AppHeader from "./components/AppHeader";
 import ToolContainer from "./components/ToolContainer";
-import { allTools } from "./components/tools";
+import { allTools, buildSpotlightActions } from "./components/tools";
+import { iconSearchBig } from "./resources/icons";
+import { NOTHING_FOUND, SEARCH } from "./commons/constants";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useLocalStorage<ColorScheme>({
@@ -35,49 +38,60 @@ const App = () => {
     colorScheme: colorScheme
   };
 
+  const spotlightActions = buildSpotlightActions(useNavigate());
+
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={appTheme} withGlobalStyles withNormalizeCSS>
-        <AppShell
-          fixed
-          header={<AppHeader colorScheme={colorScheme} colorSchemeToggleFn={toggleColorScheme}/>}
-          navbar={
-            <Navbar width={{ base: 350 }}>
-              <Navbar.Section grow component={ScrollArea}>
-                <Accordion multiple>
-                  {
-                    allTools.map((tc, i) =>
-                      <Accordion.Item key={`${i}-${tc.label}`} value={tc.label}>
-                        <Box>
-                          <NavbarLinks key={i} parentPath={tc.path} tools={tc.tools}/>
-                        </Box>
-                      </Accordion.Item>
-                    )
-                  }
-                </Accordion>
-              </Navbar.Section>
-            </Navbar>
-          }>
-          <Routes>
-            <Route path="/">
-              <Route index element={<Navigate to="home" replace/>}/>
-              <Route path="home" element={<Home/>}/>
-              {
-                allTools.map((tc, i) =>
-                  <Route key={`${i}-${tc.path}`} path={tc.path}>
+        <SpotlightProvider
+          searchIcon={iconSearchBig}
+          searchPlaceholder={SEARCH}
+          nothingFoundMessage={NOTHING_FOUND}
+          shortcut="mod + K"
+          actions={spotlightActions}>
+          <AppShell
+            fixed
+            header={<AppHeader colorScheme={colorScheme} colorSchemeToggleFn={toggleColorScheme}/>}
+            navbar={
+              <Navbar width={{ base: 350 }}>
+                <Navbar.Section grow component={ScrollArea}>
+                  <Accordion multiple>
                     {
-                      tc.tools.map((t) =>
-                        <Route
-                          key={`${tc.path}-${t.path}`}
-                          path={t.path}
-                          element={<ToolContainer title={t.label}>{t.component}</ToolContainer>}/>)
+                      allTools.map((tc, i) =>
+                        <Accordion.Item key={`${i}-${tc.label}`} value={tc.label}>
+                          <Box>
+                            <NavbarLinks key={i} parentPath={tc.path} tools={tc.tools}/>
+                          </Box>
+                        </Accordion.Item>
+                      )
                     }
-                  </Route>
-                )
-              }
-            </Route>
-          </Routes>
-        </AppShell>
+                  </Accordion>
+                </Navbar.Section>
+              </Navbar>
+            }>
+            <Routes>
+              <Route path="/">
+                <Route index element={<Navigate to="home" replace/>}/>
+                <Route path="home" element={<Home/>}/>
+                {
+                  allTools.map((tc, i) =>
+                    <Route key={`${i}-${tc.path}`} path={tc.path}>
+                      {
+                        tc.tools.map((t) =>
+                          <Route
+                            key={`${tc.path}-${t.path}`}
+                            path={t.path}
+                            element={<ToolContainer title={t.label}>{t.component}</ToolContainer>}
+                          />
+                        )
+                      }
+                    </Route>
+                  )
+                }
+              </Route>
+            </Routes>
+          </AppShell>
+        </SpotlightProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

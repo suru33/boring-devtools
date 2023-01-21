@@ -9,6 +9,7 @@ import { flatten, isEmpty } from "lodash";
 import ComponentLabel from "../../ComponentLabel";
 import { allTimeZones } from "../../../resources/countries";
 import { combineDateTime } from "../../../commons/utils.datetime";
+import { NOTHING_FOUND } from "../../../commons/constants";
 
 const TimeZoneConverter = () => {
   dayjs.extend(utcPlugin);
@@ -89,8 +90,7 @@ const TimeZoneConverter = () => {
         <Select
           style={{ width: 300 }}
           searchable
-          clearButtonLabel="Clear selection"
-          nothingFound="Nothing found"
+          nothingFound={NOTHING_FOUND}
           label={<ComponentLabel text="Timezone"/>}
           data={timezoneDropdownData}
           value={inputTimezone}
@@ -101,8 +101,7 @@ const TimeZoneConverter = () => {
       <Select
         style={{ width: 300 }}
         searchable
-        clearButtonLabel="Clear selection"
-        nothingFound="Nothing found"
+        nothingFound={NOTHING_FOUND}
         label={<ComponentLabel text="Output timezone"/>}
         data={timezoneDropdownData}
         value={outputTimezone}

@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import { ActionIcon, ColorScheme, Group, Header, Text, UnstyledButton } from "@mantine/core";
+import { ActionIcon, Button, ColorScheme, Group, Header, Text, UnstyledButton } from "@mantine/core";
+import { useOs } from "@mantine/hooks";
+import { useSpotlight } from "@mantine/spotlight";
 import AppLogo from "../resources/AppLogo";
-import { iconMoonStars, iconSun } from "../resources/icons";
+import { iconMoonStars, iconSearch, iconSun } from "../resources/icons";
 
 interface AppHeaderProps {
   colorScheme: ColorScheme,
@@ -9,6 +11,9 @@ interface AppHeaderProps {
 }
 
 const AppHeader = (props: AppHeaderProps) => {
+  const spotlight = useSpotlight();
+  const os = useOs();
+  const searchKey = os === "ios" || os === "macos" ? "⌘ + K" : "Ctrl + K";
   const { colorScheme, colorSchemeToggleFn } = props;
   return <Header height={60}>
     <Group sx={{ height: "100%" }} px={20} position="apart">
@@ -16,17 +21,27 @@ const AppHeader = (props: AppHeaderProps) => {
         <UnstyledButton component={Link} to="/home">
           <Group>
             <AppLogo size={50} colorScheme={colorScheme}/>
-            <Text
-              size="xl"
-              weight={700}>
-              boring-devtools
-            </Text>
+            <Text size="xl" weight={700}>boring-devtools</Text>
           </Group>
         </UnstyledButton>
       </Group>
-      <ActionIcon variant="default" onClick={() => colorSchemeToggleFn()} size={30} title="Toggle color scheme">
-        {colorScheme === "dark" ? iconSun : iconMoonStars}
-      </ActionIcon>
+      <Group>
+        <Button
+          size="xs"
+          variant="subtle"
+          leftIcon={iconSearch}
+          color="gray"
+          onClick={() => spotlight.openSpotlight()}>
+          {`Search (${searchKey})`}
+        </Button>
+        <ActionIcon
+          title="Toggle color scheme"
+          variant="default"
+          size={30}
+          onClick={() => colorSchemeToggleFn()}>
+          {colorScheme === "dark" ? iconSun : iconMoonStars}
+        </ActionIcon>
+      </Group>
     </Group>
   </Header>;
 };
