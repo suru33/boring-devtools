@@ -14,6 +14,7 @@ import { SpotlightProvider } from "@mantine/spotlight";
 import Home from "./pages/Home";
 import NavbarLinks from "./components/NavbarLinks";
 import AppHeader from "./components/AppHeader";
+import AppFooter from "./components/AppFooter";
 import ToolContainer from "./components/ToolContainer";
 import { allTools, buildSpotlightActions } from "./components/tools";
 import { iconSearchBig } from "./resources/icons";
@@ -54,6 +55,7 @@ const App = () => {
           <AppShell
             fixed
             header={<AppHeader colorScheme={colorScheme} colorSchemeToggleFn={toggleColorScheme}/>}
+            footer={<AppFooter />}
             navbar={
               <Navbar width={{ base: 350 }}>
                 <Navbar.Section grow component={ScrollArea}>
