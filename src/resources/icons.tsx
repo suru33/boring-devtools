@@ -27,7 +27,8 @@ import {
   IconTransform,
   IconWorld,
   IconWorldLongitude,
-  IconWriting
+  IconWriting,
+  IconLicense
 } from "@tabler/icons";
 
 const size = 16;
@@ -56,7 +57,8 @@ export const navbarIcons = {
   transform: <IconTransform size={size}/>,
   randomBig : <IconArrowsShuffle size={sizeBig}/>,
   languageBig: <IconLanguage size={sizeBig}/>,
-  calendarBig: <IconCalendarEvent size={sizeBig} />
+  calendarBig: <IconCalendarEvent size={sizeBig} />,
+  licenseBig: <IconLicense size={sizeBig} />
 };
 
 export const iconCheck = <IconCheck size={size}/>;

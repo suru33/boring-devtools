@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import {
   Accordion,
   AppShell,
@@ -7,7 +7,8 @@ import {
   MantineProvider,
   Navbar,
   ScrollArea,
-  Text
+  Text,
+  UnstyledButton
 } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { SpotlightProvider } from "@mantine/spotlight";
@@ -17,9 +18,10 @@ import AppHeader from "./components/AppHeader";
 import AppFooter from "./components/AppFooter";
 import ToolContainer from "./components/ToolContainer";
 import { allTools, buildSpotlightActions } from "./components/tools";
-import { iconSearchBig } from "./resources/icons";
+import { iconSearchBig, navbarIcons } from "./resources/icons";
 import { BASE_PATH, NOTHING_FOUND, SEARCH } from "./commons/constants";
 import NotFound from "./pages/NotFound";
+import Credits from "./pages/Credits";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useLocalStorage<ColorScheme>({
@@ -70,6 +72,13 @@ const App = () => {
                         </Accordion.Item>
                       )
                     }
+                    <Accordion.Item key="credits" value="credits">
+                      <Accordion.Control icon={navbarIcons.licenseBig}>
+                        <UnstyledButton component={Link} to={`${BASE_PATH}/credits`}>
+                          <Text size="lg" weight={700}>Credits</Text>
+                        </UnstyledButton>
+                      </Accordion.Control>
+                    </Accordion.Item>
                   </Accordion>
                 </Navbar.Section>
               </Navbar>
@@ -78,6 +87,7 @@ const App = () => {
               <Route path={`${BASE_PATH}/`}>
                 <Route index element={<Navigate to={`${BASE_PATH}/home`} replace/>}/>
                 <Route path="home" element={<Home/>}/>
+                <Route path="credits" element={<Credits/>}/>
                 {
                   allTools.map((tc, i) =>
                     <Route key={`${i}-${tc.path}`} path={tc.path}>
