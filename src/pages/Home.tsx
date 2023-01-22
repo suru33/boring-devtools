@@ -1,9 +1,9 @@
-import { Text } from "@mantine/core";
+import { Center, Text } from "@mantine/core";
 
 const Home = () =>
-  <div>
+  <Center style={{ width: "100%", height: "100%" }}>
     <Text size="xl" weight={700}>
-        Select tool from the list
+        Select a tool from the sidebar
     </Text>
-  </div>;
+  </Center>;
 export default Home;
