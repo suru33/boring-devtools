@@ -18,6 +18,7 @@ import ToolContainer from "./components/ToolContainer";
 import { allTools, buildSpotlightActions } from "./components/tools";
 import { iconSearchBig } from "./resources/icons";
 import { BASE_PATH, NOTHING_FOUND, SEARCH } from "./commons/constants";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useLocalStorage<ColorScheme>({
@@ -90,6 +91,7 @@ const App = () => {
                     </Route>
                   )
                 }
+                <Route path='*' element={<NotFound />}/>
               </Route>
             </Routes>
           </AppShell>
