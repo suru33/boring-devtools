@@ -14,3 +14,4 @@ export const MIN_OUTPUT_ITEMS = 1;
 export const MAX_OUTPUT_ITEMS = 100;
 export const OUTPUT_ITEMS = 25;
 export const FULL_PAGE_TEXT_SIZE = 50;
+export const FULL_PAGE_TEXT_WEIGHT = 900;
