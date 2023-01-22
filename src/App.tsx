@@ -19,26 +19,26 @@ import AppFooter from "./components/AppFooter";
 import ToolContainer from "./components/ToolContainer";
 import { allTools, buildSpotlightActions } from "./components/tools";
 import { iconSearchBig, navbarIcons } from "./resources/icons";
-import { NOTHING_FOUND, SEARCH } from "./commons/constants";
+import __ from "./commons/constants";
 import NotFound from "./pages/NotFound";
 import Credits from "./pages/Credits";
+import { fontWeight } from "./app-sx";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useLocalStorage<ColorScheme>({
-    key: "app-color-scheme",
+    key: __.sk.theme,
     defaultValue: "light",
     getInitialValueInEffect: true
   });
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
-  useHotkeys([[ "mod+J", () => toggleColorScheme() ]]);
+  useHotkeys([[ __.shortcuts.toggleTheme, () => toggleColorScheme() ]]);
 
-  const appFontFamily = "'JetBrains Mono NL', monospace";
   const appTheme = {
-    fontFamily: appFontFamily,
-    fontFamilyMonospace: appFontFamily,
-    headings: { fontFamily: appFontFamily },
+    fontFamily: __.settings.fontFamily,
+    fontFamilyMonospace: __.settings.fontFamily,
+    headings: { fontFamily: __.settings.fontFamily },
     colorScheme: colorScheme
   };
 
@@ -50,14 +50,14 @@ const App = () => {
         <SpotlightProvider
           highlightQuery
           searchIcon={iconSearchBig}
-          searchPlaceholder={SEARCH}
-          nothingFoundMessage={NOTHING_FOUND}
-          shortcut="mod + K"
+          searchPlaceholder={__.labels.search}
+          nothingFoundMessage={__.labels.nothingFound}
+          shortcut={__.shortcuts.search}
           actions={spotlightActions}>
           <AppShell
             fixed
             header={<AppHeader colorScheme={colorScheme} colorSchemeToggleFn={toggleColorScheme}/>}
-            footer={<AppFooter />}
+            footer={<AppFooter/>}
             navbar={
               <Navbar width={{ base: 350 }}>
                 <Navbar.Section grow component={ScrollArea}>
@@ -75,7 +75,7 @@ const App = () => {
                     <Accordion.Item key="credits" value="credits">
                       <Accordion.Control icon={navbarIcons.licenseBig}>
                         <UnstyledButton component={Link} to={"/credits"}>
-                          <Text size="lg" weight={700}>Credits</Text>
+                          <Text size="lg" weight={fontWeight.bold}>{__.labels.credits}</Text>
                         </UnstyledButton>
                       </Accordion.Control>
                     </Accordion.Item>
@@ -103,7 +103,7 @@ const App = () => {
                     </Route>
                   )
                 }
-                <Route path='/*' element={<NotFound />}/>
+                <Route path='/*' element={<NotFound/>}/>
               </Route>
             </Routes>
           </AppShell>

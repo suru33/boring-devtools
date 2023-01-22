@@ -1,105 +1,127 @@
-import { useEffect, useState } from "react";
+import { ComponentPropsWithoutRef, forwardRef, useEffect, useState } from "react";
 import { Button, Group, Select, Stack, Text } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
 import { useInputState } from "@mantine/hooks";
-import dayjs from "dayjs";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
 import HowMany, { useHowManyInputState } from "../../HowMany";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
-import { textAreaDefaultRows } from "../../../app-sx";
+import { ToolProps } from "../../../commons/types";
 import { randomDates } from "../../../commons/utils.random";
-import { combineDateTime } from "../../../commons/utils.datetime";
-import { EMPTY_STRING } from "../../../commons/constants";
+import { datetimeRangeFromNow, mergeDateTime, setNowCallback } from "../../../commons/utils.datetime";
+import { colors } from "../../../resources/colors";
+import __ from "../../../commons/constants";
 
-const DateTimeGenerator = () => {
-  const ERROR_MESSAGE = "* start date and time should be < end date time";
-  const START_DATE = dayjs().hour(0).minute(0).second(0).toDate();
-  const START_TIME = dayjs().hour(0).minute(0).second(0).toDate();
-  const END_DATE = dayjs(START_DATE).add(10, "days").toDate();
-  const END_TIME = dayjs().hour(23).minute(59).second(59).toDate();
-  const DEFAULT_FORMAT = "YYYY-MM-DD HH:mm";
-  const FORMATS = [
-    { value: DEFAULT_FORMAT, label: "2020-12-20 13:45" },
-    { value: "YYYY-MM-DD hh:mm A", label: "2020-12-20 01:45 PM" },
-    { value: "DD/MM/YYYY HH:mm", label: "20/12/2020 13:45" },
-    { value: "DD/MM/YYYY hh:mm A", label: "20/12/2020 01:45 PM" },
-    { value: "MM-DD-YYYY HH:mm", label: "12-20-2020 13:45" },
-    { value: "MM-DD-YYYY hh:mm A", label: "12-20-2020 01:45 PM" },
-    { value: "YYYY-MM-DD", label: "2020-12-20" },
-    { value: "DD-MM-YYYY", label: "20-12-2020" },
-    { value: "DD/MM/YYYY", label: "20/12/2020" },
-    { value: "MM-DD-YYYY", label: "12-20-2020" },
-    { value: "MMM D, YYYY", label: "Dec 2, 2020", description: "tes" },
-    { value: "UNIX_MILLIS", label: "Unix Timestamp (milliseconds)" },
-    { value: "UNIX", label: "Unix Timestamp" },
-    { value: "ISO_8601", label: "ISO 8601 (2019-01-25T02:00:00.000Z)" }
+const DateTimeGenerator = (props: ToolProps) => {
+  const [ sd, st, ed, et ] = datetimeRangeFromNow();
+
+  interface DateFormatSelectItemProps extends ComponentPropsWithoutRef<"div"> {
+    label: string;
+    value: string;
+    description: string;
+  }
+
+  const defaultFormat = __.formats.dateTimeWithOutSeconds;
+
+  const dateFormatsSelectData: DateFormatSelectItemProps[] = [
+    { label: defaultFormat, value: defaultFormat, description: "2020-12-20 13:45" },
+    { label: "YYYY-MM-DD hh:mm A", value: "YYYY-MM-DD hh:mm A", description: "2020-12-20 01:45 PM" },
+    { label: "DD/MM/YYYY HH:mm", value: "DD/MM/YYYY HH:mm", description: "20/12/2020 13:45" },
+    { label: "DD/MM/YYYY hh:mm A", value: "DD/MM/YYYY hh:mm A", description: "20/12/2020 01:45 PM" },
+    { label: "MM-DD-YYYY HH:mm", value: "MM-DD-YYYY HH:mm", description: "12-20-2020 13:45" },
+    { label: "MM-DD-YYYY hh:mm A", value: "MM-DD-YYYY hh:mm A", description: "12-20-2020 01:45 PM" },
+    { label: "YYYY-MM-DD", value: "YYYY-MM-DD", description: "2020-12-20" },
+    { label: "DD-MM-YYYY", value: "DD-MM-YYYY", description: "20-12-2020" },
+    { label: "DD/MM/YYYY", value: "DD/MM/YYYY", description: "20/12/2020" },
+    { label: "MM-DD-YYYY", value: "MM-DD-YYYY", description: "12-20-2020" },
+    { label: "MMM D, YYYY", value: "MMM D, YYYY", description: "Dec 2, 2020" },
+    { label: "Unix Timestamp (milliseconds)", value: "UNIX_MILLIS", description: "1674606313347" },
+    { label: "Unix Timestamp", value: "UNIX", description: "1674540375" },
+    { label: "ISO 8601", value: "ISO_8601", description: "2019-01-25T02:00:00.000Z" }
   ];
 
-  const [ startDate, onStartDateChange ] = useInputState(START_DATE);
-  const [ startTime, onStartTimeChange ] = useState(START_TIME);
-  const [ endDate, onEndDateChange ] = useState(END_DATE);
-  const [ endTime, onEndTimeChange ] = useState(END_TIME);
+  const DateFormatSelectItem = forwardRef<HTMLDivElement, DateFormatSelectItemProps>(
+    ({ label, description, ...others }: DateFormatSelectItemProps, ref) =>
+      <div ref={ref} {...others}>
+        <Group noWrap>
+          <div>
+            <Text size="sm">{label}</Text>
+            <Text size="xs" opacity={0.65}>{description}</Text>
+          </div>
+        </Group>
+      </div>
+  );
+
+  DateFormatSelectItem.displayName = DateFormatSelectItem.name;
+
+  const [ startDate, onStartDateChange ] = useInputState(sd);
+  const [ startTime, onStartTimeChange ] = useState(st);
+  const [ endDate, onEndDateChange ] = useState(ed);
+  const [ endTime, onEndTimeChange ] = useState(et);
   const [ errorFlag, setErrorFlag ] = useState(false);
   const [ count, setCount ] = useHowManyInputState();
   const [ output, setOutput ] = useEmptyStringInputState();
   const [ generateDisabled, setGenerateDisabled ] = useInputState(false);
-  const [ format, setFormat ] = useState(DEFAULT_FORMAT);
+  const [ format, setFormat ] = useInputState(defaultFormat);
 
   useEffect(() => {
-    const flag = combineDateTime(startDate, startTime) > combineDateTime(endDate, endTime);
+    const flag = mergeDateTime(startDate, startTime).isAfter(mergeDateTime(endDate, endTime));
     setGenerateDisabled(flag);
     setErrorFlag(flag);
   }, [ startDate, startTime, endDate, endTime ]);
 
   const generateOutput = () => {
-    setOutput(randomDates(combineDateTime(startDate, startTime), combineDateTime(endDate, endTime), count, format));
+    setOutput(randomDates(
+      mergeDateTime(startDate, startTime).toDate(),
+      mergeDateTime(endDate, endTime).toDate(),
+      count,
+      format
+    ));
   };
 
   return (
     <Stack>
       <Group align="end">
         <DatePicker
-          label={<ComponentLabel text="Start date"/>}
+          label={<ComponentLabel text={__.labels.startDate}/>}
           value={startDate}
           error={errorFlag}
           clearable={false}
-          onChange={v => onStartDateChange(v || START_DATE)}/>
+          onChange={v => onStartDateChange(v || sd)}/>
         <TimeInput
-          label={<ComponentLabel text="time"/>}
+          withSeconds
+          label={<ComponentLabel text={__.labels.time}/>}
           value={startTime}
           error={errorFlag}
           onChange={onStartTimeChange}/>
-        <Text color="red" size="sm">{errorFlag ? ERROR_MESSAGE : EMPTY_STRING}</Text>
+        <Button onClick={() => setNowCallback(onStartDateChange, onStartTimeChange)}>{__.labels.now}</Button>
       </Group>
+      {errorFlag && <Text color={colors.red} size="sm">{__.errmsg.dateRange}</Text>}
       <Group align="end">
         <DatePicker
-          label={<ComponentLabel text="End date"/>}
+          label={<ComponentLabel text={__.labels.endDate}/>}
           value={endDate}
           clearable={false}
-          onChange={v => onEndDateChange(v || END_DATE)}/>
+          onChange={v => onEndDateChange(v || ed)}/>
         <TimeInput
-          label={<ComponentLabel text="time"/>}
+          withSeconds
+          label={<ComponentLabel text={__.labels.time}/>}
           value={endTime}
           onChange={onEndTimeChange}/>
+        <Button onClick={() => setNowCallback(onEndDateChange, onEndTimeChange)}>{__.labels.now}</Button>
       </Group>
       <Group align="end">
         <Select
-          data={FORMATS}
-          label={<ComponentLabel text="Format"/>}
-          style={{ width: 300 }}
+          itemComponent={DateFormatSelectItem}
+          data={dateFormatsSelectData}
+          label={<ComponentLabel text={__.labels.format}/>}
+          style={{ width: 330 }}
           value={format}
-          onChange={v => setFormat(v || DEFAULT_FORMAT)}/>
-        <HowMany value={count} onChange={setCount} />
-        <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>
+          onChange={v => setFormat(v || defaultFormat)}/>
+        <HowMany value={count} onChange={setCount}/>
+        <Button onClick={generateOutput} disabled={generateDisabled}>{__.labels.generate}</Button>
       </Group>
-      <CopyTextArea
-        readOnly
-        spellCheck="false"
-        minRows={textAreaDefaultRows}
-        variant="filled"
-        label={<ComponentLabel text="Output"/>}
-        value={output}/>
+      <CopyTextArea value={output}/>
     </Stack>
   );
 };

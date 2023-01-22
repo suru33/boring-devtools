@@ -4,6 +4,8 @@ import { useOs } from "@mantine/hooks";
 import { useSpotlight } from "@mantine/spotlight";
 import AppLogo from "../resources/AppLogo";
 import { iconMoonStars, iconSearch, iconSun } from "../resources/icons";
+import { fontWeight } from "../app-sx";
+import __ from "../commons/constants";
 
 interface AppHeaderProps {
   colorScheme: ColorScheme,
@@ -13,7 +15,8 @@ interface AppHeaderProps {
 const AppHeader = (props: AppHeaderProps) => {
   const spotlight = useSpotlight();
   const os = useOs();
-  const [ searchShortcut, themeShortcut ] = os === "ios" || os === "macos" ? [ "⌘ + K", "⌘ + J" ] : [ "Ctrl + K", "Ctrl + J" ];
+  const [ searchShortcut, themeShortcut ] = os === "ios" || os === "macos" ?
+    __.labels.shortcuts.mac : __.labels.shortcuts.others;
   const { colorScheme, colorSchemeToggleFn } = props;
   return <Header height={60}>
     <Group sx={{ height: "100%" }} px={20} position="apart">
@@ -21,7 +24,7 @@ const AppHeader = (props: AppHeaderProps) => {
         <UnstyledButton component={Link} to={"/home"}>
           <Group>
             <AppLogo size={50} colorScheme={colorScheme}/>
-            <Text size="xl" weight={900}>boring-devtools</Text>
+            <Text size="xl" weight={fontWeight.extraBold}>{__.settings.appname}</Text>
           </Group>
         </UnstyledButton>
       </Group>
@@ -32,10 +35,10 @@ const AppHeader = (props: AppHeaderProps) => {
           leftIcon={iconSearch}
           color="gray"
           onClick={() => spotlight.openSpotlight()}>
-          {`Search (${searchShortcut})`}
+          {`${__.labels.search} (${searchShortcut})`}
         </Button>
         <ActionIcon
-          title={`Toggle color scheme (${themeShortcut})`}
+          title={`${__.labels.toggleColorScheme} (${themeShortcut})`}
           variant="default"
           size={30}
           onClick={() => colorSchemeToggleFn()}>

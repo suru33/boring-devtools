@@ -1,34 +1,20 @@
-import { SimpleGrid, Textarea } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
-import ComponentLabel from "../../ComponentLabel";
+import { SimpleGrid } from "@mantine/core";
 import CopyTextArea from "../../CopyTextArea";
-import { sortLines } from "../../../commons/utils.strings";
-import { textAreaDefaultRows } from "../../../app-sx";
-import { EMPTY_STRING } from "../../../commons/constants";
+import InputTextArea from "../../InputTextArea";
+import { ToolProps } from "../../../commons/types";
+import { sortLines, useEmptyStringInputState } from "../../../commons/utils.strings";
 
-const WordsSorter = () => {
-  const [ input, setInput ] = useInputState(EMPTY_STRING);
-  const [ output, setOutput ] = useInputState(EMPTY_STRING);
+const WordsSorter = (props: ToolProps) => {
+  const [ input, setInput ] = useEmptyStringInputState();
+  const [ output, setOutput ] = useEmptyStringInputState();
   const onTextChange = (value: string) => {
     setInput(value);
     setOutput(sortLines(value));
   };
   return (
     <SimpleGrid cols={2}>
-      <Textarea
-        spellCheck="false"
-        minRows={textAreaDefaultRows}
-        label={<ComponentLabel text="Input"/>}
-        value={input}
-        onChange={e => onTextChange(e.target.value)}/>
-      <CopyTextArea
-        readOnly
-        spellCheck="false"
-        variant="filled"
-        minRows={textAreaDefaultRows}
-        label={<ComponentLabel text="Output"/>}
-        value={output}
-      />
+      <InputTextArea value={input} onChange={e => onTextChange(e.target.value)}/>
+      <CopyTextArea value={output}/>
     </SimpleGrid>
   );
 };

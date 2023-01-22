@@ -1,34 +1,30 @@
-import * as _ from "lodash";
-import { StringCase, StringCaseFunction } from "./types";
-import { EMPTY_STRING, NO_SPACE } from "./constants";
 import { useInputState } from "@mantine/hooks";
+import { camelCase, capitalize, deburr, kebabCase, lowerFirst, snakeCase, toLower, toUpper, upperFirst } from "lodash";
+import { StringCase, StringCaseFunction } from "./types";
+import __ from "./constants";
 
-export const useEmptyStringInputState = () => useInputState(EMPTY_STRING);
+export const useEmptyStringInputState = () => useInputState<string>(__.emptyStr);
 
 export const reverse = (s: string): string =>
-  s === EMPTY_STRING ? EMPTY_STRING : [...s].reverse().join(NO_SPACE);
+  s === __.emptyStr ? __.emptyStr : [...s].reverse().join(__.emptyStr);
 
 const caseFunctions: StringCaseFunction = {
-  "camel": _.camelCase,
-  "capitalize": _.capitalize,
-  "kebab": _.kebabCase,
-  "lower": _.toLower,
-  "lower-first": _.lowerFirst,
-  "snake": _.snakeCase,
-  "upper": _.toUpper,
-  "upper-first": _.upperFirst,
-  "deburr": _.deburr
+  "camel": camelCase,
+  "capitalize": capitalize,
+  "kebab": kebabCase,
+  "lower": toLower,
+  "lower-first": lowerFirst,
+  "snake": snakeCase,
+  "upper": toUpper,
+  "upper-first": upperFirst,
+  "deburr": deburr
 };
 
 export const changeCase = (stringCase: StringCase, s: string): string =>
-  s === EMPTY_STRING ? EMPTY_STRING : caseFunctions[stringCase](s);
-
-export const repeat = (s: string, n: number): string => _.repeat(s, n);
-
-export const uniqueCharacters = (s: string) => _.uniq(s);
+  s === __.emptyStr ? __.emptyStr : caseFunctions[stringCase](s);
 
 export const sortLines = (s: string): string =>
-  s.split("\n").map(s => s.trim()).sort().join("\n");
+  s.split(__.newLine).map(s => s.trim()).sort().join(__.newLine);
 
 export const base64ToString = (s: string): string => atob(s);
 

@@ -1,12 +1,26 @@
-// predefined colors
-// 'dark' | 'gray' | 'red' | 'pink' | 'grape' | 'violet' | 'indigo'
-// 'blue' | 'cyan' | 'green' | 'lime' | 'yellow' | 'orange' | 'teal'
-
+export const colors = {
+  dark: "dark",
+  gray: "gray",
+  red: "red",
+  pink: "pink",
+  grape: "grape",
+  violet: "violet",
+  indigo: "indigo",
+  blue: "blue",
+  cyan: "cyan",
+  green: "green",
+  lime: "lime",
+  yellow: "yellow",
+  orange: "orange",
+  teal: "teal",
+  darkgreen: "darkgreen",
+  lightgrey: "lightgrey"
+};
 export const navbarColors = {
-  strings: "green",
-  numbers: "grape",
-  dates: "orange",
-  ids: "red",
-  code: "gray",
-  world: "indigo"
+  strings: colors.green,
+  numbers: colors.grape,
+  dates: colors.orange,
+  ids: colors.red,
+  code: colors.gray,
+  world: colors.indigo
 };

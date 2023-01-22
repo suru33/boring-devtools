@@ -1,12 +1,15 @@
-import { Checkbox, Stack, Text, Textarea } from "@mantine/core";
+import { Checkbox, Stack, Text } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
-import ComponentLabel from "../../ComponentLabel";
-import { textAreaDefaultRows } from "../../../app-sx";
-import { uniqueCharacters } from "../../../commons/utils.strings";
-import { EMPTY_STRING } from "../../../commons/constants";
+import { uniq } from "lodash";
+import InputTextArea from "../../InputTextArea";
+import { ToolProps } from "../../../commons/types";
+import { useEmptyStringInputState } from "../../../commons/utils.strings";
+import { fontWeight } from "../../../app-sx";
+import { colors } from "../../../resources/colors";
+import __ from "../../../commons/constants";
 
-const StringLengthCalculator = () => {
-  const [ input, setInput ] = useInputState(EMPTY_STRING);
+const StringLengthCalculator = (props: ToolProps) => {
+  const [ input, setInput ] = useEmptyStringInputState();
   const [ length, setLength ] = useInputState(0);
   const [ uniqueCharactersCount, setUniqueCharactersCount ] = useInputState(0);
   const [ strip, setStrip ] = useInputState(true);
@@ -15,24 +18,16 @@ const StringLengthCalculator = () => {
     setInput(value);
     const output = strip ? value.trim() : value;
     setLength(output.length);
-    setUniqueCharactersCount(uniqueCharacters(output).length);
+    setUniqueCharactersCount(uniq(output).length);
   };
 
   return (
     <Stack>
-      <Textarea
-        spellCheck="false"
-        minRows={textAreaDefaultRows}
-        label={<ComponentLabel text="Input"/>}
-        value={input}
-        onChange={e => onTextChange(e.target.value)}>
-      </Textarea>
-      <Checkbox checked={strip} label="Strip" onChange={setStrip}/>
-      <Text weight={700}>
-        Length: <Text color="blue" inherit component="span">{length}</Text>
-      </Text>
-      <Text weight={700}>
-        Unique Characters: <Text color="blue" inherit component="span">{uniqueCharactersCount}</Text>
+      <InputTextArea value={input} onChange={e => onTextChange(e.target.value)}/>
+      <Checkbox checked={strip} label={__.labels.strip} onChange={setStrip}/>
+      <Text weight={fontWeight.bold}>
+        {__.labels.length} <Text span color={colors.blue}>{length}</Text>
+        , {__.labels.uniqueChars} <Text span color={colors.blue}>{uniqueCharactersCount}</Text>
       </Text>
     </Stack>
   );

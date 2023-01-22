@@ -1,34 +1,22 @@
 import { Button, Group, Stack } from "@mantine/core";
-import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
 import HowMany, { useHowManyInputState } from "../../HowMany";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
+import { ToolProps } from "../../../commons/types";
 import { randomUUIDs } from "../../../commons/utils.random";
-import { textAreaDefaultRows } from "../../../app-sx";
+import __ from "../../../commons/constants";
 
-const UUIDGenerator = () => {
-
+const UUIDGenerator = (props: ToolProps) => {
   const [ count, setCount ] = useHowManyInputState();
   const [ output, setOutput ] = useEmptyStringInputState();
-
-  const generateOutput = () => {
-    const result = randomUUIDs(count);
-    setOutput(result);
-  };
 
   return (
     <Stack>
       <Group align="end">
-        <HowMany value={count} onChange={setCount} />
-        <Button onClick={generateOutput}>Generate</Button>
+        <HowMany value={count} onChange={setCount}/>
+        <Button onClick={() => setOutput(randomUUIDs(count))}>{__.labels.generate}</Button>
       </Group>
-      <CopyTextArea
-        readOnly
-        spellCheck="false"
-        minRows={textAreaDefaultRows}
-        variant="filled"
-        label={<ComponentLabel text="Output"/>}
-        value={output}/>
+      <CopyTextArea value={output}/>
     </Stack>
   );
 };

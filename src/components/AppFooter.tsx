@@ -1,15 +1,22 @@
-import { Footer, Group, Text } from "@mantine/core";
+import { Center, Footer, Text } from "@mantine/core";
+import __ from "../commons/constants";
 
-const AppFooter = () =>
-  <Footer height={30}>
-    <Group sx={{ height: "100%" }} position="center" align="center">
-      <Text size="xs" color="dimmed">
-        {"boring-devtools v1.0.0 • Copyright © 2023 - 2024 Surendra • Licence "}
-        <Text component="a" td="underline" target="_blank" href="https://github.com/suru33/boring-devtools/blob/master/LICENSE">MIT</Text>
-        {" • "}
-        <Text component="a" td="underline" href="https://suru.im" target="_blank">https://suru.im</Text>
-      </Text>
-    </Group>
-  </Footer>;
+const AppFooter = () => {
+  const Link = (props: {display: string, url: string}) =>
+    <Text size="xs" color="dimmed" component="a" td="underline" target="_blank" href={props.url}>
+      {props.display}
+    </Text>;
+  return (
+    <Footer height={30}>
+      <Center style={{ height: "100%" }}>
+        <Text size="xs" color="dimmed">
+          {__.settings.appname} v{__.settings.version} • {__.settings.copyright}
+          {} • {__.labels.license} <Link display={__.settings.license} url={__.settings.licenseURL} />
+          {} • <Link display={__.settings.myURL} url={__.settings.myURL} />
+        </Text>
+      </Center>
+    </Footer>
+  );
+};
 
 export default AppFooter;
