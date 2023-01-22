@@ -4,6 +4,7 @@ import { useOs } from "@mantine/hooks";
 import { useSpotlight } from "@mantine/spotlight";
 import AppLogo from "../resources/AppLogo";
 import { iconMoonStars, iconSearch, iconSun } from "../resources/icons";
+import { BASE_PATH } from "../commons/constants";
 
 interface AppHeaderProps {
   colorScheme: ColorScheme,
@@ -13,15 +14,15 @@ interface AppHeaderProps {
 const AppHeader = (props: AppHeaderProps) => {
   const spotlight = useSpotlight();
   const os = useOs();
-  const searchKey = os === "ios" || os === "macos" ? "⌘ + K" : "Ctrl + K";
+  const [ searchShortcut, themeShortcut ] = os === "ios" || os === "macos" ? [ "⌘ + K", "⌘ + J" ] : [ "Ctrl + K", "Ctrl + J" ];
   const { colorScheme, colorSchemeToggleFn } = props;
   return <Header height={60}>
     <Group sx={{ height: "100%" }} px={20} position="apart">
       <Group>
-        <UnstyledButton component={Link} to="/home">
+        <UnstyledButton component={Link} to={`${BASE_PATH}/home`}>
           <Group>
             <AppLogo size={50} colorScheme={colorScheme}/>
-            <Text size="xl" weight={700}>boring-devtools</Text>
+            <Text size="xl" weight={900}>boring-devtools</Text>
           </Group>
         </UnstyledButton>
       </Group>
@@ -32,10 +33,10 @@ const AppHeader = (props: AppHeaderProps) => {
           leftIcon={iconSearch}
           color="gray"
           onClick={() => spotlight.openSpotlight()}>
-          {`Search (${searchKey})`}
+          {`Search (${searchShortcut})`}
         </Button>
         <ActionIcon
-          title="Toggle color scheme"
+          title={`Toggle color scheme (${themeShortcut})`}
           variant="default"
           size={30}
           onClick={() => colorSchemeToggleFn()}>

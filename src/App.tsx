@@ -2,12 +2,12 @@ import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import {
   Accordion,
   AppShell,
-  Box,
   ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
   Navbar,
-  ScrollArea
+  ScrollArea,
+  Text
 } from "@mantine/core";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { SpotlightProvider } from "@mantine/spotlight";
@@ -17,7 +17,7 @@ import AppHeader from "./components/AppHeader";
 import ToolContainer from "./components/ToolContainer";
 import { allTools, buildSpotlightActions } from "./components/tools";
 import { iconSearchBig } from "./resources/icons";
-import { NOTHING_FOUND, SEARCH } from "./commons/constants";
+import { BASE_PATH, NOTHING_FOUND, SEARCH } from "./commons/constants";
 
 const App = () => {
   const [ colorScheme, setColorScheme ] = useLocalStorage<ColorScheme>({
@@ -56,13 +56,14 @@ const App = () => {
             navbar={
               <Navbar width={{ base: 350 }}>
                 <Navbar.Section grow component={ScrollArea}>
-                  <Accordion multiple>
+                  <Accordion multiple disableChevronRotation chevron={<></>}>
                     {
                       allTools.map((tc, i) =>
                         <Accordion.Item key={`${i}-${tc.label}`} value={tc.label}>
-                          <Box>
-                            <NavbarLinks key={i} parentPath={tc.path} tools={tc.tools}/>
-                          </Box>
+                          <Accordion.Control icon={tc.icon}>
+                            <Text size="lg" weight={700}>{tc.label}</Text>
+                          </Accordion.Control>
+                          <NavbarLinks key={i} parentPath={`${BASE_PATH}/${tc.path}`} tools={tc.tools}/>
                         </Accordion.Item>
                       )
                     }
@@ -71,8 +72,8 @@ const App = () => {
               </Navbar>
             }>
             <Routes>
-              <Route path="/">
-                <Route index element={<Navigate to="home" replace/>}/>
+              <Route path={`${BASE_PATH}/`}>
+                <Route index element={<Navigate to={`${BASE_PATH}/home`} replace/>}/>
                 <Route path="home" element={<Home/>}/>
                 {
                   allTools.map((tc, i) =>

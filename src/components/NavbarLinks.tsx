@@ -17,7 +17,7 @@ const NavbarLink = (props: NavbarLinkProps) => {
   const location = useLocation();
   const { parentPath, tool } = props;
   const path = `${parentPath}/${tool.path}`;
-  const highlight = location.pathname === `/${path}`;
+  const highlight = location.pathname === path;
 
   const getColors = (theme: MantineTheme, hover = false): NavBarColors => {
     const darkHoverColor = theme.colors.dark[6];
