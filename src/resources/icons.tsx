@@ -2,13 +2,16 @@ import {
   IconAddressBook,
   IconAlignJustified,
   IconArrowLeftCircle,
+  IconArrowsShuffle,
   IconArrowsSort,
+  IconCalendarEvent,
   IconCalendarStats,
   IconCalendarTime,
   IconCheck,
   IconClipboard,
   IconCode,
   IconId,
+  IconLanguage,
   IconLetterCase,
   IconLetterCaseToggle,
   IconList,
@@ -16,16 +19,17 @@ import {
   IconNumbers,
   IconRepeat,
   IconRuler2,
+  IconSearch,
   IconSeparator,
   IconSun,
   IconTransform,
   IconWorld,
   IconWorldLongitude,
-  IconWriting,
-  IconSearch
+  IconWriting
 } from "@tabler/icons";
 
 const size = 16;
+const sizeBig = 18;
 
 export const navbarIcons = {
   string: <IconLetterCase size={size}/>,
@@ -46,7 +50,10 @@ export const navbarIcons = {
   code: <IconCode size={size}/>,
   dateDifference: <IconCalendarStats size={size}/>,
   timeZone: <IconWorldLongitude size={size}/>,
-  transform: <IconTransform size={size}/>
+  transform: <IconTransform size={size}/>,
+  randomBig : <IconArrowsShuffle size={sizeBig}/>,
+  languageBig: <IconLanguage size={sizeBig}/>,
+  calendarBig: <IconCalendarEvent size={sizeBig} />
 };
 
 export const iconCheck = <IconCheck size={size}/>;
@@ -54,4 +61,5 @@ export const iconClipboard = <IconClipboard size={size}/>;
 export const iconMoonStars = <IconMoonStars size={size}/>;
 export const iconSun = <IconSun size={size}/>;
 export const iconSearch = <IconSearch size={size}/>;
-export const iconSearchBig = <IconSearch size={18}/>;
+
+export const iconSearchBig = <IconSearch size={sizeBig}/>;
