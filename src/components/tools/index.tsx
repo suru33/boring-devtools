@@ -22,6 +22,7 @@ import DateDifferenceCalculator from "./dates/DateDifferenceCalculator";
 import TimeZoneConverter from "./dates/TimeZoneConverter";
 import { navbarColors as colors } from "../../resources/colors";
 import { navbarIcons as icons } from "../../resources/icons";
+import { BASE_PATH } from "../../commons/constants";
 
 export interface Tool {
   label: string,
@@ -34,12 +35,14 @@ export interface Tool {
 export interface ToolCategory {
   label: string,
   path: string,
+  icon: ReactNode,
   tools: Tool[]
 }
 
 const randomToolsCategory: ToolCategory = {
   label: "Random Generators",
   path: "random-generators",
+  icon: icons.randomBig,
   tools: [
     {
       label: "Strings Generator",
@@ -110,6 +113,7 @@ const randomToolsCategory: ToolCategory = {
 const stringToolsCategory: ToolCategory = {
   label: "String Tools",
   path: "string-tools",
+  icon: icons.languageBig,
   tools: [
     {
       label: "String Length Calculator",
@@ -159,6 +163,7 @@ const stringToolsCategory: ToolCategory = {
 const dateToolsCategory: ToolCategory = {
   label: "Date Tools",
   path: "date-tools",
+  icon: icons.calendarBig,
   tools: [
     {
       label: "Date Difference Calculator",
@@ -185,7 +190,7 @@ export const allTools: ToolCategory[] = [
 
 export const getToolPath = (tc: ToolCategory, t: Tool) => {
   if(tc.tools.find(i => isEqual(i, t))) {
-    return `/${tc.path}/${t.path}`;
+    return `${BASE_PATH}/${tc.path}/${t.path}`;
   } else {
     throw new Error(`${t.label} does not belongs to ${tc.label}`);
   }
