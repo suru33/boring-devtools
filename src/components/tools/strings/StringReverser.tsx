@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { SimpleGrid, Stack, Text, Textarea } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
-import ComponentLabel from "../../ComponentLabel";
+import { SimpleGrid, Stack, Text } from "@mantine/core";
 import CopyTextArea from "../../CopyTextArea";
-import { reverse } from "../../../commons/utils.strings";
+import InputTextArea from "../../InputTextArea";
+import { ToolProps } from "../../../commons/types";
+import { reverse, useEmptyStringInputState } from "../../../commons/utils.strings";
 import { isEmpty } from "lodash";
-import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
-import { EMPTY_STRING } from "../../../commons/constants";
+import { fontWeight } from "../../../app-sx";
+import { colors } from "../../../resources/colors";
+import __ from "../../../commons/constants";
 
-const StringReverser = () => {
-  const initialStatus = { message: "Input is empty", color: "grey" };
-  const [ input, setInput ] = useInputState(EMPTY_STRING);
-  const [ output, setOutput ] = useInputState(EMPTY_STRING);
+const StringReverser = (props: ToolProps) => {
+  const initialStatus = { message: __.labels.inputEmpty as string, color: colors.gray };
+  const [ input, setInput ] = useEmptyStringInputState();
+  const [ output, setOutput ] = useEmptyStringInputState();
   const [ status, setStatus ] = useState(initialStatus);
 
   const onTextChange = (value: string) => {
@@ -23,31 +24,19 @@ const StringReverser = () => {
     if (isEmpty(input)) {
       setStatus(initialStatus);
     } else if (input === output) {
-      setStatus({ message: "Palindrome string", color: "darkgreen" });
+      setStatus({ message: __.labels.palindrome, color: colors.darkgreen });
     } else {
-      setStatus({ message: "Not a palindrome string", color: "red" });
+      setStatus({ message: __.labels.notPalindrome, color: colors.red });
     }
   }, [ input, output ]);
 
   return (
     <Stack>
-      <SimpleGrid cols={2} sx={defaultMargin}>
-        <Textarea
-          spellCheck="false"
-          minRows={textAreaDefaultRows}
-          label={<ComponentLabel text="Input"/>}
-          value={input}
-          onChange={e => onTextChange(e.target.value)}/>
-        <CopyTextArea
-          readOnly
-          spellCheck="false"
-          variant="filled"
-          minRows={textAreaDefaultRows}
-          label={<ComponentLabel text="Output"/>}
-          value={output}
-        />
+      <SimpleGrid cols={2}>
+        <InputTextArea value={input} onChange={e => onTextChange(e.target.value)}/>
+        <CopyTextArea value={output}/>
       </SimpleGrid>
-      <Text weight={700} color={status.color}>{status.message}</Text>
+      <Text weight={fontWeight.bold} color={status.color}>{status.message}</Text>
     </Stack>
   );
 };

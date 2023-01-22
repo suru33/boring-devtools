@@ -5,51 +5,44 @@ import { DatePicker, TimeInput } from "@mantine/dates";
 import dayjs from "dayjs";
 import Duration from "dayjs/plugin/duration";
 import ComponentLabel from "../../ComponentLabel";
-import { combineDateTime } from "../../../commons/utils.datetime";
+import { ToolProps } from "../../../commons/types";
+import { datetimeRangeFromNow, mergeDateTime, setNowCallback } from "../../../commons/utils.datetime";
+import { colors } from "../../../resources/colors";
+import { fontWeight } from "../../../app-sx";
+import __ from "../../../commons/constants";
 
-const DateDifferenceCalculator = () => {
+const DateDifferenceCalculator = (props: ToolProps) => {
   dayjs.extend(Duration);
 
-  const ERROR_MESSAGE = "* start date and time should be < end date time";
-  const START_DATE = dayjs().hour(0).minute(0).second(0).toDate();
-  const START_TIME = dayjs().hour(0).minute(0).second(0).toDate();
-  const END_DATE = dayjs(START_DATE).add(10, "days").toDate();
-  const END_TIME = dayjs().hour(23).minute(59).second(59).toDate();
+  const [ sd, st, ed, et ] = datetimeRangeFromNow();
+  const suffix = (n: number, i: number) =>
+    n === 1 ? ` ${__.labels.timestampSuffixes[i]} ` : ` ${__.labels.timestampSuffixes[i]}s `;
 
-  const suffixes= [ "Year", "Month", "Day", "Hour", "Minute", "Second" ];
-  const suffix = (n: number, i: number) => n === 1 ? ` ${suffixes[i]} ` : ` ${suffixes[i]}s `;
-
-  const [ startDate, onStartDateChange ] = useInputState(START_DATE);
-  const [ startTime, onStartTimeChange ] = useState(START_TIME);
-  const [ endDate, onEndDateChange ] = useState(END_DATE);
-  const [ endTime, onEndTimeChange ] = useState(END_TIME);
+  const [ startDate, onStartDateChange ] = useInputState(sd);
+  const [ startTime, onStartTimeChange ] = useInputState(st);
+  const [ endDate, onEndDateChange ] = useInputState(ed);
+  const [ endTime, onEndTimeChange ] = useInputState(et);
   const [ output, setOutput ] = useState<ReactNode>(<></>);
 
-  const setNow = (dateFn: (_:Date) => void, timeFn: (_:Date) => void) => {
-    const now = new Date();
-    dateFn(now);
-    timeFn(now);
-  };
-
   useEffect(() => {
-    const flag = combineDateTime(startDate, startTime) > combineDateTime(endDate, endTime);
-    if (flag) {
-      setOutput(<Text color="red" weight={700}>{ERROR_MESSAGE}</Text>);
+    const d1 = mergeDateTime(startDate, startTime);
+    const d2 = mergeDateTime(endDate, endTime);
+    if (d1.isAfter(d2, "seconds")) {
+      setOutput(<Text color={colors.red} weight={fontWeight.bold}>{__.errmsg.dateRange}</Text>);
     } else {
-      const d1 = dayjs(combineDateTime(startDate, startTime));
-      const d2 = dayjs(combineDateTime(endDate, endTime));
+      const [ fmt, seperator ] = __.formats.splitTimestamp;
       const diff = dayjs.duration(d2.diff(d1, "seconds"), "seconds")
-        .format("Y;M;D;H;m;s")
-        .split(";")
+        .format(fmt)
+        .split(seperator)
         .map(s => parseInt(s));
       setOutput(
-        <Text weight={500}>
-          <ComponentLabel text={"The difference is:"}/>
+        <Text weight={fontWeight.semiBold}>
+          <ComponentLabel text={__.labels.differenceIs}/>
           {
             diff.map((v, i) =>
-              <Text span key={i} color="blue">
+              <Text span key={i} color={colors.blue}>
                 {v}
-                <Text span color="grey">{suffix(v, i)}</Text>
+                <Text span color={colors.gray}>{suffix(v, i)}</Text>
               </Text>
             )
           }
@@ -62,21 +55,21 @@ const DateDifferenceCalculator = () => {
     <Stack>
       <Group align="end">
         <DatePicker
-          label={<ComponentLabel text="Start date & time"/>}
+          label={<ComponentLabel text={__.labels.endDateTime}/>}
           value={startDate}
           clearable={false}
-          onChange={v => onStartDateChange(v || START_DATE)}/>
+          onChange={v => onStartDateChange(v || sd)}/>
         <TimeInput withSeconds value={startTime} onChange={onStartTimeChange}/>
-        <Button onClick={() => setNow(onStartDateChange, onStartTimeChange)}>Now</Button>
+        <Button onClick={() => setNowCallback(onStartDateChange, onStartTimeChange)}>{__.labels.now}</Button>
       </Group>
       <Group align="end">
         <DatePicker
-          label={<ComponentLabel text="End date & time"/>}
+          label={<ComponentLabel text={__.labels.endDateTime}/>}
           value={endDate}
           clearable={false}
-          onChange={v => onEndDateChange(v || END_DATE)}/>
+          onChange={v => onEndDateChange(v || ed)}/>
         <TimeInput withSeconds value={endTime} onChange={onEndTimeChange}/>
-        <Button onClick={() => setNow(onEndDateChange, onEndTimeChange)}>Now</Button>
+        <Button onClick={() => setNowCallback(onEndDateChange, onEndTimeChange)}>{__.labels.now}</Button>
       </Group>
       {output}
     </Stack>

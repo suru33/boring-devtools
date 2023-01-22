@@ -13,6 +13,7 @@ interface NavBarColors {
   hover?: string,
   text?: string
 }
+
 const NavbarLink = (props: NavbarLinkProps) => {
   const location = useLocation();
   const { parentPath, tool } = props;
@@ -21,10 +22,10 @@ const NavbarLink = (props: NavbarLinkProps) => {
 
   const getColors = (theme: MantineTheme, hover = false): NavBarColors => {
     const darkHoverColor = theme.colors.dark[6];
-    const darkHighlightColor =  theme.colors.dark[5];
+    const darkHighlightColor = theme.colors.dark[5];
     const darkTextColor = theme.colors.gray[1];
-    const lightHoverColor =  theme.colors.gray[0];
-    const lightHighlightColor =  theme.colors.gray[2];
+    const lightHoverColor = theme.colors.gray[0];
+    const lightHighlightColor = theme.colors.gray[2];
     const lightTextColor = theme.black;
     switch (true) {
       case theme.colorScheme === "dark" && highlight && hover:
@@ -44,7 +45,7 @@ const NavbarLink = (props: NavbarLinkProps) => {
   };
 
   const navBarSx: Sx = (theme) => {
-    const defaultColors =  getColors(theme);
+    const defaultColors = getColors(theme);
     return {
       display: "block",
       width: "100%",

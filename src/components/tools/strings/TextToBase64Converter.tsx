@@ -1,17 +1,16 @@
 import { SimpleGrid } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
-import { base64ToString, stringToBase64 } from "../../../commons/utils.strings";
-import { textAreaDefaultRows } from "../../../app-sx";
-import { EMPTY_STRING } from "../../../commons/constants";
+import { Base64Conv, ToolProps } from "../../../commons/types";
+import { base64ToString, stringToBase64, useEmptyStringInputState } from "../../../commons/utils.strings";
+import __ from "../../../commons/constants";
 
-const TextToBase64Converter = () => {
-  const [ text, setText ] = useInputState(EMPTY_STRING);
-  const [ base64, setBase64 ] = useInputState(EMPTY_STRING);
-  const onTextChange = (value: string, inputFn: (_:string) => void, outputFn: (_:string) => void, type: "string" | "base64") => {
+const TextToBase64Converter = (props: ToolProps) => {
+  const [ text, setText ] = useEmptyStringInputState();
+  const [ base64, setBase64 ] = useEmptyStringInputState();
+  const onTextChange = (value: string, inputFn: (_: string) => void, outputFn: (_: string) => void, type: Base64Conv) => {
     inputFn(value);
-    if(type === "string") {
+    if (type === "text") {
       outputFn(stringToBase64(value));
     } else {
       outputFn(base64ToString(value));
@@ -20,15 +19,15 @@ const TextToBase64Converter = () => {
   return (
     <SimpleGrid cols={2}>
       <CopyTextArea
-        spellCheck="false"
-        minRows={textAreaDefaultRows}
-        label={<ComponentLabel text="Text"/>}
+        variant="default"
+        readOnly={false}
+        label={<ComponentLabel text={__.labels.text}/>}
         value={text}
-        onChange={e => onTextChange(e.target.value, setText, setBase64, "string")}/>
+        onChange={e => onTextChange(e.target.value, setText, setBase64, "text")}/>
       <CopyTextArea
-        spellCheck="false"
-        minRows={textAreaDefaultRows}
-        label={<ComponentLabel text="Base64"/>}
+        readOnly={false}
+        variant="default"
+        label={<ComponentLabel text={__.labels.base64}/>}
         value={base64}
         onChange={e => onTextChange(e.target.value, setBase64, setText, "base64")}/>
     </SimpleGrid>

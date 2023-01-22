@@ -1,15 +1,17 @@
-import { Group, NumberInput, SimpleGrid, Stack, Textarea } from "@mantine/core";
+import { NumberInput, SimpleGrid, Stack } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
+import { repeat } from "lodash";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
-import { defaultMargin, textAreaDefaultRows } from "../../../app-sx";
-import { repeat } from "../../../commons/utils.strings";
-import { EMPTY_STRING } from "../../../commons/constants";
+import InputTextArea from "../../InputTextArea";
+import { ToolProps } from "../../../commons/types";
+import { useEmptyStringInputState } from "../../../commons/utils.strings";
+import __ from "../../../commons/constants";
 
-const StringRepeater = () => {
+const StringRepeater = (props: ToolProps) => {
   const [ times, setTimes ] = useInputState(3);
-  const [ input, setInput ] = useInputState(EMPTY_STRING);
-  const [ output, setOutput ] = useInputState(EMPTY_STRING);
+  const [ input, setInput ] = useEmptyStringInputState();
+  const [ output, setOutput ] = useEmptyStringInputState();
 
   const updateOutput = (s: string, n: number) => {
     setOutput(repeat(s, n));
@@ -26,29 +28,16 @@ const StringRepeater = () => {
   };
 
   return (
-    <Stack>
-      <Group sx={defaultMargin} align="end">
-        <NumberInput
-          label={<ComponentLabel text="How many times?"/>}
-          value={times}
-          min={1}
-          max={50}
-          onChange={onTimesChanged}/>
-      </Group>
-      <SimpleGrid cols={2}>
-        <Textarea
-          spellCheck="false"
-          minRows={textAreaDefaultRows}
-          label={<ComponentLabel text="Input"/>}
-          value={input}
-          onChange={e => onInputChanged(e.target.value)}/>
-        <CopyTextArea
-          readOnly
-          spellCheck="false"
-          minRows={textAreaDefaultRows}
-          variant="filled"
-          label={<ComponentLabel text="Output"/>}
-          value={output}/>
+    <Stack align="flex-start">
+      <NumberInput
+        label={<ComponentLabel text={__.labels.howManyTimesQ}/>}
+        value={times}
+        min={1}
+        max={50}
+        onChange={onTimesChanged}/>
+      <SimpleGrid cols={2} sx={{ width: "100%" }}>
+        <InputTextArea value={input} onChange={e => onInputChanged(e.target.value)}/>
+        <CopyTextArea value={output}/>
       </SimpleGrid>
     </Stack>
   );

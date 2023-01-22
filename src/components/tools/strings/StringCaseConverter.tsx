@@ -1,46 +1,58 @@
-import { Radio, SimpleGrid, Stack, Text, Textarea, Tooltip } from "@mantine/core";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { Group, Select, SimpleGrid, Stack, Text } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
-import { StringCase } from "../../../commons/types";
-import { defaultTooltipWidth, textAreaDefaultRows } from "../../../app-sx";
-import { changeCase } from "../../../commons/utils.strings";
-import { EMPTY_STRING } from "../../../commons/constants";
+import InputTextArea from "../../InputTextArea";
+import { StringCase, ToolProps } from "../../../commons/types";
+import { changeCase, useEmptyStringInputState } from "../../../commons/utils.strings";
+import __ from "../../../commons/constants";
 
-interface StringCaseRadio {
-  case: StringCase,
-  text: string,
-  help: string,
-  multiline?: boolean
-}
+const StringCaseConverter = (props: ToolProps) => {
 
-const StringCaseConverter = () => {
+  interface CaseSelectItemProps extends ComponentPropsWithoutRef<"div"> {
+    value: StringCase;
+    label: string;
+    description: string;
+  }
 
-  const allOptions: StringCaseRadio[] = [
-    { case: "lower", text: "Lower", help: "Converts string, as a whole, to lower case" },
-    { case: "upper", text: "Upper", help: "Converts string, as a whole, to upper case" },
+  const caseSelectItems: CaseSelectItemProps[] = [
+    { value: "lower", label: "Lower", description: "Converts string, as a whole, to lower case" },
+    { value: "upper", label: "Upper", description: "Converts string, as a whole, to upper case" },
     {
-      case: "capitalize",
-      text: "Capitalize",
-      help: "Converts the first character of string to upper case and the remaining to lower case.",
-      multiline: true
+      value: "capitalize",
+      label: "Capitalize",
+      description: "Converts the first character of string to upper case and the remaining to lower case."
     },
-    { case: "upper-first", text: "Upper first", help: "Converts the first character of string to upper case." },
-    { case: "lower-first", text: "Lower first", help: "Converts the first character of string to lower case." },
-    { case: "camel", text: "Camel", help: "Converts string to camel case." },
-    { case: "kebab", text: "Kebab", help: "Converts string to kebab case." },
-    { case: "snake", text: "Snake", help: "Converts string to snake case." },
+    { value: "upper-first", label: "Upper first", description: "Converts the first character of string to upper case." },
+    { value: "lower-first", label: "Lower first", description: "Converts the first character of string to lower case." },
+    { value: "camel", label: "Camel", description: "Converts string to camel case." },
+    { value: "kebab", label: "Kebab", description: "Converts string to kebab case." },
+    { value: "snake", label: "Snake", description: "Converts string to snake case." },
     {
-      case: "deburr",
-      text: "Deburr",
-      help: "Deburrs string by converting Latin-1 Supplement and Latin Extended-A letters to basic Latin letters and removing combining diacritical marks.",
-      multiline: true
+      value: "deburr",
+      label: "Deburr",
+      description: "Deburrs string by converting Latin-1 Supplement and Latin Extended-A letters to basic Latin letters and removing combining diacritical marks."
     }
   ];
 
+  const StringCaseSelectItem = forwardRef<HTMLDivElement, CaseSelectItemProps>(
+    ({ label, description, ...others }: CaseSelectItemProps, ref) =>
+      <div ref={ref} {...others}>
+        <Group noWrap>
+          <div>
+            <Text size="sm">{label}</Text>
+            <Text size="xs" opacity={0.65}>{description}</Text>
+          </div>
+        </Group>
+      </div>
+  );
+
+  StringCaseSelectItem.displayName = StringCaseSelectItem.name;
+
   const [ stringCase, setStringCase ] = useInputState<StringCase>("lower");
-  const [ input, setInput ] = useInputState(EMPTY_STRING);
-  const [ output, setOutput ] = useInputState(EMPTY_STRING);
+  const [ input, setInput ] = useEmptyStringInputState();
+  const [ output, setOutput ] = useEmptyStringInputState();
 
   const updateOutput = (stringCase: StringCase, s: string) => {
     setOutput(changeCase(stringCase, s));
@@ -53,43 +65,22 @@ const StringCaseConverter = () => {
 
   const onInputChanged = (value: string) => {
     setInput(value);
-    updateOutput(stringCase as StringCase, value);
+    updateOutput(stringCase, value);
   };
 
   return (
-    <Stack>
-      <Radio.Group
-        label={<ComponentLabel text="String case"/>}
-        onChange={onStringCaseChanged}
-        value={stringCase}>
-        {
-          allOptions.map((opt) => {
-            const label = <Tooltip
-              withArrow
-              multiline={opt.multiline}
-              label={opt.help}
-              width={opt.multiline ? defaultTooltipWidth : "auto"}>
-              <Text>{opt.text}</Text>
-            </Tooltip>;
-            return <Radio key={opt.case} value={opt.case} label={label}/>;
-          })
-        }
-      </Radio.Group>
+    <Stack align="flex-start">
+      <Select
+        style={{ width: 350 }}
+        label={<ComponentLabel text={__.labels.stringCase}/>}
+        value={stringCase}
+        itemComponent={StringCaseSelectItem}
+        onChange={(v) => onStringCaseChanged(v as StringCase || "lower")}
+        data={caseSelectItems}/>
 
-      <SimpleGrid cols={2}>
-        <Textarea
-          spellCheck="false"
-          minRows={textAreaDefaultRows}
-          label={<ComponentLabel text="Input"/>}
-          value={input}
-          onChange={e => onInputChanged(e.target.value)}/>
-        <CopyTextArea
-          readOnly
-          spellCheck="false"
-          minRows={textAreaDefaultRows}
-          variant="filled"
-          label={<ComponentLabel text="Output"/>}
-          value={output}/>
+      <SimpleGrid cols={2} sx={{ width: "100%" }}>
+        <InputTextArea value={input} onChange={e => onInputChanged(e.target.value)}/>
+        <CopyTextArea value={output}/>
       </SimpleGrid>
     </Stack>
   );
