@@ -1,3 +1,5 @@
+import { TextProps } from "@mantine/core";
+
 export const NEW_LINE = "\n";
 export const EMPTY_STRING = "";
 export const NO_SPACE = "";
@@ -13,5 +15,8 @@ export const SYMBOL_LETTERS = [ "!", "@", "#", "$", "%", "^", "&", "*", "(", ")"
 export const MIN_OUTPUT_ITEMS = 1;
 export const MAX_OUTPUT_ITEMS = 100;
 export const OUTPUT_ITEMS = 25;
-export const FULL_PAGE_TEXT_SIZE = 50;
-export const FULL_PAGE_TEXT_WEIGHT = 900;
+export const FULL_PAGE_TEXT_PROPS: TextProps = {
+  size: 50,
+  weight: 900,
+  ta: "center"
+};
