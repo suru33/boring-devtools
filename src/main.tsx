@@ -1,6 +1,7 @@
 import React from "react";
+// To be able to run in GitHub pages use HashRouter instead of BrowserRouter
+import { HashRouter } from "react-router-dom";
 import App from "./App";
-import { HashRouter as Router } from "react-router-dom";
 
 import { createRoot } from "react-dom/client";
 
@@ -9,9 +10,9 @@ if(container) {
   const root = createRoot(container);
   root.render(
     <React.StrictMode>
-      <Router>
+      <HashRouter>
         <App/>
-      </Router>
+      </HashRouter>
     </React.StrictMode>
   );
 }

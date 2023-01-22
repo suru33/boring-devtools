@@ -22,7 +22,6 @@ import DateDifferenceCalculator from "./dates/DateDifferenceCalculator";
 import TimeZoneConverter from "./dates/TimeZoneConverter";
 import { navbarColors as colors } from "../../resources/colors";
 import { navbarIcons as icons } from "../../resources/icons";
-import { BASE_PATH } from "../../commons/constants";
 
 export interface Tool {
   label: string,
@@ -190,7 +189,7 @@ export const allTools: ToolCategory[] = [
 
 export const getToolPath = (tc: ToolCategory, t: Tool) => {
   if(tc.tools.find(i => isEqual(i, t))) {
-    return `${BASE_PATH}/${tc.path}/${t.path}`;
+    return `${tc.path}/${t.path}`;
   } else {
     throw new Error(`${t.label} does not belongs to ${tc.label}`);
   }

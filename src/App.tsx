@@ -19,7 +19,7 @@ import AppFooter from "./components/AppFooter";
 import ToolContainer from "./components/ToolContainer";
 import { allTools, buildSpotlightActions } from "./components/tools";
 import { iconSearchBig, navbarIcons } from "./resources/icons";
-import { BASE_PATH, NOTHING_FOUND, SEARCH } from "./commons/constants";
+import { NOTHING_FOUND, SEARCH } from "./commons/constants";
 import NotFound from "./pages/NotFound";
 import Credits from "./pages/Credits";
 
@@ -68,13 +68,13 @@ const App = () => {
                           <Accordion.Control icon={tc.icon}>
                             <Text size="lg" weight={700}>{tc.label}</Text>
                           </Accordion.Control>
-                          <NavbarLinks key={i} parentPath={`${BASE_PATH}/${tc.path}`} tools={tc.tools}/>
+                          <NavbarLinks key={i} parentPath={tc.path} tools={tc.tools}/>
                         </Accordion.Item>
                       )
                     }
                     <Accordion.Item key="credits" value="credits">
                       <Accordion.Control icon={navbarIcons.licenseBig}>
-                        <UnstyledButton component={Link} to={`${BASE_PATH}/credits`}>
+                        <UnstyledButton component={Link} to={"/credits"}>
                           <Text size="lg" weight={700}>Credits</Text>
                         </UnstyledButton>
                       </Accordion.Control>
@@ -84,8 +84,8 @@ const App = () => {
               </Navbar>
             }>
             <Routes>
-              <Route path={`${BASE_PATH}/`}>
-                <Route index element={<Navigate to={`${BASE_PATH}/home`} replace/>}/>
+              <Route path={"/"}>
+                <Route index element={<Navigate to={"/home"} replace/>}/>
                 <Route path="home" element={<Home/>}/>
                 <Route path="credits" element={<Credits/>}/>
                 {
@@ -103,7 +103,7 @@ const App = () => {
                     </Route>
                   )
                 }
-                <Route path='*' element={<NotFound />}/>
+                <Route path='/*' element={<NotFound />}/>
               </Route>
             </Routes>
           </AppShell>
