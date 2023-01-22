@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ComponentPropsWithoutRef, forwardRef, useEffect, useState } from "react";
 import { Button, Group, Select, Stack, Text } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
 import { useInputState } from "@mantine/hooks";
@@ -14,22 +14,45 @@ import __ from "../../../commons/constants";
 
 const DateTimeGenerator = (props: ToolProps) => {
   const [ sd, st, ed, et ] = datetimeRangeFromNow();
-  const formatsSelectData = [
-    { value: __.formats.dateTimeWithOutSeconds, label: "2020-12-20 13:45" },
-    { value: "YYYY-MM-DD hh:mm A", label: "2020-12-20 01:45 PM" },
-    { value: "DD/MM/YYYY HH:mm", label: "20/12/2020 13:45" },
-    { value: "DD/MM/YYYY hh:mm A", label: "20/12/2020 01:45 PM" },
-    { value: "MM-DD-YYYY HH:mm", label: "12-20-2020 13:45" },
-    { value: "MM-DD-YYYY hh:mm A", label: "12-20-2020 01:45 PM" },
-    { value: "YYYY-MM-DD", label: "2020-12-20" },
-    { value: "DD-MM-YYYY", label: "20-12-2020" },
-    { value: "DD/MM/YYYY", label: "20/12/2020" },
-    { value: "MM-DD-YYYY", label: "12-20-2020" },
-    { value: "MMM D, YYYY", label: "Dec 2, 2020", description: "tes" },
-    { value: "UNIX_MILLIS", label: "Unix Timestamp (milliseconds)" },
-    { value: "UNIX", label: "Unix Timestamp" },
-    { value: "ISO_8601", label: "ISO 8601 (2019-01-25T02:00:00.000Z)" }
+
+  interface DateFormatSelectItemProps extends ComponentPropsWithoutRef<"div"> {
+    label: string;
+    value: string;
+    description: string;
+  }
+
+  const defaultFormat = __.formats.dateTimeWithOutSeconds;
+
+  const dateFormatsSelectData: DateFormatSelectItemProps[] = [
+    { label: defaultFormat, value: defaultFormat, description: "2020-12-20 13:45" },
+    { label: "YYYY-MM-DD hh:mm A", value: "YYYY-MM-DD hh:mm A", description: "2020-12-20 01:45 PM" },
+    { label: "DD/MM/YYYY HH:mm", value: "DD/MM/YYYY HH:mm", description: "20/12/2020 13:45" },
+    { label: "DD/MM/YYYY hh:mm A", value: "DD/MM/YYYY hh:mm A", description: "20/12/2020 01:45 PM" },
+    { label: "MM-DD-YYYY HH:mm", value: "MM-DD-YYYY HH:mm", description: "12-20-2020 13:45" },
+    { label: "MM-DD-YYYY hh:mm A", value: "MM-DD-YYYY hh:mm A", description: "12-20-2020 01:45 PM" },
+    { label: "YYYY-MM-DD", value: "YYYY-MM-DD", description: "2020-12-20" },
+    { label: "DD-MM-YYYY", value: "DD-MM-YYYY", description: "20-12-2020" },
+    { label: "DD/MM/YYYY", value: "DD/MM/YYYY", description: "20/12/2020" },
+    { label: "MM-DD-YYYY", value: "MM-DD-YYYY", description: "12-20-2020" },
+    { label: "MMM D, YYYY", value: "MMM D, YYYY", description: "Dec 2, 2020" },
+    { label: "Unix Timestamp (milliseconds)", value: "UNIX_MILLIS", description: "1674606313347" },
+    { label: "Unix Timestamp", value: "UNIX", description: "1674540375" },
+    { label: "ISO 8601", value: "ISO_8601", description: "2019-01-25T02:00:00.000Z" }
   ];
+
+  const DateFormatSelectItem = forwardRef<HTMLDivElement, DateFormatSelectItemProps>(
+    ({ label, description, ...others }: DateFormatSelectItemProps, ref) =>
+      <div ref={ref} {...others}>
+        <Group noWrap>
+          <div>
+            <Text size="sm">{label}</Text>
+            <Text size="xs" opacity={0.65}>{description}</Text>
+          </div>
+        </Group>
+      </div>
+  );
+
+  DateFormatSelectItem.displayName = DateFormatSelectItem.name;
 
   const [ startDate, onStartDateChange ] = useInputState(sd);
   const [ startTime, onStartTimeChange ] = useState(st);
@@ -39,7 +62,7 @@ const DateTimeGenerator = (props: ToolProps) => {
   const [ count, setCount ] = useHowManyInputState();
   const [ output, setOutput ] = useEmptyStringInputState();
   const [ generateDisabled, setGenerateDisabled ] = useInputState(false);
-  const [ format, setFormat ] = useState<string>(__.formats.dateTimeWithOutSeconds);
+  const [ format, setFormat ] = useInputState(defaultFormat);
 
   useEffect(() => {
     const flag = mergeDateTime(startDate, startTime).isAfter(mergeDateTime(endDate, endTime));
@@ -89,11 +112,12 @@ const DateTimeGenerator = (props: ToolProps) => {
       </Group>
       <Group align="end">
         <Select
-          data={formatsSelectData}
+          itemComponent={DateFormatSelectItem}
+          data={dateFormatsSelectData}
           label={<ComponentLabel text={__.labels.format}/>}
           style={{ width: 330 }}
           value={format}
-          onChange={v => setFormat(v || __.formats.dateTimeWithOutSeconds)}/>
+          onChange={v => setFormat(v || defaultFormat)}/>
         <HowMany value={count} onChange={setCount}/>
         <Button onClick={generateOutput} disabled={generateDisabled}>{__.labels.generate}</Button>
       </Group>
