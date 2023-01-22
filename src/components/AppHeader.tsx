@@ -4,7 +4,6 @@ import { useOs } from "@mantine/hooks";
 import { useSpotlight } from "@mantine/spotlight";
 import AppLogo from "../resources/AppLogo";
 import { iconMoonStars, iconSearch, iconSun } from "../resources/icons";
-import { BASE_PATH } from "../commons/constants";
 
 interface AppHeaderProps {
   colorScheme: ColorScheme,
@@ -19,7 +18,7 @@ const AppHeader = (props: AppHeaderProps) => {
   return <Header height={60}>
     <Group sx={{ height: "100%" }} px={20} position="apart">
       <Group>
-        <UnstyledButton component={Link} to={`${BASE_PATH}/home`}>
+        <UnstyledButton component={Link} to={"/home"}>
           <Group>
             <AppLogo size={50} colorScheme={colorScheme}/>
             <Text size="xl" weight={900}>boring-devtools</Text>
