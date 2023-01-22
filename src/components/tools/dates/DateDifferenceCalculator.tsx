@@ -3,12 +3,12 @@ import { Button, Group, Stack, Text } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import { DatePicker, TimeInput } from "@mantine/dates";
 import dayjs from "dayjs";
-import * as durationPlugin from "dayjs/plugin/duration";
+import Duration from "dayjs/plugin/duration";
 import ComponentLabel from "../../ComponentLabel";
 import { combineDateTime } from "../../../commons/utils.datetime";
 
 const DateDifferenceCalculator = () => {
-  dayjs.extend(durationPlugin);
+  dayjs.extend(Duration);
 
   const ERROR_MESSAGE = "* start date and time should be < end date time";
   const START_DATE = dayjs().hour(0).minute(0).second(0).toDate();
@@ -63,7 +63,6 @@ const DateDifferenceCalculator = () => {
       <Group align="end">
         <DatePicker
           label={<ComponentLabel text="Start date & time"/>}
-          amountOfMonths={2}
           value={startDate}
           clearable={false}
           onChange={v => onStartDateChange(v || START_DATE)}/>
@@ -73,7 +72,6 @@ const DateDifferenceCalculator = () => {
       <Group align="end">
         <DatePicker
           label={<ComponentLabel text="End date & time"/>}
-          amountOfMonths={2}
           value={endDate}
           clearable={false}
           onChange={v => onEndDateChange(v || END_DATE)}/>
