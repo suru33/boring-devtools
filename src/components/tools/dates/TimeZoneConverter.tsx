@@ -3,8 +3,8 @@ import { Button, Group, Mark, Select, SelectItem, Stack, Text } from "@mantine/c
 import { DatePicker, TimeInput } from "@mantine/dates";
 import { useInputState } from "@mantine/hooks";
 import dayjs from "dayjs";
-import * as utcPlugin from "dayjs/plugin/utc";
-import * as timezonePlugin from "dayjs/plugin/timezone";
+import Utc from "dayjs/plugin/utc";
+import Timezone from "dayjs/plugin/timezone";
 import { flatten, isEmpty } from "lodash";
 import ComponentLabel from "../../ComponentLabel";
 import { allTimeZones } from "../../../resources/countries";
@@ -12,8 +12,8 @@ import { combineDateTime } from "../../../commons/utils.datetime";
 import { NOTHING_FOUND } from "../../../commons/constants";
 
 const TimeZoneConverter = () => {
-  dayjs.extend(utcPlugin);
-  dayjs.extend(timezonePlugin);
+  dayjs.extend(Utc);
+  dayjs.extend(Timezone);
 
   const now = new Date();
   const userTimezone = dayjs.tz.guess();
