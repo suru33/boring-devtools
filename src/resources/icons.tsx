@@ -8,8 +8,10 @@ import {
   IconCalendarStats,
   IconCalendarTime,
   IconCheck,
+  IconHandClick,
   IconClipboard,
   IconCode,
+  IconError404,
   IconId,
   IconLanguage,
   IconLetterCase,
@@ -30,6 +32,7 @@ import {
 
 const size = 16;
 const sizeBig = 18;
+const sizeFullPage = 150;
 
 export const navbarIcons = {
   string: <IconLetterCase size={size}/>,
@@ -63,3 +66,6 @@ export const iconSun = <IconSun size={size}/>;
 export const iconSearch = <IconSearch size={size}/>;
 
 export const iconSearchBig = <IconSearch size={sizeBig}/>;
+
+export const pageIconNotFound = <IconError404 size={sizeFullPage} />;
+export const pageIconHandClick = <IconHandClick size={sizeFullPage} />;
