@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Grid, Group, Select, Stack, Text } from "@mantine/core";
+import { Button, Group, Select, Stack, Text } from "@mantine/core";
 import { DatePicker, TimeInput } from "@mantine/dates";
 import { useInputState } from "@mantine/hooks";
 import dayjs from "dayjs";
@@ -30,7 +30,7 @@ const DateTimeGenerator = () => {
     { value: "DD-MM-YYYY", label: "20-12-2020" },
     { value: "DD/MM/YYYY", label: "20/12/2020" },
     { value: "MM-DD-YYYY", label: "12-20-2020" },
-    { value: "MMM D, YYYY", label: "Dec 2, 2020" },
+    { value: "MMM D, YYYY", label: "Dec 2, 2020", description: "tes" },
     { value: "UNIX_MILLIS", label: "Unix Timestamp (milliseconds)" },
     { value: "UNIX", label: "Unix Timestamp" },
     { value: "ISO_8601", label: "ISO 8601 (2019-01-25T02:00:00.000Z)" }
@@ -60,35 +60,39 @@ const DateTimeGenerator = () => {
     <Stack>
       <Group align="end">
         <DatePicker
-          label={<ComponentLabel text="Start date & time"/>}
+          label={<ComponentLabel text="Start date"/>}
           value={startDate}
           error={errorFlag}
           clearable={false}
           onChange={v => onStartDateChange(v || START_DATE)}/>
-        <TimeInput value={startTime} error={errorFlag} onChange={onStartTimeChange}/>
+        <TimeInput
+          label={<ComponentLabel text="time"/>}
+          value={startTime}
+          error={errorFlag}
+          onChange={onStartTimeChange}/>
         <Text color="red" size="sm">{errorFlag ? ERROR_MESSAGE : EMPTY_STRING}</Text>
+      </Group>
+      <Group align="end">
         <DatePicker
-          label={<ComponentLabel text="End date & time"/>}
+          label={<ComponentLabel text="End date"/>}
           value={endDate}
           clearable={false}
           onChange={v => onEndDateChange(v || END_DATE)}/>
-        <TimeInput value={endTime} onChange={onEndTimeChange}/>
+        <TimeInput
+          label={<ComponentLabel text="time"/>}
+          value={endTime}
+          onChange={onEndTimeChange}/>
       </Group>
-      <Grid align="end">
-        <Grid.Col span={3}>
-          <Select
-            data={FORMATS}
-            label={<ComponentLabel text="Format"/>}
-            value={format}
-            onChange={v => setFormat(v || DEFAULT_FORMAT)}/>
-        </Grid.Col>
-        <Grid.Col span={2}>
-          <HowMany value={count} onChange={setCount} />
-        </Grid.Col>
-        <Grid.Col span={1}>
-          <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>
-        </Grid.Col>
-      </Grid>
+      <Group align="end">
+        <Select
+          data={FORMATS}
+          label={<ComponentLabel text="Format"/>}
+          style={{ width: 300 }}
+          value={format}
+          onChange={v => setFormat(v || DEFAULT_FORMAT)}/>
+        <HowMany value={count} onChange={setCount} />
+        <Button onClick={generateOutput} disabled={generateDisabled}>Generate</Button>
+      </Group>
       <CopyTextArea
         readOnly
         spellCheck="false"
