@@ -1,5 +1,5 @@
 export const allContinents =
-    [ "Africa", "Antarctica", "Asia", "Europe", "North America", "Oceania", "South America" ] as const;
+  [ "Africa", "Antarctica", "Asia", "Europe", "North America", "Oceania", "South America" ] as const;
 
 export type Continent = typeof allContinents[number]
 
@@ -467,9 +467,9 @@ export const allTimeZones: Record<Continent, string[]> = {
 };
 
 interface CountryData {
-    name: string,
-    postal_code_format: string,
-    phone_format: string
+  name: string,
+  postal_code_format: string,
+  phone_format: string
 }
 
 const allCountries: Record<CountryCode, CountryData> = {
@@ -1739,6 +1739,7 @@ export interface FakerLocale {
   value: string,
   label: string
 }
+
 export const fakerLocales: FakerLocale[] = [
   {
     "value": "af_ZA",
