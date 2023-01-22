@@ -1,8 +1,8 @@
 import { isEmpty, range, uniq } from "lodash";
 import { faker } from "@faker-js/faker";
-import { IPv } from "./types";
-import { dateFormatFunction, DEFAULT_DATETIME_FORMAT } from "./utils.datetime";
-import { LOWERCASE_LETTERS, NEW_LINE, NO_SPACE, NUMERIC_LETTERS, SYMBOL_LETTERS, UPPERCASE_LETTERS } from "./constants";
+import { IPv, TextType } from "./types";
+import { dateFormatFunction } from "./utils.datetime";
+import __ from "./constants";
 
 export const randomInt = (value: number | { min: number; max: number; }): number => {
   const fn = (a: number, b: number) => Math.floor(Math.random() * (b - a)) + a;
@@ -21,15 +21,15 @@ export const randomString = (
   extraChars: string
 ): string => {
   let charSet: string[] = [];
-  charSet = upper ? [ ...charSet, ...UPPERCASE_LETTERS ] : charSet;
-  charSet = lower ? [ ...charSet, ...LOWERCASE_LETTERS ] : charSet;
-  charSet = numeric ? [ ...charSet, ...NUMERIC_LETTERS ] : charSet;
-  charSet = symbols ? [ ...charSet, ...SYMBOL_LETTERS ] : charSet;
+  charSet = upper ? [ ...charSet, ...__.charsets.uppercase ] : charSet;
+  charSet = lower ? [ ...charSet, ...__.charsets.lowercase ] : charSet;
+  charSet = numeric ? [ ...charSet, ...__.charsets.numeric ] : charSet;
+  charSet = symbols ? [ ...charSet, ...__.charsets.symbol ] : charSet;
   charSet = isEmpty(extraChars.trim()) ? charSet : uniq([ ...charSet, ...extraChars.trim() ]);
 
   return range(length)
     .map(() => chooseRandom<string>(charSet))
-    .join(NO_SPACE);
+    .join(__.emptyStr);
 };
 
 export const randomStrings = (
@@ -42,28 +42,30 @@ export const randomStrings = (
   count: number): string =>
   range(count)
     .map(() => randomString(length, upper, lower, numeric, symbols, extraChars))
-    .join(NEW_LINE);
+    .join(__.newLine);
 
-export const randomWords = (count: number): string =>
-  range(count)
-    .map(faker.random.word)
-    .join(NEW_LINE);
-
-export const randomSentences = (count: number): string => faker.lorem.sentences(count, NEW_LINE);
-
-export const randomParagraphs = (count: number): string => faker.lorem.paragraphs(count);
+export const randomText = (type: TextType, count: number): string => {
+  switch (type) {
+    case "words":
+      return range(count).map(faker.random.word).join(__.newLine);
+    case "sentences":
+      return faker.lorem.sentences(count, __.newLine);
+    case "paragraphs" :
+      return faker.lorem.paragraphs(count, __.newLine);
+  }
+};
 
 export const randomIPs = (version: IPv, count: number): string => {
   const fn = version === "v4" ? faker.internet.ipv4 : faker.internet.ipv6;
   return range(count)
     .map(fn)
-    .join(NEW_LINE);
+    .join(__.newLine);
 };
 
 export const randomUUIDs = (count: number): string =>
   range(count)
     .map(faker.datatype.uuid)
-    .join(NEW_LINE);
+    .join(__.newLine);
 
 export const randomNumber = (min: number, max: number, floatValue: boolean, precision: number): number =>
   faker.datatype.number({ min: min, max: max, precision: floatValue ? 1 / Math.pow(10, precision) : 1 });
@@ -71,9 +73,9 @@ export const randomNumber = (min: number, max: number, floatValue: boolean, prec
 export const randomNumbers = (min: number, max: number, floatValue: boolean, count: number, precision: number): string =>
   range(count)
     .map(() => randomNumber(min, max, floatValue, precision))
-    .join(NEW_LINE);
+    .join(__.newLine);
 
-export const randomDates = (from: Date, to: Date, count: number, format = DEFAULT_DATETIME_FORMAT): string =>
+export const randomDates = (from: Date, to: Date, count: number, format: string = __.formats.dateTimeWithOutSeconds): string =>
   uniq(faker.date.betweens(from, to, count)
     .map(dateFormatFunction(format)))
-    .join(NEW_LINE);
+    .join(__.newLine);
