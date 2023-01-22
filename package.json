@@ -8,6 +8,7 @@
     "lint:check": "eslint --ext .js --ext .tsx --ext .ts --ext .json .",
     "lint:fix": "eslint --fix --ext js --ext .tsx --ext .ts --ext .json ."
   },
+  "homepage": "https://suru33.github.io/boring-devtools/",
   "dependencies": {
     "@emotion/cache": "^11.10.5",
     "@emotion/react": "^11.10.5",
