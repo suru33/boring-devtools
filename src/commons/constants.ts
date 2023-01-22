@@ -3,7 +3,6 @@ export const EMPTY_STRING = "";
 export const NO_SPACE = "";
 export const SEARCH = "Search...";
 export const NOTHING_FOUND = "Nothing found...";
-
 export const BASE_PATH = "/boring-devtools";
 
 export const UPPERCASE_LETTERS = [ "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" ];
@@ -14,3 +13,4 @@ export const SYMBOL_LETTERS = [ "!", "@", "#", "$", "%", "^", "&", "*", "(", ")"
 export const MIN_OUTPUT_ITEMS = 1;
 export const MAX_OUTPUT_ITEMS = 100;
 export const OUTPUT_ITEMS = 25;
+export const FULL_PAGE_TEXT_SIZE = 50;
