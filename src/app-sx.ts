@@ -10,9 +10,10 @@ export const timezoneSelect: CSSProperties = {
   width: 300
 };
 export const fontWeight = {
-  semiBold: 500,
+  medium: 500,
+  semiBold: 600,
   bold: 700,
-  extraBold: 900
+  extraBold: 800
 };
 
 export const numVals = {

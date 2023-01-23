@@ -36,7 +36,7 @@ const DateDifferenceCalculator = (props: ToolProps) => {
         .split(seperator)
         .map(s => parseInt(s));
       setOutput(
-        <Text weight={fontWeight.semiBold}>
+        <Text weight={fontWeight.medium}>
           <ComponentLabel text={__.labels.differenceIs}/>
           {
             diff.map((v, i) =>
