@@ -25,5 +25,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/master' }}
         with:
+          cname: boring-devtools.com
           personal_token: ${{ secrets.PERSONAL_TOKEN }}
           publish_dir: ./dist
