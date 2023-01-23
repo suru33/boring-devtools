@@ -7,7 +7,7 @@ const __ = {
   settings: {
     appname: "boring-devtools",
     version: "1.0.1",
-    fontFamily: "'JetBrains Mono NL', monospace",
+    fontFamily: "'JetBrains Mono', monospace",
     myURL: "https://suru.im",
     license: "MIT",
     licenseURL: "https://github.com/suru33/boring-devtools/blob/master/LICENSE",
