@@ -6,7 +6,7 @@ const __ = {
   addressSeperator: "\n--\n",
   settings: {
     appname: "boring-devtools",
-    version: "1.0.1",
+    version: "1.0.2",
     fontFamily: "'JetBrains Mono', monospace",
     myURL: "https://suru.im",
     license: "MIT",
