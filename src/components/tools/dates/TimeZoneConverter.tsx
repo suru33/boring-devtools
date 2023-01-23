@@ -38,18 +38,21 @@ const TimeZoneConverter = (props: ToolProps) => {
   const [ input, setInput ] = useState<string[]>([]);
   const [ output, setOutput ] = useState<string[]>([]);
 
-  const displayDatetime = (tz: string, datetime: string[]) => {
-    const [ YYYY, MM, DD, HH, mm, ss, Z ] = datetime;
+  const displayDatetime = (datetime: string[], cDatetime?: string[]) => {
+    const Segment = (p: { ix: number, color: string }) =>
+      <Text span color={p.color}>
+        {
+          cDatetime ?
+            cDatetime[p.ix] === datetime[p.ix] ? <>{datetime[p.ix]}</> : <Mark>{datetime[p.ix]}</Mark>
+            : <>{datetime[p.ix]}</>
+        }
+      </Text>;
     return (
-      <Text weight={fontWeight.semiBold}>
-        <Text span color={colors.pink}>{YYYY}</Text>-
-        <Text span color={colors.indigo}>{MM}</Text>-
-        <Text span color={colors.darkgreen}>{DD}</Text>
-        <Text span color={colors.grape}>{` ${HH}`}</Text>:
-        <Text span color={colors.blue}>{mm}</Text>:
-        <Text span color={colors.orange}>{ss}</Text>
-        <Text span color={colors.lightgrey}>{` ${__.labels.utcOffset} `}</Text>
-        <Text span color={colors.cyan}>{Z}</Text>
+      <Text weight={fontWeight.medium}>
+        <Segment ix={0} color={colors.pink}/>-<Segment ix={1} color={colors.indigo}/>-
+        <Segment ix={2} color={colors.darkgreen}/> <Segment ix={3} color={colors.grape}/>:
+        <Segment ix={4} color={colors.blue}/>:<Segment ix={5} color={colors.orange}/>
+        <></> <Text span color={colors.gray}>{__.labels.utcOffset}</Text> <Segment ix={6} color={colors.cyan}/>
       </Text>);
   };
 
@@ -73,9 +76,9 @@ const TimeZoneConverter = (props: ToolProps) => {
       {
         isEmpty(userTimezone) ?
           <Text color={colors.red} weight={fontWeight.bold}>{__.errmsg.timezoneGet}</Text> :
-          <Text weight={fontWeight.bold}>
+          <Text weight={fontWeight.extraBold}>
             {__.labels.yourTimezone}
-            <Text span color={colors.blue}><Mark>{userTimezone}</Mark></Text>
+            <Text span color={colors.blue}>{userTimezone}</Text>
           </Text>
       }
       <Group align="end">
@@ -99,7 +102,7 @@ const TimeZoneConverter = (props: ToolProps) => {
           onChange={setInputTimezone}/>
         <Button onClick={setNow}>{__.labels.now}</Button>
       </Group>
-      {displayDatetime(inputTimezone, input)}
+      {displayDatetime(input)}
       <Select
         style={timezoneSelect}
         searchable
@@ -108,7 +111,7 @@ const TimeZoneConverter = (props: ToolProps) => {
         data={timezoneDropdownData}
         value={outputTimezone}
         onChange={setOutputTimezone}/>
-      {displayDatetime(outputTimezone, output)}
+      {displayDatetime(output, input)}
     </Stack>
   );
 };
