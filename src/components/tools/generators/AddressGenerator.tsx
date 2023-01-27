@@ -6,8 +6,9 @@ import CopyTextArea from "../../CopyTextArea";
 import HowMany, { useHowManyInputState } from "../../HowMany";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { ToolProps } from "../../../commons/types";
-import { allCountryCodes, CountryCode, defaultLocale, fakerLocales } from "../../../resources/countries";
+import { allCountryCodes, CountryCode } from "../../../resources/countries";
 import { countryDropdownOptions, generateAddress } from "../../../commons/utils.country";
+import { defaultFakerLocale, fakerLocaleSelectData } from "../../../commons/faker.utils";
 import __ from "../../../commons/constants";
 
 const AddressGenerator = (props: ToolProps) => {
@@ -15,7 +16,7 @@ const AddressGenerator = (props: ToolProps) => {
   const [ selectedCountries, setSelectedCountries ] = useState<CountryCode[]>([]);
   const [ count, setCount ] = useHowManyInputState(5);
   const [ output, setOutput ] = useEmptyStringInputState();
-  const [ locale, setLocale ] = useInputState(defaultLocale.value);
+  const [ locale, setLocale ] = useInputState(defaultFakerLocale.value);
 
   const generateOutput = () => {
     const countries = selectedCountries.length > 0 ? selectedCountries : allCountryCodes;
@@ -31,7 +32,7 @@ const AddressGenerator = (props: ToolProps) => {
           label={<ComponentLabel text={__.labels.selectLocale}/>}
           value={locale}
           onChange={setLocale}
-          data={fakerLocales}/>
+          data={fakerLocaleSelectData}/>
         <HowMany value={count} onChange={setCount}/>
       </Group>
       <MultiSelect
