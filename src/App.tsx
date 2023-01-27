@@ -5,6 +5,7 @@ import {
   ColorScheme,
   ColorSchemeProvider,
   MantineProvider,
+  MantineThemeOverride,
   Navbar,
   ScrollArea,
   Text,
@@ -35,7 +36,7 @@ const App = () => {
 
   useHotkeys([[ __.shortcuts.toggleTheme, () => toggleColorScheme() ]]);
 
-  const appTheme = {
+  const appTheme: MantineThemeOverride = {
     fontFamily: __.settings.fontFamily,
     fontFamilyMonospace: __.settings.fontFamily,
     headings: { fontFamily: __.settings.fontFamily },
