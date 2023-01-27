@@ -26,4 +26,4 @@ export interface ToolProps {
   id: ToolId,
 }
 
-export type TextType = "words" | "sentences" | "paragraphs"
+export type TextType = "words" | "sentences" | "paragraphs" | "slug"

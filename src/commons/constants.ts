@@ -6,7 +6,7 @@ const __ = {
   addressSeperator: "\n--\n",
   settings: {
     appname: "boring-devtools",
-    version: "1.0.2",
+    version: "1.0.3",
     fontFamily: "'JetBrains Mono', monospace",
     myURL: "https://suru.im",
     license: "MIT",
@@ -80,12 +80,14 @@ const __ = {
     words: "Words",
     sentences: "Sentences",
     paragraphs: "Paragraphs",
+    slug: "Slug",
     textType: "Text type",
     credits: "Credits",
     license: "License",
     toggleColorScheme: "Toggle color scheme",
     copied: "Copied",
     copy: "Copy",
+    wordsCount: "World count",
     timestampSuffixes: [ "Year", "Month", "Day", "Hour", "Minute", "Second" ],
     charsets: {
       uppercase: "Uppercase alphabets",
