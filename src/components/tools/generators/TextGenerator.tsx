@@ -1,18 +1,20 @@
 import { Button, Group, NumberInput, Select, Stack } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
 import CopyTextArea from "../../CopyTextArea";
-import HowMany, { useHowManyInputState } from "../../HowMany";
+import HowMany from "../../HowMany";
 import { TextType, ToolProps } from "../../../commons/types";
 import ComponentLabel from "../../ComponentLabel";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { randomText } from "../../../commons/utils.random";
+import { useToolPropHowManyStorage, useToolPropsStorage } from "../../../commons/utils.storage";
+import { numVals } from "../../../app-sx";
 import __ from "../../../commons/constants";
 
 const TextGenerator = (props: ToolProps) => {
-  const [ count, setCount ] = useHowManyInputState();
+  const defaultSlugCount = 3;
+  const [ count, setCount ] = useToolPropHowManyStorage({ tid: props.id });
   const [ output, setOutput ] = useEmptyStringInputState();
-  const [ textType, setTextType ] = useInputState<TextType>("words");
-  const [ slugCont, setSlugCount ] = useInputState(3);
+  const [ textType, setTextType ] = useToolPropsStorage<TextType>({ tid: props.id, key: "type", defaultValue: "words" });
+  const [ slugCont, setSlugCount ] = useToolPropsStorage({ tid: props.id, key: "slug-count", defaultValue: defaultSlugCount });
 
   const typeSelectData = [
     { value: "words", label: __.labels.words },
@@ -36,10 +38,10 @@ const TextGenerator = (props: ToolProps) => {
               min={2}
               max={30}
               value={slugCont}
-              onChange={setSlugCount}
+              onChange={v => setSlugCount(v || defaultSlugCount)}
             />
         }
-        <HowMany value={count} onChange={setCount}/>
+        <HowMany value={count} onChange={v => setCount(v || numVals.defaultOutputItems)}/>
         <Button onClick={() => setOutput(randomText(textType, count, slugCont))}>
           {__.labels.generate}
         </Button>
