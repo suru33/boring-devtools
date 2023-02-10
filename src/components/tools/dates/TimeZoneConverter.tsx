@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import Utc from "dayjs/plugin/utc";
 import Timezone from "dayjs/plugin/timezone";
 import { flatten, isEmpty } from "lodash";
+import { useToolPropsStorage } from "../../../commons/utils.storage";
 import ComponentLabel from "../../ComponentLabel";
 import { ToolProps } from "../../../commons/types";
 import { allTimeZones } from "../../../resources/countries";
@@ -33,8 +34,8 @@ const TimeZoneConverter = (props: ToolProps) => {
 
   const [ inputDate, onInputDateChange ] = useInputState(now);
   const [ inputTime, onInputTimeChange ] = useInputState(now);
-  const [ inputTimezone, setInputTimezone ] = useInputState(getUserTimezone());
-  const [ outputTimezone, setOutputTimezone ] = useInputState<string>(__.timezoneUtc);
+  const [ inputTimezone, setInputTimezone ] = useToolPropsStorage({ tid: props.id, key: "itz", defaultValue: getUserTimezone() });
+  const [ outputTimezone, setOutputTimezone ] = useToolPropsStorage({ tid: props.id, key: "otz", defaultValue: __.timezoneUtc });
   const [ input, setInput ] = useState<string[]>([]);
   const [ output, setOutput ] = useState<string[]>([]);
 
@@ -99,7 +100,7 @@ const TimeZoneConverter = (props: ToolProps) => {
           label={<ComponentLabel text={__.labels.timezone}/>}
           data={timezoneDropdownData}
           value={inputTimezone}
-          onChange={setInputTimezone}/>
+          onChange={v => setInputTimezone(v || getUserTimezone)}/>
         <Button onClick={setNow}>{__.labels.now}</Button>
       </Group>
       {displayDatetime(input)}
@@ -110,7 +111,7 @@ const TimeZoneConverter = (props: ToolProps) => {
         label={<ComponentLabel text={__.labels.outputTimezone}/>}
         data={timezoneDropdownData}
         value={outputTimezone}
-        onChange={setOutputTimezone}/>
+        onChange={v => setOutputTimezone(v || __.timezoneUtc)}/>
       {displayDatetime(output, input)}
     </Stack>
   );
