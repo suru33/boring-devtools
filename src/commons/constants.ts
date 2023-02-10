@@ -33,7 +33,14 @@ const __ = {
     startDate: "sd",
     endDate: "ed",
     startTime: "st",
-    endTime: "et"
+    endTime: "et",
+    howMany: "how-many",
+    length: "length",
+    min: "min",
+    max: "max",
+    count: "count",
+    selectedCountries: "selected-countries",
+    locale: "locale"
   },
   labels: {
     output: "Output",
