@@ -1,16 +1,18 @@
 import { Button, Group, Select, Stack } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
-import HowMany, { useHowManyInputState } from "../../HowMany";
+import HowMany from "../../HowMany";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { IPv, ToolProps } from "../../../commons/types";
 import { randomIPs } from "../../../commons/utils.random";
+import { useToolPropHowManyStorage, useToolPropsStorage } from "../../../commons/utils.storage";
+import { numVals } from "../../../app-sx";
 import __ from "../../../commons/constants";
 
 const IPAddressGenerator = (props: ToolProps) => {
-  const [ version, setVersion ] = useInputState<IPv>("v4");
-  const [ count, setCount ] = useHowManyInputState();
+  const defaultIPVersion: IPv = "v4";
+  const [ version, setVersion ] = useToolPropsStorage<IPv>({ tid: props.id, key: "ipv", defaultValue: defaultIPVersion });
+  const [ count, setCount ] = useToolPropHowManyStorage({ tid: props.id });
   const [ output, setOutput ] = useEmptyStringInputState();
 
   const selectData = [
@@ -20,13 +22,13 @@ const IPAddressGenerator = (props: ToolProps) => {
 
   return (
     <Stack align="flex-start">
-      <Select
-        label={<ComponentLabel text={__.labels.ipVersion}/>}
-        data={selectData}
-        value={version}
-        onChange={v => setVersion(v as IPv)}/>
       <Group align="end">
-        <HowMany value={count} onChange={setCount}/>
+        <Select
+          label={<ComponentLabel text={__.labels.ipVersion}/>}
+          data={selectData}
+          value={version}
+          onChange={v => setVersion((v || defaultIPVersion) as IPv)}/>
+        <HowMany value={count} onChange={v => setCount(v || numVals.defaultOutputItems)}/>
         <Button onClick={() => setOutput(randomIPs(version, count))}>{__.labels.generate}</Button>
       </Group>
       <CopyTextArea value={output}/>
