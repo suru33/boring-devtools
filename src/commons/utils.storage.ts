@@ -16,7 +16,11 @@ export const useToolPropEmptyStringStorage = (args: IStorageProperties<string> &
   useToolPropsStorage<string>({ ...args, defaultValue: "" });
 
 export const useToolPropHowManyStorage = (args: Partial<IStorageProperties<number>> & { tid: ToolId }) =>
-  useToolPropsStorage<number>({ ...args, key: __.sk.howMany, defaultValue: numVals.defaultOutputItems });
+  useToolPropsStorage<number>({
+    ...args,
+    key: __.sk.howMany,
+    defaultValue: args.defaultValue || numVals.defaultOutputItems
+  });
 
 export const useToolPropDateStorage = (args: IStorageProperties<Date> & { tid: ToolId }) =>
   useToolPropsStorage<Date>({ ...args, serialize: serializeDate, deserialize: deserializeDate });
