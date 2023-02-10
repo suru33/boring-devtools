@@ -1,22 +1,26 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button, Checkbox, Group, NumberInput, Select, Stack } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
 import { range } from "lodash";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
-import HowMany, { useHowManyInputState } from "../../HowMany";
+import HowMany from "../../HowMany";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { ToolProps } from "../../../commons/types";
 import { randomNumbers } from "../../../commons/utils.random";
+import { useToolPropHowManyStorage, useToolPropsStorage } from "../../../commons/utils.storage";
+import { numVals } from "../../../app-sx";
 import __ from "../../../commons/constants";
 
 const NumbersGenerator = (props: ToolProps) => {
-  const [ min, setMin ] = useInputState(0);
-  const [ max, setMax ] = useInputState(1000);
-  const [ count, setCount ] = useHowManyInputState();
-  const [ floatValue, setFloatValue ] = useState(false);
+  const defaultMin = 0;
+  const defaultMax = 1000;
+  const defaultPrecision = "2";
+  const [ min, setMin ] = useToolPropsStorage({ tid: props.id, key: __.sk.min, defaultValue: defaultMin });
+  const [ max, setMax ] = useToolPropsStorage({ tid: props.id, key: __.sk.max, defaultValue: defaultMax });
+  const [ count, setCount ] = useToolPropHowManyStorage({ tid: props.id });
+  const [ floatValue, setFloatValue ] = useToolPropsStorage({ tid: props.id, key: "float", defaultValue: false });
   const [ output, setOutput ] = useEmptyStringInputState();
-  const [ precision, setPrecision ] = useInputState("2");
+  const [ precision, setPrecision ] = useToolPropsStorage({ tid: props.id, key: "precision", defaultValue: defaultPrecision });
   const [ minError, setMinError ] = useEmptyStringInputState();
 
   const precisionSelectValues =
@@ -41,7 +45,7 @@ const NumbersGenerator = (props: ToolProps) => {
           max={Number.MAX_SAFE_INTEGER}
           precision={floatValue ? parseInt(precision) : 0}
           step={1}
-          onChange={setMin}/>
+          onChange={v => setMin(v || defaultMin)}/>
         <NumberInput
           label={<ComponentLabel text={__.labels.max}/>}
           value={max}
@@ -49,16 +53,16 @@ const NumbersGenerator = (props: ToolProps) => {
           max={Number.MAX_SAFE_INTEGER}
           precision={floatValue ? parseInt(precision) : 0}
           step={1}
-          onChange={setMax}/>
+          onChange={v => setMax(v || defaultMax)}/>
         {
           floatValue &&
             <Select
               label={<ComponentLabel text={__.labels.precision}/>}
               data={precisionSelectValues}
               value={precision}
-              onChange={setPrecision}/>
+              onChange={v => setPrecision(v || defaultPrecision)}/>
         }
-        <HowMany value={count} onChange={setCount}/>
+        <HowMany value={count} onChange={v => setCount(v|| numVals.defaultOutputItems)}/>
       </Group>
       <Group align="center">
         <Checkbox
