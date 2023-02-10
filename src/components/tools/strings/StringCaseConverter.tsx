@@ -1,11 +1,11 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { Group, Select, SimpleGrid, Stack, Text } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
 import InputTextArea from "../../InputTextArea";
 import { StringCase, ToolProps } from "../../../commons/types";
 import { changeCase, useEmptyStringInputState } from "../../../commons/utils.strings";
+import { useToolPropsStorage } from "../../../commons/utils.storage";
 import __ from "../../../commons/constants";
 
 const StringCaseConverter = (props: ToolProps) => {
@@ -50,7 +50,13 @@ const StringCaseConverter = (props: ToolProps) => {
 
   StringCaseSelectItem.displayName = StringCaseSelectItem.name;
 
-  const [ stringCase, setStringCase ] = useInputState<StringCase>("lower");
+  const defaultStringCase: StringCase = "lower";
+
+  const [ stringCase, setStringCase ] = useToolPropsStorage<StringCase>({
+    tid: props.id,
+    key: "str-case",
+    defaultValue: defaultStringCase
+  });
   const [ input, setInput ] = useEmptyStringInputState();
   const [ output, setOutput ] = useEmptyStringInputState();
 
@@ -75,7 +81,7 @@ const StringCaseConverter = (props: ToolProps) => {
         label={<ComponentLabel text={__.labels.stringCase}/>}
         value={stringCase}
         itemComponent={StringCaseSelectItem}
-        onChange={(v) => onStringCaseChanged(v as StringCase || "lower")}
+        onChange={v => onStringCaseChanged((v || defaultStringCase) as StringCase )}
         data={caseSelectItems}/>
 
       <SimpleGrid cols={2} sx={{ width: "100%" }}>
