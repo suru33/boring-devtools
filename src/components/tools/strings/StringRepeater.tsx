@@ -1,15 +1,16 @@
 import { NumberInput, SimpleGrid, Stack } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
 import { repeat } from "lodash";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
 import InputTextArea from "../../InputTextArea";
 import { ToolProps } from "../../../commons/types";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
+import { useToolPropsStorage } from "../../../commons/utils.storage";
 import __ from "../../../commons/constants";
 
 const StringRepeater = (props: ToolProps) => {
-  const [ times, setTimes ] = useInputState(3);
+  const defaultTimes = 3;
+  const [ times, setTimes ] = useToolPropsStorage({ tid: props.id, key: "times", defaultValue: defaultTimes });
   const [ input, setInput ] = useEmptyStringInputState();
   const [ output, setOutput ] = useEmptyStringInputState();
 
@@ -34,7 +35,7 @@ const StringRepeater = (props: ToolProps) => {
         value={times}
         min={1}
         max={50}
-        onChange={onTimesChanged}/>
+        onChange={v => onTimesChanged(v || defaultTimes)}/>
       <SimpleGrid cols={2} sx={{ width: "100%" }}>
         <InputTextArea value={input} onChange={e => onInputChanged(e.target.value)}/>
         <CopyTextArea value={output}/>

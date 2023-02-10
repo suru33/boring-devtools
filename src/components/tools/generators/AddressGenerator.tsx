@@ -1,10 +1,9 @@
-import { useState } from "react";
 import { Button, Group, MultiSelect, Select, Stack } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
-import HowMany, { useHowManyInputState } from "../../HowMany";
+import HowMany from "../../HowMany";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
+import { useToolPropHowManyStorage, useToolPropsStorage } from "../../../commons/utils.storage";
 import { ToolProps } from "../../../commons/types";
 import { allCountryCodes, CountryCode } from "../../../resources/countries";
 import { countryDropdownOptions, generateAddress } from "../../../commons/utils.country";
@@ -12,11 +11,20 @@ import { defaultFakerLocale, fakerLocaleSelectData } from "../../../commons/fake
 import __ from "../../../commons/constants";
 
 const AddressGenerator = (props: ToolProps) => {
-
-  const [ selectedCountries, setSelectedCountries ] = useState<CountryCode[]>([]);
-  const [ count, setCount ] = useHowManyInputState(5);
+  const defaultCount = 5;
+  const defaultSelectedCountries: CountryCode[] = [];
+  const [ selectedCountries, setSelectedCountries ] = useToolPropsStorage<CountryCode[]>({
+    tid: props.id,
+    key: __.sk.selectedCountries,
+    defaultValue: defaultSelectedCountries
+  });
+  const [ count, setCount ] = useToolPropHowManyStorage({ tid: props.id, defaultValue: defaultCount });
   const [ output, setOutput ] = useEmptyStringInputState();
-  const [ locale, setLocale ] = useInputState(defaultFakerLocale.value);
+  const [ locale, setLocale ] = useToolPropsStorage({
+    tid: props.id,
+    key: __.sk.locale,
+    defaultValue: defaultFakerLocale.value
+  });
 
   const generateOutput = () => {
     const countries = selectedCountries.length > 0 ? selectedCountries : allCountryCodes;
@@ -31,9 +39,9 @@ const AddressGenerator = (props: ToolProps) => {
           nothingFound={__.labels.nothingFound}
           label={<ComponentLabel text={__.labels.selectLocale}/>}
           value={locale}
-          onChange={setLocale}
+          onChange={v => setLocale(v || defaultFakerLocale.value)}
           data={fakerLocaleSelectData}/>
-        <HowMany value={count} onChange={setCount}/>
+        <HowMany value={count} onChange={v => setCount(v || defaultCount)}/>
       </Group>
       <MultiSelect
         sx={{ minWidth: 450 }}

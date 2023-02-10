@@ -1,23 +1,28 @@
 import { Button, Checkbox, Group, NumberInput, Stack, TextInput } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
-import HowMany, { useHowManyInputState } from "../../HowMany";
+import HowMany from "../../HowMany";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
+import {
+  useToolPropEmptyStringStorage,
+  useToolPropHowManyStorage,
+  useToolPropsStorage
+} from "../../../commons/utils.storage";
 import { randomStrings } from "../../../commons/utils.random";
 import { ToolProps } from "../../../commons/types";
-import { verticalGroupIndent } from "../../../app-sx";
+import { numVals, verticalGroupIndent } from "../../../app-sx";
 import __ from "../../../commons/constants";
 
 const StringsGenerator = (props: ToolProps) => {
-  const [ upper, setUpper ] = useInputState(true);
-  const [ lower, setLower ] = useInputState(true);
-  const [ numeric, setNumeric ] = useInputState(true);
-  const [ symbols, setSymbols ] = useInputState(false);
-  const [ extras, setExtras ] = useInputState(false);
-  const [ pool, setPool ] = useEmptyStringInputState();
-  const [ count, setCount ] = useHowManyInputState();
-  const [ length, setLength ] = useInputState(20);
+  const defaultLength = 20;
+  const [ upper, setUpper ] = useToolPropsStorage({ tid: props.id, key: "upper", defaultValue: true });
+  const [ lower, setLower ] = useToolPropsStorage({ tid: props.id, key: "lower", defaultValue: true });
+  const [ numeric, setNumeric ] = useToolPropsStorage({ tid: props.id, key: "numeric", defaultValue: true });
+  const [ symbols, setSymbols ] = useToolPropsStorage({ tid: props.id, key: "symbols", defaultValue: false });
+  const [ extras, setExtras ] = useToolPropsStorage({ tid: props.id, key: "extras", defaultValue: false });
+  const [ pool, setPool ] = useToolPropEmptyStringStorage({ tid: props.id, key: "pool" });
+  const [ count, setCount ] = useToolPropHowManyStorage({ tid: props.id });
+  const [ length, setLength ] = useToolPropsStorage({ tid: props.id, key: __.sk.length, defaultValue: defaultLength });
   const [ output, setOutput ] = useEmptyStringInputState();
 
   const generateOutput = () => {
@@ -29,13 +34,32 @@ const StringsGenerator = (props: ToolProps) => {
     <Stack>
       <ComponentLabel text={__.labels.charset}/>
       <Stack sx={verticalGroupIndent}>
-        <Checkbox checked={upper} label={__.labels.charsets.uppercase} onChange={setUpper}/>
-        <Checkbox checked={lower} label={__.labels.charsets.lowercase} onChange={setLower}/>
-        <Checkbox checked={numeric} label={__.labels.charsets.digits} onChange={setNumeric}/>
-        <Checkbox checked={symbols} label={__.labels.charsets.symbols} onChange={setSymbols}/>
+        <Checkbox
+          checked={upper}
+          label={__.labels.charsets.uppercase}
+          onChange={e => setUpper(e.currentTarget.checked)}/>
+        <Checkbox
+          checked={lower}
+          label={__.labels.charsets.lowercase}
+          onChange={e => setLower(e.currentTarget.checked)}/>
+        <Checkbox
+          checked={numeric}
+          label={__.labels.charsets.digits}
+          onChange={e => setNumeric(e.currentTarget.checked)}/>
+        <Checkbox
+          checked={symbols}
+          label={__.labels.charsets.symbols}
+          onChange={e => setSymbols(e.currentTarget.checked)}/>
         <Group>
-          <Checkbox checked={extras} label={__.labels.charsets.extras} onChange={setExtras}/>
-          <TextInput placeholder={__.labels.addMoreChars} sx={{ width: 300 }} value={pool} onChange={setPool}/>
+          <Checkbox
+            checked={extras}
+            label={__.labels.charsets.extras}
+            onChange={e => setExtras(e.currentTarget.checked)}/>
+          <TextInput
+            placeholder={__.labels.addMoreChars}
+            sx={{ width: 300 }}
+            value={pool}
+            onChange={e => setPool(e.currentTarget.value)}/>
         </Group>
       </Stack>
       <Group align="end">
@@ -44,8 +68,8 @@ const StringsGenerator = (props: ToolProps) => {
           value={length}
           min={1}
           max={100}
-          onChange={setLength}/>
-        <HowMany value={count} onChange={setCount}/>
+          onChange={v => setLength(v || defaultLength)}/>
+        <HowMany value={count} onChange={v => setCount(v || numVals.defaultOutputItems)}/>
         <Button onClick={generateOutput}>{__.labels.generate}</Button>
       </Group>
       <CopyTextArea value={output}/>

@@ -4,12 +4,14 @@ import { DatePicker, TimeInput } from "@mantine/dates";
 import { useInputState } from "@mantine/hooks";
 import ComponentLabel from "../../ComponentLabel";
 import CopyTextArea from "../../CopyTextArea";
-import HowMany, { useHowManyInputState } from "../../HowMany";
+import HowMany from "../../HowMany";
 import { useEmptyStringInputState } from "../../../commons/utils.strings";
 import { ToolProps } from "../../../commons/types";
 import { randomDates } from "../../../commons/utils.random";
 import { datetimeRangeFromNow, mergeDateTime, setNowCallback } from "../../../commons/utils.datetime";
 import { colors } from "../../../resources/colors";
+import { useToolPropHowManyStorage, useToolPropsStorage } from "../../../commons/utils.storage";
+import { numVals } from "../../../app-sx";
 import __ from "../../../commons/constants";
 
 const DateTimeGenerator = (props: ToolProps) => {
@@ -59,10 +61,10 @@ const DateTimeGenerator = (props: ToolProps) => {
   const [ endDate, onEndDateChange ] = useState(ed);
   const [ endTime, onEndTimeChange ] = useState(et);
   const [ errorFlag, setErrorFlag ] = useState(false);
-  const [ count, setCount ] = useHowManyInputState();
+  const [ count, setCount ] = useToolPropHowManyStorage({ tid: props.id });
   const [ output, setOutput ] = useEmptyStringInputState();
   const [ generateDisabled, setGenerateDisabled ] = useInputState(false);
-  const [ format, setFormat ] = useInputState(defaultFormat);
+  const [ format, setFormat ] = useToolPropsStorage({ tid: props.id, key: "format", defaultValue: defaultFormat });
 
   useEffect(() => {
     const flag = mergeDateTime(startDate, startTime).isAfter(mergeDateTime(endDate, endTime));
@@ -118,7 +120,7 @@ const DateTimeGenerator = (props: ToolProps) => {
           style={{ width: 330 }}
           value={format}
           onChange={v => setFormat(v || defaultFormat)}/>
-        <HowMany value={count} onChange={setCount}/>
+        <HowMany value={count} onChange={v => setCount(v || numVals.defaultOutputItems)}/>
         <Button onClick={generateOutput} disabled={generateDisabled}>{__.labels.generate}</Button>
       </Group>
       <CopyTextArea value={output}/>
