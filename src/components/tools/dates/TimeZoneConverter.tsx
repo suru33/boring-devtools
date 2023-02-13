@@ -23,19 +23,19 @@ const TimeZoneConverter = (props: ToolProps) => {
   const userTimezone = dayjs.tz.guess();
   const [ splitFormat, seperator ] = __.formats.splitTimestampWithTimeZone;
   const timezoneDropdownData: SelectItem[] = [
-    { value: __.timezoneUtc, label: __.timezoneUtc },
+    { value: __.tzUTC, label: __.tzUTC },
     ...flatten(Object.entries(allTimeZones).map((i) => {
       const [ continent, timezones ] = i;
       return timezones.map((t) => ({ value: t, label: t, group: continent }));
     }))
   ];
 
-  const getUserTimezone = () => isEmpty(userTimezone) ? __.timezoneUtc : userTimezone;
+  const getUserTimezone = () => isEmpty(userTimezone) ? __.tzUTC : userTimezone;
 
   const [ inputDate, onInputDateChange ] = useInputState(now);
   const [ inputTime, onInputTimeChange ] = useInputState(now);
   const [ inputTimezone, setInputTimezone ] = useToolPropsStorage({ tid: props.id, key: "itz", defaultValue: getUserTimezone() });
-  const [ outputTimezone, setOutputTimezone ] = useToolPropsStorage({ tid: props.id, key: "otz", defaultValue: __.timezoneUtc });
+  const [ outputTimezone, setOutputTimezone ] = useToolPropsStorage({ tid: props.id, key: "otz", defaultValue: __.tzUTC });
   const [ input, setInput ] = useState<string[]>([]);
   const [ output, setOutput ] = useState<string[]>([]);
 
@@ -100,7 +100,7 @@ const TimeZoneConverter = (props: ToolProps) => {
           label={<ComponentLabel text={__.labels.timezone}/>}
           data={timezoneDropdownData}
           value={inputTimezone}
-          onChange={v => setInputTimezone(v || getUserTimezone)}/>
+          onChange={v => setInputTimezone(v || getUserTimezone())}/>
         <Button onClick={setNow}>{__.labels.now}</Button>
       </Group>
       {displayDatetime(input)}
@@ -111,7 +111,7 @@ const TimeZoneConverter = (props: ToolProps) => {
         label={<ComponentLabel text={__.labels.outputTimezone}/>}
         data={timezoneDropdownData}
         value={outputTimezone}
-        onChange={v => setOutputTimezone(v || __.timezoneUtc)}/>
+        onChange={v => setOutputTimezone(v || __.tzUTC)}/>
       {displayDatetime(output, input)}
     </Stack>
   );
