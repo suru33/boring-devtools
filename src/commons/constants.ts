@@ -2,7 +2,7 @@ const __ = {
   newLine: "\n",
   emptyStr: "",
   space: " ",
-  timezoneUtc: "UTC",
+  tzUTC: "UTC",
   addressSeperator: "\n--\n",
   settings: {
     appname: "boring-devtools",
