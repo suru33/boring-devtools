@@ -8,9 +8,10 @@ import {
   IconCalendarStats,
   IconCalendarTime,
   IconCheck,
-  IconClipboard,
   IconCode,
+  IconCopy,
   IconError404,
+  IconEye,
   IconHandClick,
   IconId,
   IconLanguage,
@@ -58,7 +59,8 @@ export const navbarIcons = {
 };
 
 export const iconCheck = <IconCheck size={size}/>;
-export const iconClipboard = <IconClipboard size={size}/>;
+export const iconCopy = <IconCopy size={size}/>;
+export const iconView = <IconEye size={size}/>;
 export const iconMoonStars = <IconMoonStars size={size}/>;
 export const iconSun = <IconSun size={size}/>;
 export const iconSearch = <IconSearch size={size}/>;
