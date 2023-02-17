@@ -1,5 +1,5 @@
-import { Sx, TextProps } from "@mantine/core";
 import { CSSProperties } from "react";
+import { Sx, TextProps } from "@mantine/core";
 
 export const verticalGroupIndent: Sx = {
   marginLeft: 20,
