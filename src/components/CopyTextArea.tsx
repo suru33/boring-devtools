@@ -8,6 +8,25 @@ import { colors } from "../resources/colors";
 import __ from "../commons/constants";
 
 const CopyTextArea = (props: TextareaProps) => {
+
+  const Lines = (props: { text: string }) => {
+    const strings = props.text.split("\n");
+    return (
+      <>
+        {
+          strings.map((s, ix) =>
+            <Title
+              key={ix}
+              align="center"
+              order={1}
+              sx={{ marginBottom: ix + 1 === strings.length ? 50 : 10 }}>
+              {s.trim()}
+            </Title>
+          )
+        }
+      </>
+    );
+  };
   const toString = (s: string | ReadonlyArray<string> | number | undefined): string => {
     if (typeof s === "string") {
       return s;
@@ -21,6 +40,7 @@ const CopyTextArea = (props: TextareaProps) => {
   };
 
   const [ modalOpened, setModalOpened ] = useState(false);
+  const showButtons = () => !isEmpty(props.value);
 
   return (
     <>
@@ -34,22 +54,27 @@ const CopyTextArea = (props: TextareaProps) => {
           minRows={props.minRows ? props.minRows : numVals.textAreaRows}
           label={props.label ? props.label : <ComponentLabel text={__.labels.output}/>}
         />
-        <div style={{ position: "absolute", top: "40px", right: "20px", zIndex: 100 }}>
-          <CopyButton value={toString(props.value)} timeout={1500}>
-            {({ copied, copy }) =>
-              <Tooltip label={copied ? __.labels.copied : __.labels.copy} withArrow position="right">
-                <ActionIcon color={copied ? colors.teal : colors.gray}
-                  onClick={copy}> {copied ? iconCheck : iconCopy} </ActionIcon>
+        {showButtons() &&
+          <>
+            <div style={{ position: "absolute", top: "40px", right: "20px", zIndex: 100 }}>
+              <CopyButton value={toString(props.value)} timeout={1500}>
+                {({ copied, copy }) =>
+                  <Tooltip label={copied ? __.labels.copied : __.labels.copy} withArrow position="right">
+                    <ActionIcon
+                      color={copied ? colors.teal : colors.gray}
+                      onClick={copy}>
+                      {copied ? iconCheck : iconCopy}
+                    </ActionIcon>
+                  </Tooltip>
+                }
+              </CopyButton>
+            </div>
+            <div style={{ position: "absolute", top: "70px", right: "20px", zIndex: 100 }}>
+              <Tooltip label="View" withArrow position="right">
+                <ActionIcon onClick={() => setModalOpened(true)}>{iconView}</ActionIcon>
               </Tooltip>
-            }
-          </CopyButton>
-        </div>
-        { !isEmpty(props.value) &&
-          <div style={{ position: "absolute", top: "70px", right: "20px", zIndex: 100 }}>
-            <Tooltip label="View" withArrow position="right">
-              <ActionIcon onClick={() => setModalOpened(true)}>{iconView}</ActionIcon>
-            </Tooltip>
-          </div>
+            </div>
+          </>
         }
       </div>
       <Modal
@@ -57,12 +82,9 @@ const CopyTextArea = (props: TextareaProps) => {
         size="90%"
         overflow="inside"
         opened={modalOpened}
+        overlayBlur={2}
         onClose={() => setModalOpened(false)}>
-        {
-          toString(props.value).split("\n").map(
-            (t, i) => <Title align="center" order={1} key={i} sx={{ marginBottom: 10 }}>{t}</Title>
-          )
-        }
+        <Lines text={toString(props.value)}/>
       </Modal>
     </>
   );
