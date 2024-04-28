@@ -3,10 +3,10 @@ const __ = {
   emptyStr: "",
   space: " ",
   tzUTC: "UTC",
-  addressSeperator: "\n--\n",
+  addressSeparator: "\n--\n",
   settings: {
-    appname: "boring-devtools",
-    version: "1.0.7",
+    appName: "boring-devtools",
+    version: "1.0.9",
     fontFamily: "'JetBrains Mono', monospace",
     myURL: "https://suru.im",
     license: "MIT",

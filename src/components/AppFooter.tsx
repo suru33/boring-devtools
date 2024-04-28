@@ -10,7 +10,7 @@ const AppFooter = () => {
     <Footer height={30}>
       <Center style={{ height: "100%" }}>
         <Text size="xs" color="dimmed">
-          {__.settings.appname} v{__.settings.version} • {__.settings.copyright}
+          {__.settings.appName} v{__.settings.version} • {__.settings.copyright}
           {} • {__.labels.license} <Link display={__.settings.license} url={__.settings.licenseURL} />
           {} • <Link display={__.settings.myURL} url={__.settings.myURL} />
         </Text>

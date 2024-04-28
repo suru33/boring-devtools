@@ -12,5 +12,5 @@ export const generateAddress = (countries: CountryCode[], locale = defaultFakerL
     `${$faker.address.zipCode(getZipCodeFormat(country))}, ${$faker.address.city()}`,
     country === "US" ? `${$faker.address.state()}, ${getCountryName(country)}` : getCountryName(country)
   ].join(__.newLine);
-  return range(count).map(() => address(chooseRandom(countries))).join(__.addressSeperator);
+  return range(count).map(() => address(chooseRandom(countries))).join(__.addressSeparator);
 };
