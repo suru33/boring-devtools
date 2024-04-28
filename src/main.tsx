@@ -11,7 +11,7 @@ if (container) {
   root.render(
     <React.StrictMode>
       <HashRouter>
-        <App/>
+        <App />
       </HashRouter>
     </React.StrictMode>
   );

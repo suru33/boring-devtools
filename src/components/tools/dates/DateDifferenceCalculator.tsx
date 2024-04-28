@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Button, Group, Stack, Text } from "@mantine/core";
+import { Button, Group, Space, Stack, Table, Text } from "@mantine/core";
 import { useInputState } from "@mantine/hooks";
 import { DatePicker, TimeInput } from "@mantine/dates";
 import dayjs from "dayjs";
@@ -24,28 +24,64 @@ const DateDifferenceCalculator = (props: ToolProps) => {
   const [ endTime, onEndTimeChange ] = useInputState(et);
   const [ output, setOutput ] = useState<ReactNode>(<></>);
 
+  const DateSegment = (props: { value: number, name: string }) =>
+    <Text span color={colors.blue}>
+      {props.value}
+      <Text span color={colors.gray}>{props.name}</Text>
+    </Text>;
+
   useEffect(() => {
     const d1 = mergeDateTime(startDate, startTime);
     const d2 = mergeDateTime(endDate, endTime);
     if (d1.isAfter(d2, "seconds")) {
       setOutput(<Text color={colors.red} weight={fontWeight.bold}>{__.errmsg.dateRange}</Text>);
     } else {
-      const [ fmt, seperator ] = __.formats.splitTimestamp;
-      const diff = dayjs.duration(d2.diff(d1, "seconds"), "seconds")
+      const [ fmt, separator ] = __.formats.splitTimestamp;
+      const totalSeconds = d2.diff(d1, "seconds");
+      const byUnit = [
+        d2.diff(d1, "years"),
+        d2.diff(d1, "months"),
+        d2.diff(d1, "days"),
+        d2.diff(d1, "hours"),
+        d2.diff(d1, "minutes"),
+        totalSeconds
+      ];
+      console.log(dayjs.duration(d2.diff(d1)));
+      const diff = dayjs.duration(d2.diff(d1))
         .format(fmt)
-        .split(seperator)
+        .split(separator)
         .map(s => parseInt(s));
       setOutput(
         <Text weight={fontWeight.medium}>
           <ComponentLabel text={__.labels.differenceIs}/>
-          {
-            diff.map((v, i) =>
-              <Text span key={i} color={colors.blue}>
-                {v}
-                <Text span color={colors.gray}>{suffix(v, i)}</Text>
-              </Text>
-            )
-          }
+          <Space h="sm"/>
+          { diff.map((v, ix) => <DateSegment key={ix} value={v} name={suffix(v, ix)}/>) }
+          <Space h="xl"/>
+          <ComponentLabel text={"By Chrono Unit"}/>
+          <Space h="sm"/>
+          <Table
+            sx={{ width: "400px" }}
+            withBorder
+            withColumnBorders
+            striped
+            verticalSpacing="sm">
+            <thead>
+              <tr>
+                <th>Total</th>
+                <th>Unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                byUnit.map((v, ix) =>
+                  <tr key={ix}>
+                    <td>{v}</td>
+                    <td>{suffix(v, ix)}</td>
+                  </tr>
+                )
+              }
+            </tbody>
+          </Table>
         </Text>
       );
     }

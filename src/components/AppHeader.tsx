@@ -24,7 +24,7 @@ const AppHeader = (props: AppHeaderProps) => {
         <UnstyledButton component={Link} to={"/home"}>
           <Group>
             <AppLogo size={50} colorScheme={colorScheme}/>
-            <Text size="xl" weight={fontWeight.extraBold}>{__.settings.appname}</Text>
+            <Text size="xl" weight={fontWeight.extraBold}>{__.settings.appName}</Text>
           </Group>
         </UnstyledButton>
       </Group>
